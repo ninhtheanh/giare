@@ -1,0 +1,88 @@
+<!--{include header_index}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="maillist">
+<div id="contentfontend">
+  <div id="signup">
+    <div class="subdashboard" id="dashboard">
+      <ul>
+        <li class="current"><a href="#">&nbsp;Đăng ký nhận mail</a><span></span></li>
+      </ul>
+    </div>
+    <div class="box clear">
+      <div class="subbox-content welcome">
+        <div style="background-color:#FFFFFF;min-height:450px;_height:450px">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="left" valign="top" width="70%" style="padding:20px">
+              
+               <!--{if !$pagetitle||$request_uri=='index'}-->               
+               <h1>Cùng nhóm mua chung deal cực hot giá tốt nhất mỗi ngày. Khuyến mãi giảm giá cực rẻ được ưu đãi chỉ có tại dealsoc.vn. Mua hàng theo nhóm sẽ được khuyến mãi du lịch, ăn uống, giải trí, thời trang, spa, mỹ phẩm, massage... giảm tới 90%</h1>
+                
+                <!--{/if}-->              
+              
+              <div  align="left" style="font-size:20px;">
+                  <h4>Đăng ký để nhận thông tin khuyến mãi tại <?php echo $city['name']; ?> - lên đến 90% giảm giá!</h4>
+                </div>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                  <tbody>
+                    <tr>
+                      <td width="24"><img src="/static/css/images/faqbox_topleft.gif" width="24" height="20"></td>
+                      <td style="background: url(&quot;/static/css/images/faqbox_topbg.gif&quot;) repeat-x scroll 0% 0% transparent;"></td>
+                      <td width="23"><img src="/static/css/images/faqbox_topright.gif" width="23" height="20"></td>
+                    </tr>
+                    <tr>
+                      <td style="background: url(&quot;/static/css/images/faqbox_leftbg.gif&quot;) repeat-y scroll right center transparent;">&nbsp;</td>
+                      <td bgcolor="#f1f1f1"><div align="left">Deal hấp dẫn mỗi ngày về các dịch vụ ăn uống, giải trí, du lịch... và bạn đừng bỏ lỡ!</div>
+                        <div class="enter-address">
+                        <div class="enter-address-c">
+                          <form id="enter-address-form" action="/subscribe.php" method="post" class="validator">
+                            <table border="0" cellspacing="0" cellpadding="0">
+                              <tr>
+                                <td align="left" valign="top"><div class="mail">
+                                    <label>Email của bạn</label>
+                                    <input id="enter-address-mail" name="email" class="f-input f-mail" type="text" value="{$login_user['email']}" size="20" require="true" datatype="email" />
+                                  </div></td>
+                                <td valign="top" align="left"><div class="city">
+                                    <label>Tỉnh/TP</label>
+                                    <select name="city_id" class="f-city">
+                                      ${Utility::Option(Utility::OptionArray($hotcities, 'id', 'name'), $city['id'])}
+                                    </select>
+                                  </div></td>
+                                <td align="left" valign="bottom"><input id="enter-address-commit" type="submit" class="formbutton" value="Đăng ký" /></td>
+                              </tr>
+                            </table>
+                          </form>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="intro">
+                          <p>Deal hàng ngày của chúng tôi bao gồm: Dịch vụ ăn uống, giải trí, du lịch, thư giản, nghỉ dưỡng, đào tạo, ...</p>
+                        </div></div></td>
+                      <td style="background: url(&quot;/static/css/images/faqbox_rightbg.gif&quot;) repeat-y scroll right center transparent;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><img src="/static/css/images/faqbox_bottomleft.gif" alt="" width="24" border="0" height="21"></td>
+                      <td style="background: url(&quot;/static/css/images/faqbox_bottombg.gif&quot;) repeat-x scroll 0% 0% transparent;"></td>
+                      <td><img src="/static/css/images/faqbox_bottomright.gif" alt="" width="23" border="0" height="21"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                
+                Tags: <a href="/tag/?q=deals">Deals</a>, <a href="/tag/?q=nhom-mua">Nhóm mua</a>, <a href="/tag/?q=cung-mua">Cùng mua</a>, <a href="/tag/?q=mua-chung">Mua chung</a>, 
+                <a href="/tag/?q=khuyen-mai">Khuyến mãi</a>, <a href="/tag/?q=gia-re">Giá rẻ</a>, <a href="/tag/?q=hot-deal">Hot Deal</a>
+                
+                </td>
+              <td width="30%" align="left" valign="top" style="padding-left:7px;padding-top:20px;"><div id="sidebar">
+                  <!--{include block_side_support}-->
+                </div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- bd end -->
+</div>
+<!-- bdw end -->
+<!--{include footer}-->

@@ -1,0 +1,51 @@
+<!--{include header}-->
+<script type="text/javascript" src="/static/js/vote.js"></script>
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+
+<div id="user-vote">
+	<div id="content">
+        <div class="box clear">
+			<div class="box-top"></div>
+			<div class="box-content">
+				<div class="head">
+					<h2>user survey</h2>
+				</div>
+				<div class="sect">
+					<p class="welcome">Answer several questions，your would be better serviced {$INI['system']['abbreviation']}！</p>
+					<form method="post" action="/vote/add.php" onsubmit="return vote_submit(this);">
+						<ol class="vote-list">
+							<!--{if !$question_list}-->
+								no survey
+							<!--{/if}-->
+
+                            <!--{loop $question_list $num $question}-->
+                                <li id="vote-list-{$num}">
+                                    <h4 id="title{$question['id']}">${$num+1}. {$question['title']}</h4>
+                                    <div class="choices">
+                                        <!--{loop $question['options_list'] $index $options}-->
+                                            <input type="{$question['type']}" value="{$options['id']}" id="label-{$question['id']}-{$options['id']}" name="vote{$question['id']}[]" class="choice"/>
+                                            <label class="text" for="label-{$question['id']}-{$options['id']}">{$options['name']}</label>
+                                            <!--{if $options['is_input']}-->
+                                                <input type="text" class="f-text" name="input{$options['id']}" id="input{$options['id']}" onfocus="document.getElementById('label-{$question['id']}-{$options['id']}').checked = true;" onblur="document.getElementById('label-{$question['id']}-{$options['id']}').checked = this.value ? true : false;">
+                                            <!--{/if}-->
+                                            ${$options['is_br'] ? '<br>' : ''}
+                                        <!--{/loop}-->
+                                    </div>
+                                </li>
+                            <!--{/loop}-->
+						</ol>
+						<div class="commit"><input type="submit" class="formbutton" name="submit" value="Submit" /></div>
+					</form>
+				</div>
+                <div class="clear">&nbsp;</div>
+			</div>
+			<div class="box-bottom"></div>
+		</div>
+	</div>
+</div>
+
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include footer}-->

@@ -1,0 +1,1 @@
+<?php $IEM = $tpl->Get('IEM'); ?>&nbsp;&nbsp;<a id="hrefSegmentManageDelete_<?php if(isset($GLOBALS['SegmentID'])) print $GLOBALS['SegmentID']; ?>" class="SegmentManageDeleteLink" href="index.php?Page=Segment" title="<?php if(isset($GLOBALS['SegmentName'])) print $GLOBALS['SegmentName']; ?>"><?php print GetLang('Delete'); ?></a>

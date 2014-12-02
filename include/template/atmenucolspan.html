@@ -1,0 +1,20 @@
+<div style="width:1110px; margin:0px auto;">
+<div id="atboxmenu" style="text-align:left;">
+	<div class="atmenu-title" style="cursor:pointer;">
+    	<i class="icon icon-menu" style="margin:0px 15px;"></i>
+        <span style="line-height: 15px;">Ngành hàng</span>
+    </div>
+    <div class="atboxmenulist" style="position: absolute;z-index: 9999;background: #fff; display:none;">
+    	<ul class="atlistmenu">
+        	<?php  echo at_current_top(); ?>
+        </ul>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.atmenu-title').click(function(){
+		$('.atboxmenulist').slideToggle('slow');
+	});
+});
+</script>

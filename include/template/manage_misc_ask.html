@@ -1,0 +1,41 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_misc('ask')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="subbox-top"><div class="subhead"><h2>Questions on deal</h2></div></div>
+            <div class="box-content">
+                <div class="head">
+                    <ul class="filter">
+						<li><form action="/backend/misc/ask.php" method="get">deal：<input type="text" class="h-input" name="title" value="${htmlspecialchars($title)}" >&nbsp;<select name="type">${Utility::Option($option_ask, $type, 'category')}</select>&nbsp;<input type="submit" value="select" class="formbutton"  style="padding:1px 6px;"/><form></li>
+					</ul>
+				</div>
+                <div class="sect">
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+					<tr><th width="260">deal name</th><th width="60">user</th><th width="200">question</th><th width="200">reply</th><th width="120">operation</th></tr>
+					<!--{loop $asks $index $one}-->
+					<tr ${$index%2?'':'class="alt"'} id="team-list-id-{$one['id']}">
+						<td><a class="deal-title" href="/team.php?id={$one['team_id']}">{$teams[$one['team_id']]['title']}</a></td>
+						<td nowrap>{$users[$one['user_id']]['username']}</td>
+						<td>${htmlspecialchars($one['content'])}</td>
+						<td>${htmlspecialchars($one['comment'])}</td>
+						<td class="op" nowrap><a href="/backend/misc/askedit.php?id={$one['id']}&r={$currefer}">reply</a>｜<a href="/backend/misc/askremove.php?id={$one['id']}&r={$currefer}" class="remove-record">delete</a></td>
+					</tr>
+					<!--{/loop}-->
+					<tr><td colspan="6">{$pagestring}</tr>
+                    </table>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

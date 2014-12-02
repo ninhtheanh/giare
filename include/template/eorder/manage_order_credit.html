@@ -1,0 +1,50 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_order('credit')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="box-top"></div>
+            <div class="box-content">
+                <div class="head">
+                    <h2>Pay with account balance</h2>
+				</div>
+				<div class="sect" style="padding:0 10px;">
+					<form method="get">
+						<p style="margin:5px 0;">order No.：<input type="text" name="id" value="${htmlspecialchars($id)}" class="h-input"/>&nbsp;user：<input type="text" name="uemail" class="h-input" value="${htmlspecialchars($uemail)}" >&nbsp;deal No.：<input type="text" name="team_id" class="h-input number" value="{$team_id}" >&nbsp;TP:<select name="city_id" class="h-input" require="true" onchange="this.form.submit();"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray($allcities,'id','name'),$city_id)}</select><!--{if $city_id}-->&nbsp;Quận/Huyện:<select name="dist_id" onchange="this.form.submit();" class="h-input" require="true"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray($alldist,'dist_id','dist_name'),$dist_id)}</select><!--{/if}--></p>
+						<p style="margin:5px 0;">ordering time：<input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="cbday" value="{$cbday}" /> - <input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="ceday" value="{$ceday}" />&nbsp;paying time：<input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="pbday" value="{$pbday}" /> - <input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="peday" value="{$peday}" /></p>
+						<p style="margin:5px 0;"><input type="submit" value="select" class="formbutton"  style="padding:1px 6px;"/></p>
+					<form>
+				</div>
+                <div class="sect">
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+					<tr><th width="20">ID</th><th width="350">deal</th><th width="180">user</th><th width="20" nowrap>q.ty</th><th width="60" nowrap>total (<span class="money">{$currency}</span>)</th><th width="60" nowrap>Unpaid (<span class="money">{$currency}</span>)</th><th width="60" nowrap>Paid (<span class="money">{$currency}</span>)</th><th width="50" nowrap>express</th><th width="50" nowrap>operation</th></tr>
+					<!--{loop $orders $index $one}-->
+					<tr ${$index%2?'':'class="alt"'} id="order-list-id-{$one['id']}">
+						<td>{$one['id']}</td>
+						<td>{$one['team_id']}&nbsp;(<a class="deal-title" href="/team.php?id={$one['team_id']}" target="_blank">{$teams[$one['team_id']]['title']}</a>)</td>
+						<td><a href="/ajax/manage.php?action=userview&id={$one['user_id']}" class="ajaxlink">{$users[$one['user_id']]['email']}<br/>{$users[$one['user_id']]['username']}</a><!--{if Utility::IsMobile($users[$one['user_id']]['mobile'])}-->&nbsp;&raquo;&nbsp;<a href="/ajax/misc.php?action=sms&v={$users[$one['user_id']]['mobile']}" class="ajaxlink">SMS</a><!--{/if}--></td>
+						<td>{$one['quantity']}</td>
+						<td>${print_price(moneyit($one['origin']))}</td>
+						<td>${print_price(moneyit($one['credit']))}</td>
+						<td>${print_price(moneyit($one['money']))}</td>
+						<td>{$option_delivery[$teams[$one['team_id']]['delivery']]}${$one['express_id']?'Y':''}</td>
+						<td class="op" nowrap><a href="/ajax/manage.php?action=orderview&id={$one['id']}" class="ajaxlink">detail</a></td>
+					</tr>
+					<!--{/loop}-->
+					<tr><td colspan="9">{$pagestring}</tr>
+                    </table>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

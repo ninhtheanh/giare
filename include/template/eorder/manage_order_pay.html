@@ -1,0 +1,71 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_order('pay')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="subbox-top"><div class="subhead">
+                    <h2>Đơn hàng đã thanh toán</h2>
+				</div></div>
+            <div class="box-content">
+            <table border="0" cellspacing="0" cellpadding="0" class="filter-table">
+              <form method="get"><tr>
+                <td><strong>Order No.</strong></td>
+                <td><input type="text" name="id" value="${htmlspecialchars($id)}" class="h-input"/></td>
+                <td><strong>User</strong></td>
+                <td><input type="text" name="uemail" class="h-input" value="${htmlspecialchars($uemail)}" ></td>
+                <td nowrap="nowrap"><strong>Deal No.</strong></td>
+                <td><input type="text" name="team_id" class="h-input number" value="{$team_id}" ></td>
+                <td><strong>TP</strong></td>
+                <td><select name="city_id" class="h-input" require="true" onchange="this.form.submit();"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray($allcities,'id','name'),$city_id)}</select></td>
+                <td><!--{if $city_id}-->&nbsp;Quận/Huyện</td>
+                <td><select name="dist_id" onchange="this.form.submit();" class="h-input" require="true"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray(option_district('VN', $city_id, false, true),'dist_id','dist_name'),$dist_id)}</select><!--{/if}--></td>
+              </tr>
+              <tr>
+                <td nowrap="nowrap"><strong>Ordering time</strong></td>
+                <td><input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="cbday" value="{$cbday}" /></td>
+                <td>-</td>
+                <td><input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="ceday" value="{$ceday}" /></td>
+                <td nowrap="nowrap"><strong>Delivery time</strong></td>
+                <td><input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="pbday" value="{$pbday}" /></td>
+                <td>-</td>
+                <td><input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="peday" value="{$peday}" /></td>
+                <td nowrap="nowrap">NV giao hàng</td>
+                <td><select name="shipper_id" onchange="this.form.submit();" id="shipper_id" class="h-input" require="true"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray($allshipper,'id','shipper_name'),$shipper_id)}</select></td>
+              </tr>
+              <tr><td colspan="10" style="padding-bottom:10px"><input type="submit" value=" Lọc dữ liệu " class="formbutton"  style="padding:3px 6px;"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Total: {$count} ĐH</strong></td></tr><form>
+            </table>
+					
+                <div class="sect">
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+					<tr><th width="20">ID</th><th width="400">deal</th><th width="200">user</th><th width="20" nowrap>q.ty</th><th width="60" nowrap>total (<span class="money">{$currency}</span>)</th><!--<th width="60" nowrap>UnPaid (<span class="money">{$currency}</span>)</th>--><th width="60" nowrap>pay (<span class="money">{$currency}</span>)</th><!--<th width="50" nowrap>express</th>--><th width="50" nowrap>operation</th></tr>
+					<!--{loop $orders $index $one}-->
+					<tr style="background-color:#${getStatusColor($one['state'])}" id="order-list-id-{$one['id']}">
+						<td>{$one['id']}</td>
+						<td>{$one['team_id']}&nbsp;(<a class="deal-title" href="/team.php?id={$one['team_id']}" target="_blank">{$teams[$one['team_id']]['title']}</a>)</td>
+						<td><a href="/ajax/manage.php?action=userview&id={$one['user_id']}" class="ajaxlink">{$one['realname']}<br />{$one['mobile']}</a><br/><b style="color:#FA6D18"><!--${if ($one['note_address']!=''){$note_address = $one['note_address'].", ";}else{$note_address="";}}-->{$note_address}{$one['address']}, <!--{if wardname($one['dist_id'],$one['ward_id'])}--><!--${$wardname = wardname($one['dist_id'],$one['ward_id'])}-->{$wardname['ward_name']},<!--{/if}--><!--{if ename_dist($one['dist_id'])}--><!--${$dists = ename_dist($one['dist_id'])}-->{$dists['dist_name']}<!--{/if}--></b><br /><!--{if total_order_user($users[$one['user_id']]['id'])>0}--><b style="color:#FA6D18">${$old_cus='Khách hàng cũ'}</b><!--{else}--><b style="color:#C40000">${$old_cus='Khách hàng mới'}</b><!--{/if}--><!--{if Utility::IsMobile($users[$one['user_id']]['mobile'])}-->&nbsp;&raquo;&nbsp;<a href="/ajax/misc.php?action=sms&v={$users[$one['user_id']]['mobile']}" class="ajaxlink">SMS</a><!--{/if}--></td>
+						<td align="center">{$one['quantity']}</td>
+						<td align="right">${print_price(moneyit($one['origin']))}</td>
+						<!--<td>${print_price(moneyit($one['credit']))}</td>-->
+						<td align="right"><!-- {if $one['state']=='pay' && $order['money']==0 && $order['credit']==0} -->${print_price(moneyit($one['origin']))} <!--{else}-->${print_price(moneyit($one['money']))}<!--{/if}--></td>
+						<!--<td>{$option_delivery[$teams[$one['team_id']]['delivery']]}${$one['express_id']?'Y':''}{$option_service[$one['service']]}</td>-->
+						<td class="op" nowrap><a href="/ajax/manage.php?action=orderedit&id={$one['id']}" class="ajaxlink">edit</a> | <a href="/ajax/manage.php?action=orderview&id={$one['id']}" class="ajaxlink">detail</a></td>
+					</tr>
+					<!--{/loop}-->
+                    <tr><td colspan="9" align="right"><strong>SL thực đặt: {$total_voucher} voucher ------ SL thực giao: {$total_voucher_successful}</strong></td></tr>
+					<tr><td colspan="9">{$pagestring}</tr>
+                    </table>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

@@ -1,0 +1,89 @@
+<?php include template("manage_header");?>
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="partner">
+	<div class="subdashboard" id="dashboard">
+		<ul><?php echo mcurrent_system('email'); ?></ul>
+	</div>
+	<div id="content" class="clear mainwide">
+        <div class="clear box">
+            <div class="subbox-top"><div class="subhead"><h2>Email setting</h2></div>
+</div>
+            <div class="box-content">
+                <div class="sect">
+                    <form method="post">
+						<div class="wholetip clear"><h3>1. Mailing configuration</h3></div>
+						<div class="field">
+							<label>way of mailing</label>
+							<div style="margin-top:5px;" id="mail-zone-div"><input type="radio" name="mail[mail]" value="smtp" <?php echo $INI['mail']['mail']!='mail'?'checked':''; ?> />&nbsp;SMTP&nbsp;<input type="radio" name="mail[mail]" value='mail' <?php echo $INI['mail']['mail']=='mail'?'checked':''; ?> />&nbsp;PHP MAIL&nbsp;</div>
+						</div>
+						<div id="mail-zone-smtp" style="display:<?php echo $INI['mail']['mail']!='mail'?'block':'none'; ?>;">
+                        <div class="field">
+                            <label>SMTP Host</label>
+                            <input type="text" size="30" name="mail[host]" class="f-input" value="<?php echo $INI['mail']['host']; ?>" style="width:200px;"/><span class="inputtip">If：smtp.qq.com</span>
+                        </div>
+                        <div class="field">
+                            <label>SMTP Port</label>
+                            <input type="text" size="30" name="mail[port]" class="number" value="<?php echo $INI['mail']['port']; ?>"/><span class="inputtip">General Port 25，If SSL MODE 465</span>
+                        </div>
+                        <div class="field">
+                            <label>SSL </label>
+                            <input type="text" size="30" name="mail[ssl]" class="number" value="<?php echo $INI['mail']['ssl']; ?>"/>
+                            <span class="inputtip">false, ssl, tls * [SMTP 25 port selection false, 465 and other ports option ssl]</span>
+                        </div>
+                        <div class="field">
+                            <label>Username</label>
+                            <input type="text" size="30" name="mail[user]" class="f-input" value="<?php echo $INI['mail']['user']; ?>" style="width:200px;"/><span class="inputtip">If：12345678@qq.com</span>
+                        </div>
+                        <div class="field">
+                            <label>Password</label>
+                            <input type="password" size="30" name="mail[pass]" class="f-input" value="<?php echo $INI['mail']['pass']; ?>" style="width:200px;"/><span class="inputtip">Mailbox password</span>
+                        </div>
+						</div>
+                        <div class="field">
+                            <label>Mail From</label>
+                            <input type="text" size="30" name="mail[from]" class="f-input" value="<?php echo $INI['mail']['from']; ?>" style="width:200px;"/><span class="inputtip">The other received the message displayed when the sender mail address</span>
+                        </div>
+                        <div class="field">
+                            <label>Reply To</label>
+                            <input type="text" size="30" name="mail[reply]" class="f-input" value="<?php echo $INI['mail']['reply']; ?>" style="width:200px;" /><span class="inputtip">Opposite party replies when the mail default reply mail address</span>
+                        </div>
+                        <div class="field">
+                            <label>Message Encoding</label>
+                            <input type="text" size="30" name="mail[encoding]" class="f-input" value="<?php echo $INI['mail']['encoding']; ?>" style="width:200px; text-transform:uppercase;"/><span class="inputtip">Message encoding：UTF-8, GBK, BIG5 Etc</span>
+                        </div>
+                        <div class="field">
+                            <label>Frequency</label>
+                            <input type="text" size="30" name="mail[interval]" class="number" value="<?php echo abs(intval($INI['mail']['interval'])); ?>"/>
+                            <span class="inputtip">Please post the required frequency, set to send each message interval, unit: seconds, between the proposed set :2-5</span>
+                        </div>
+
+						<div class="wholetip clear"><h3>2. Subscription setting（contact information in the subscription mail）</h3></div>
+                        <div class="field">
+                            <label>telephone</label>
+                            <input type="text" size="30" name="mail[helpphone]" class="f-input" value="<?php echo $INI['subscribe']['helpphone']; ?>"/>
+                        </div>
+                        <div class="field">
+                            <label>Email</label>
+                            <input type="text" size="30" name="mail[helpemail]" class="f-input" value="<?php echo $INI['subscribe']['helpemail']; ?>"/>
+                        </div>
+
+                        <div class="act">
+                            <input type="submit" value="save" name="commit" class="formbutton"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+	</div>
+<!--
+<div id="sidebar">
+</div>
+-->
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<?php include template("manage_footer");?>

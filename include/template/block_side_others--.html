@@ -1,0 +1,105 @@
+<!--${
+$others_side_ns = abs(intval($INI['system']['sideteam']));
+$others_team_id = abs(intval($team['id']));
+$others_city_id = abs(intval($city['id']));
+
+if ( abs(intval($INI['system']['sideteam'])) ) {
+	$oc = array( 
+			'city_id' => array($others_city_id, 0), 
+			'team_type' => 'normal',
+			"id <> '$others_team_id'",
+			"begin_time < UNIX_TIMESTAMP()",
+			"end_time > UNIX_TIMESTAMP()",
+            "((max_number>0 and now_number<max_number) OR (max_number=0))",
+			);
+    
+    $ckey = 'recent';	
+	
+	$others = DB::LimitQuery('team', array(
+				'condition' => $oc,
+				'order' => 'ORDER BY `sort_order` DESC, `id` DESC',
+				'size' => $others_side_ns,
+				));
+	//$others = caches($ckey,$cval);	
+    
+    /*        
+    $mkey = 'recent';
+	if(CACHE==true && $m->get($mkey))
+	{	
+		$others = $m->get($mkey);		
+	}
+	else
+	{	
+		$others = DB::LimitQuery('team', array(
+				'condition' => $oc,
+				'order' => 'ORDER BY `sort_order` DESC, `id` DESC',
+				'size' => $others_side_ns,
+				));
+		$m->set($mkey,$others,0,60);//*60*24*4		
+	}   
+	*/
+}
+}-->
+<!--{if $others}-->
+<div class="sbox side-Business">
+	<div class="sbox-top"><div align="center" style="padding-top:3px;"><h2>Deal trong ngày</h2></div></div>
+	<div class="sbox-content">
+        <div style="padding-top:20px;">
+        <style type="text/css">
+        	.aListBPLine{width:220px;display:block;top:0px;z-index:10;left:0px;position:relative;}
+			.aListBPLine h3{font-size:12px;color:#00CCFF;padding:3px 10px 0 10px;}
+			.dInfoBRNew{width:195px;margin:auto;border:1px solid #bfbfbf;margin:5px 0 0 10px;}
+			.dSOListBRN{position:absolute;top:2px;right:5px;background:transparent url(/static/css/images/img_giam.png) no-repeat;width:61px;height:61px;top:42px;right:-5px;}
+			.dSOListBRN .div_TietKiem {height:42px;padding:11px 0 0 3px;text-align:center;width:59px;}
+			.PriceDealBRL{position:absolute;bottom:0px;left:-6px;margin-bottom:12px;height:56px;}
+			.PriceDealBRL .divPrice{margin-left:16px;min-width:111px;background-color:#b6c6a3;height:16px;padding:2px 0 0 7px; white-space:nowrap; color:#000000;font-size:12px; font-family:Arial, Helvetica, sans-serif}
+			.PriceDealBRL .div_infoMoney{width:118px;height:40px;background:#FB6D17 url(../images/img_conlai.png) no-repeat;margin-top:-3px;position:absolute;bottom:0px;margin-left:16px;}
+			.PriceDealBRL .strTextVND{margin-left:36px;}.PriceDealBRL .div_TextInfoMoney{width:118px;}
+			.styleText14{
+				font-size:11px; font-family:Arial, Helvetica, sans-serif
+			}
+			.styleText15{
+				font-size:17px; font-family:Arial, Helvetica, sans-serif
+			}
+			.styleText16{
+				font-size:7px; font-family:Arial, Helvetica, sans-serif
+			}
+			.styleText17{
+				font-size:9px; font-family:Arial, Helvetica, sans-serif
+			}
+			.styleText5{
+				font-size:16px; font-family:Arial, Helvetica, sans-serif
+			}
+			.pLineDotted{width:225px;height:3px;margin-left:1px;margin-bottom:3px; margin-top:3px; opacity:0.5;filter:alpha(opacity=50);}
+			.pGiaTienID{
+				text-align:center; font-family:Arial, Helvetica, sans-serif
+			}
+        </style>
+		<!--${$index=0}-->
+		<!--{loop $others $one}-->
+        	<div style='color:#FFFFFF; cursor:pointer' class='aListBPLine' onclick="window.location='/team.php?id={$one['id']}'">
+              <h3><a href="/team.php?id={$one['id']}" style="color:#000000; font-size:13px;">{$one['short_title']}</a></h3>
+              <div class='dInfoBRNew'><!--{if $one['image']}--><a href="/team.php?id={$one['id']}" style="color:#000000; font-size:13px;"><img src="${team_image($one['image'], true)}" border="0" width="200" height="120" alt="{$one['short_title']}" /></a><!--{/if}--></div>
+              <div class='dSOListBRN'>
+                <div class='div_TietKiem'><strong class='styleText14'>Giảm</strong><br/>
+                  <strong class='styleText15'>${ceil(team_discount($one))}%</strong></div>
+              </div>
+              <div class='PriceDealBRL'>
+                <div class='divPrice'><span class='styleText17'>Giá trị:&nbsp;<strong class='StyleTextGT lineHorizontal styleText13' style="text-decoration:line-through">${print_price(moneyit($one['market_price']))} {$currency}</strong></span>
+                  
+                </div>
+                <div class='div_infoMoney'>
+                  <div class='div_TextInfoMoney'>
+                    <p class='styleText14' style='margin-left:10px;'><strong >Còn Lại</strong></p>
+                    <p class='pGiaTien' align="center"><strong class='styleText5'>${print_price(moneyit($one['team_price']))}&nbsp;{$currency}</strong></p>
+                  </div>
+                </div>
+              </div>
+            </div><p class='pLineDotted'></p>
+		<!--{/loop}-->
+		</div>
+        <div style="clear:both">&nbsp;</div>
+	</div>
+	<div class="sbox-bottom"></div>
+</div>
+<!--{/if}-->

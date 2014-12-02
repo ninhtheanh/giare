@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Process Data</title>
+<script type="text/javascript" language="javascript" src="jquery.min.js"></script>
+<script type="text/javascript" language="javascript">
+function ReBuildImage(id){
+	var stri = '<img src="ajax-loader.gif" align="absmiddle" /> Dang xua ly In id '+id+' ....';
+	$('#str').html(stri);
+	$.ajax({
+		url : "ImportData.php?in_id="+id,
+		success : function (data){
+			var str = data+' Imported '+id;
+			$('#strin').html(str);
+			var idd = id-1;
+			if(idd==0){
+				$('#str').empty();
+				$('#strin').html("Finish");
+			}else{
+				ReBuildImage(idd);
+			}
+		}
+	});
+}
+ReBuildImage(4992);
+</script>
+</head>
+<body>
+<span id="str"></span><span id="strin"></span>
+</body>
+</html>

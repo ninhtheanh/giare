@@ -1,0 +1,52 @@
+<!--{include header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="referrals">
+	<div class="dashboard" id="dashboard">
+		<ul>${current_account('/account/refer.php')}</ul>
+	</div>
+    <div id="content" class="invites refers">
+        <div class="box clear">
+            <div class="subbox-top"><div class="subhead">
+					<h2>Lời mời của tôi</h2>
+					<!--<ul class="filter">
+						<li class="label">Category: </li>
+						${current_invite('referpending')}
+					</ul>-->
+				</div></div>
+            <div class="box-content">
+                
+                <div class="sect">
+					<div class="share-list">
+						<div class="blk im">
+							<div class="logo"><img src="/static/css/images/chat48.png" /></div>
+							<div class="info">
+								<h4>Đây là quy định liên kết của bạn để mời bạn bè. Xin vui lòng gửi cho bạn bè của bạn trên Chat hoặc Email:</h4>
+								<input id="share-copy-text" type="text" value="{$INI['system']['wwwprefix']}/r.php?r={$login_user_id}" size="35" class="f-input" onfocus="this.select()" tip="link copied，and you can send it to your friends on Chat" />
+								<input id="share-copy-button" type="button" value="Copy" class="formbutton" />
+							</div>
+						</div>
+					</div>
+                    <div class="clear"></div>
+					<table cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+					<tr><th width="200">user</th><th width="200">Thời gian mời</th>
+					<th width="200">due time</th></tr>
+					<!--{loop $invites $index $one}-->
+						<tr ${$index%2?'':'class="alt"'}><td>{$users[$one['other_user_id']]['username']}</td><td>${date('d-m-Y H:i:s', $one['create_time'])}</td><td>${date('d-m-Y H:i:s', $one['create_time']+7*86400)}</td></tr>
+					<!--{/loop}-->
+					</table>
+				</div><div align="left">&nbsp;</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+    <!--<div id="sidebar">
+		<!--{include block_side_invitenotice}-->
+    </div>-->
+</div>
+</div> <!-- bd end -->
+
+</div> <!-- bdw end -->
+
+<!--{include footer}-->

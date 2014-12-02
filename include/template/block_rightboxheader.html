@@ -1,0 +1,48 @@
+<!--{if $login_user}-->
+<ul class="links">
+  <li class="username">
+    <table border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td rowspan="3" align="left" valign="top" nowrap="nowrap" style="padding-right:5px;"><!--{if $login_user['avatar']!=""}-->
+          <div style="margin-right:10px; border:1px #ccc solid;background:#fff;padding:2px;width:48px;height:48px"><img src="${user_image($login_user['avatar'])}"  width="48" height="48" /></div>
+          <!--{else}-->
+          <!--{if $login_user['fb_userid']}-->
+          <div style="margin-right:10px; border:1px #ccc solid;background:#fff;padding:2px; width:48px;height:48px"><img src="https://graph.facebook.com/{$login_user['fb_userid']}/picture" width="48" height="48" />
+            <div style="position:absolute; left:56px; bottom:15px;"><img src="/static/css/images/f16.jpg" width="12" height="12" /></div>
+          </div>
+          <!--{else}-->
+          <div style="margin-right:10px; border:1px #ccc solid;background:#fff;padding:2px;; width:48px;height:48px"><img src="/static/css/images/noavatar.jpg" width="48" height="48" /></div>
+          <!--{/if}-->
+          <!--{/if}--></td>
+        <td align="left" valign="top" colspan="2" style="padding-bottom:5px;"> Chào,
+          <!--{if $login_user['realname']}-->
+          {$login_user['realname']}！
+          <!--{else}-->
+          {$login_user['email']}
+          <!--{/if}-->
+      </tr>
+      <!--{if $login_user['money']>0}-->
+      <tr>
+        <td align="left" valign="top" colspan="2" style="padding-bottom:5px;"> Tài khoản của bạn: <strong>${print_price(moneyit($login_user['money']))} {$currency}</strong>
+      </tr>
+      <!--{/if}-->
+      <tr>
+        <td align="left" valign="top" class="account"><a href="/order/index.php" id="myaccount" class="account">My {$INI['system']['abbreviation']}</a></td>
+        <td align="left" valign="top" class="logout"><a href="/account/logout.php">Đăng xuất</a></td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<!--{else}-->
+<ul class="links">
+  <li class="login">
+    <table border="0" cellspacing="3" cellpadding="0">
+      
+      <tr>
+        <td align="left" valign="top" colspan="2" style="padding-top:10px;" nowrap="nowrap"><a href="/account/login.php">Đăng nhập bằng tài khoản của hotdeal</a>&nbsp;&brvbar;&nbsp;<a href="/account/signup.php">Đăng ký</a></td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<!--{/if}-->
+<!--<div class="line islogin"></div>-->

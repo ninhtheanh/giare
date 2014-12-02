@@ -1,0 +1,81 @@
+<!--{include header}-->
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+  <div id="feedback">
+  	<div class="subdashboard" id="dashboard">
+		<ul><li class="current"><a href="#">&nbsp;Liên hệ hợp tác KD</a><span></span></li></ul>
+	</div>
+    <div id="contentfontend" class="mainwide clear">
+      <div class="box">
+        <div class="subbox-content">
+          <div style="background-color:#FFFFFF">
+            <div align="left" style="padding:20px; min-height:530px;_min-height:530px;">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tbody>
+                  <tr>
+                    <td width="24"><img src="/static/css/images/faqbox_topleft.gif" width="24" height="20"></td>
+                    <td style="background: url(&quot;/static/css/images/faqbox_topbg.gif&quot;) repeat-x scroll 0% 0% transparent;"></td>
+                    <td width="23"><img src="/static/css/images/faqbox_topright.gif" width="23" height="20"></td>
+                  </tr>
+                  <tr>
+                    <td style="background: url(&quot;/static/css/images/faqbox_leftbg.gif&quot;) repeat-y scroll right center transparent;">&nbsp;</td>
+                    <td bgcolor="#f1f1f1">
+                      <div align="left">
+                        <p class="notice">Chào mừng bạn liên hệ hợp tác với {$INI['system']['abbreviation']}! Bạn hãy để lại thông tin và nội dung đề nghị hợp tác, chúng tôi sẽ liên hệ ngay với bạn.</p>
+                        <form id="feedback-user-form" method="post" action="/feedback/seller.php" class="validator">
+                          <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                              <tr>
+                                <td align="left" height="35"><div class="field fullname">
+                                    <label for="feedback-fullname">Tên</label>
+                                    <input type="text" size="30" name="title" id="feedback-fullname" class="f-input" value="{$login_user['username']}" require="true" datatype="require" />
+                                  </div></td>
+                              </tr>
+                              <tr align="left">
+                                <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35"><div class="field email">
+                                    <label for="feedback-email-address">Email - Số ĐT</label>
+                                    <input type="text" size="30" name="contact" id="feedback-email-address" class="f-input" value="{$login_user['email']}" require="true" datatype="require" /> </div>
+                                    <div class="hint">Xin vui lòng nhập email và điện thoại để chúng tôi liên hệ với bạn.</div></td>
+                              </tr>
+                              <tr align="left">
+                                <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35" style="padding-top:5px;"><div align="left">
+                                    <label for="feedback-suggest">Nội dung liên hệ</label>&nbsp;<textarea cols="30" rows="5" name="content" id="feedback-suggest" class="f-textarea" style="width:500px; height:150px" require="true" datatype="require"></textarea>
+                                  </div></td>
+                              </tr>
+                              <tr align="left">
+                                <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35" style="padding-left:100px"><div class="act">
+                                    <input type="submit" value="  Gửi  " name="commit" id="feedback-submit" class="formbutton" style="padding-top:7px; padding-bottom:7px;"/>
+                                  </div></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </form>
+                      </div></td>
+                    <td style="background: url(&quot;/static/css/images/faqbox_rightbg.gif&quot;) repeat-y scroll right center transparent;">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td><img src="/static/css/images/faqbox_bottomleft.gif" alt="" width="24" border="0" height="21"></td>
+                    <td style="background: url(&quot;/static/css/images/faqbox_bottombg.gif&quot;) repeat-x scroll 0% 0% transparent;"></td>
+                    <td><img src="/static/css/images/faqbox_bottomright.gif" alt="" width="23" border="0" height="21"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- bd end -->
+</div>
+<!-- bdw end -->
+<!--{include footer}-->

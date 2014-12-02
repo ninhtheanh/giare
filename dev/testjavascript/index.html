@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<script type="text/javascript" src="jquery-1.6.2.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="jquery.selectboxes.pack.js" charset="utf-8"></script> 
+<script type="text/javascript">
+//on page load
+	$(function() {
+		
+		//when the checkbox is checked or unchecked
+		$('#copyaddress').click(function() {
+				
+			// If checked
+			if ($("#copyaddress").is(":checked")) {
+				
+				//for each input field
+				$('#shipping_fields input', ':visible', document.body).each(function(i) { 
+					//copy the values from the billing_fields inputs
+					//to the equiv inputs on the shipping_fields
+					$(this).val( $('#billing_fields input').eq(i).val() );
+					});
+				//won't work on drop downs, so get those values
+				var bcountry = $("#bcountry").val();
+				$("#scountry").selectOptions(bcountry);
+				var bstate = $("#bstate").val();
+				$("#sstate").selectOptions(bstate);  
+				var bdist = $("#bdist").val();
+				$("#sdist").selectOptions(bdist);                  
+			
+			} else {
+		
+				//for each input field
+				$('#shipping_fields input', ':visible', document.body).each(function(i) { 
+					//set shipping_fields inputs to blank
+					$(this).val(""); 
+					});
+				$("#scountry").selectOptions("");
+				$("#sstate").selectOptions("");
+				$("#sdist").selectOptions("");
+			}
+		});
+	});
+</script> 
+</head>
+
+<body>
+<form id="addressform">
+
+<p>Billing Address</p>
+<div id="billing_fields">
+    First: <input type="text" name="bill_firstname" value="" />
+    Last: <input type="text" name="bill_lastname" value="" />
+    Email: <input type="text" name="bill_email" value="" />
+    Country: <select id="bcountry" name="country">
+        <option value="">Select</option>
+        <option value="USA">USA</option>
+        <option value="Canada">Canada</option>
+    </select>
+    State: <select id="bstate" name="country">
+        <option value="">Select</option>
+        <option value="AAA">AAA</option>
+        <option value="BBB">BBB</option>
+    </select>
+    Dist: <select id="bdist" name="country">
+        <option value="">Select</option>
+        <option value="CCC">CCC</option>
+        <option value="DDD">DDD</option>
+    </select>
+</div>
+
+<p><input type="checkbox" id="copyaddress" /> Copy Billing Address to Shipping</p>
+
+<p>Shipping Address</p>
+<div id="shipping_fields">
+    First: <input type="text" name="ship_firstname" value="" />
+    Last: <input type="text" name="ship_lastname" value="" />
+    Email: <input type="text" name="ship_email" value="" />
+    Country: <select id="scountry" name="country">
+        <option value="">Select</option>
+        <option value="USA">USA</option>
+        <option value="Canada">Canada</option>
+    </select>
+    State: <select id="sstate" name="country">
+        <option value="">Select</option>
+        <option value="AAA">AAA</option>
+        <option value="BBB">BBB</option>
+    </select>
+    Dist: <select id="sdist" name="country">
+        <option value="">Select</option>
+        <option value="CCC">CCC</option>
+        <option value="DDD">DDD</option>
+    </select>
+</div>
+
+</form>  
+</body>
+</html>

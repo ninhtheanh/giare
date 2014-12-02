@@ -1,0 +1,44 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_credit('gift')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="box-top"></div>
+            <div class="box-content">
+                <div class="head">
+                    <h2>Gift Credit record</h2>
+                    <ul class="filter">${current_managecredit('gift', 0)}</ul>
+				</div>
+                <div class="sect">
+                	<div align="left" style="padding-left:20px;">
+                    	<form action="/backend/credit/gift.php" method="get">Email：<input type="text" name="like" class="h-input" value="${htmlspecialchars($like)}" />&nbsp;Phone：<input type="text" name="uphone" class="h-input" value="{$uphone}" />&nbsp;<select name="action" style="width:120px;">${Utility::Option($option_action, $action, 'all operation')}</select>&nbsp;<input type="submit" value="Submit" class="formbutton"  style="padding:1px 6px;"/><form>
+                    </div>
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+					<tr><th width="50">ID</th><th width="200">Email/username</th><th width="100" nowrap>name/city</th><th width="40">credit</th><th width="400">detail</th><th width="100">operation</th></tr>
+					<!--{loop $credits $index $one}-->
+					<tr ${$index%2?'':'class="alt"'} id="team-list-id-{$one['id']}">
+						<td>{$one['id']}</td>
+						<td>{$users[$one['user_id']]['email']}<br/>{$users[$one['user_id']]['username']}<!--{if Utility::IsMobile($users[$one['user_id']]['mobile'])}-->&nbsp;&raquo;&nbsp;<a href="/ajax/misc.php?action=sms&v={$users[$one['user_id']]['mobile']}" class="ajaxlink">SMS</a><!--{/if}--></td>
+						<td>${$users[$one['user_id']]['realname']?$users[$one['user_id']]['realname']:'----';}<br/><!--{if $users[$one['user_id']]['city_id']}-->{$allcities[$users[$one['user_id']]['city_id']]['name']}<!--{else}-->other<!--{/if}--></td>
+						<td><span class="currency"></span>${moneyit($one['score'])}</td>
+						<td>${ZCredit::Explain($one)}</td>
+						<td>operation</td>
+					</tr>
+					<!--{/loop}-->
+					<tr><td colspan="8">{$pagestring}</tr>
+                    </table>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

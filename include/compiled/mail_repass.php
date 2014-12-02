@@ -1,0 +1,8 @@
+Xin chào <?php echo $user['realname']; ?><span style="color:#ff0000;">*</span>,<br /><br /><!--You've applied for resetting your password on <?php echo $INI['system']['sitename']; ?>, please click the following link and finish reseting your password according to the directions on the page：-->Bạn đã áp dụng đặt lại mật khẩu của bạn trên <b>www.cheapdeal.vn</b>, hãy nhấp vào liên kết bên dưới và kết thúc đặt lại mật khẩu của bạn theo các hướng dẫn trên trang<br /><br /><a href="<?php echo $INI['system']['wwwprefix']; ?>/account/reset.php?code=<?php echo $user['recode']; ?>"><?php echo $INI['system']['wwwprefix']; ?>/account/reset.php?code=<?php echo $user['recode']; ?></a><br /><br />
+<span style="color:#ff0000;">*</span><strong><?php echo $user['realname']; ?></strong> là tên hiển thị bạn sử dụng để giao dịch trên <strong>www.cheapdeal.vn</strong><br />
+<p><span style="font-size:13px;"><strong>Cheapdeal TP.Hồ Chí Minh</strong></span><br />
+	-------------------------------------------<br />
+	<span style="color:#000000;font-size:13px;"><strong>A</strong>: 137/5A Lê Văn Sỹ, P.13, Q.Phú Nhuận, TP.Hồ Chí Minh</span><br />
+	<span style="color:#000000;font-size:13px;"><strong>H</strong>: 0934 024 124 &nbsp; &nbsp; <strong><span style="color:#000000;font-size:13px;"><strong>T</strong>: </span></strong><span style="color:#000000;font-size:13px;">08 3991 4018</span><strong><span style="color:#000000;font-size:13px;"><br />
+	</span>E</strong>: support@cheapdeal.vn</span><br />
+</p>

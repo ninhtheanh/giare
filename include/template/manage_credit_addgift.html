@@ -1,0 +1,46 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_credit('addgift')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="box-top"></div>
+            <div class="box-content">
+                <div class="head">
+                    <h2>Add Gift Credit</h2>
+                    <ul class="filter">${current_managecredit('addgift', 0)}</ul>
+				</div>
+                <div class="sect">
+                	<div align="left" style="padding-left:20px;">
+                    	<form action="/backend/credit/addgift.php" method="post" class="validator">
+                        <div class="field">
+                            <label>Email</label>
+                            <input type="text" size="30" name="uemail" id="credit-create-uemail" class="f-input" value="" require="true" datatype="require" />
+                        </div>
+                        <div class="field">
+                            <label>Money</label>
+                            <input type="text" size="30" name="money" id="credit-create-money" class="f-input" value=""/>
+                        </div>
+                        <div class="field">
+                            <label>Promotion</label>
+                            <select name="promotion" style="width:120px;">${Utility::Option($option_promotion, $action, 'all promotion')}</select>
+						</div>
+                        <div class="act">
+                            <input type="submit" value="add" name="commit" id="partner-submit" class="formbutton"/>
+                        </div>
+                        <form>
+                    </div>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

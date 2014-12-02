@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /backend/
+Disallow: /static/
+Disallow: /order/
+Disallow: /account/
+Disallow: /plugin_login/
+Disallow: /ajax/
+Disallow: /team/ataddcart.php
+Disallow: /ho-chi-minh/

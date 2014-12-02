@@ -1,0 +1,122 @@
+<!--{include header}-->
+
+<div id="bdw" class="bdw">
+  <div id="bd" class="cf">
+    <div id="coupons">
+      <div class="subdashboard" id="dashboard">
+        <ul>
+          ${current_account('/order/index.php')}
+        </ul>
+      </div>
+      <div id="contentfontend" class="mainwide">
+        <div class="box clear">
+          <div class="subbox-content">
+            <div style="background-color:#FFFFFF;min-height:500px;_height:500px">
+            	<div style="color:#c40000; font-size:18px; text-align:left; padding-left:10px;; padding-top:5x;"><strong>Lịch sử mua hàng</strong></div>
+	           <div align="left" style="padding:10px; padding-top:0px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                  <tbody>
+                    
+                    <tr>
+                      
+                      <td align="left" valign="top"><table border="0" cellpadding="0" cellspacing="0" class="order-table">
+                          <tbody>
+                            <tr>
+                              <th align="center" width="20" nowrap="nowrap">Mã ĐH</th>
+                              <th align="center" width="500">Tên Deal</th>
+                              <th align="center" width="50">Ngày Mua</th>
+                              <th align="center" width="20">SL</th>
+                              <th align="center" width="50">Đơn Giá</th>
+                              <th align="center" width="60">Thành Tiền</th><th align="center" width="60">Phí vận chuyển</th><th align="center" width="60">Phí thanh toán</th><th align="center" width="60">Tổng Tiền</th><th align="center" width="90">Số dư tài khoản</th>
+                              
+                              <th align="center" width="110" nowrap="nowrap">Trạng thái</th>
+                            </tr>
+                            <!--{loop $orders $index $one}--> 
+                            <!--${
+                	
+                    $maso = DB::GetQueryResult("SELECT maso FROM masoduthuong WHERE order_id=".$one['id']." AND team_id=".$one['team_id']." AND user_id=".$login_user['id']);
+              
+                   $his = DB::GetQueryResult("SELECT * FROM order_history WHERE order_id=".$one['id']." AND status_code NOT IN ('changed') GROUP BY status_code ORDER BY date DESC, order_id",false);
+                   /* $his = DB::LimitQuery('order_history', array(
+                        'condition' => array('order_id' => $one['id'],'status_code NOT IN ("changed")'), 
+                        'order' => 'ORDER BY date DESC,order_id',
+                    ));*/
+                }--> 
+                            <!--${$status_color = getStatusColor($one['state']);$status_name=getStatusName($one['state']);}-->
+                            <tr bgcolor="#{$status_color}">
+                              <td align="center" <!--{if $maso['maso']>0}-->rowspan=2<!--{/if}--> ><strong>{$one['id']}</strong></td>
+                              <td align="left"><a class="deal-title" href="/{$city['slug']}/${seo_url($teams[$one['team_id']]['short_title'],$one['team_id'],$url_suffix)}" target="_blank"><strong>{$teams[$one['team_id']]['short_title']}</strong></a><br />
+                                
+                                <!--${if ($one['note_address']!=''){$note_address = $one['note_address'].", ";}else{$note_address="";}}--> 
+                                {$note_address}{$one['address']}, 
+                                <!--{if wardname($one['dist_id'],$one['ward_id'])}--> 
+                                <!--${$wardname = wardname($one['dist_id'],$one['ward_id'])}--> 
+                                {$wardname['ward_name']}, 
+                                <!--{/if}--> 
+                                <!--{if ename_dist($one['dist_id'])}--> 
+                                <!--${$dists = ename_dist($one['dist_id'])}--> 
+                                {$dists['dist_name']} 
+                                <!--{/if}--> 
+                                <br /><!--{if $one['remark'] || $one['remark2'] || $one['notes']}--><span style="color:#EF2544"><strong>Ghi chú:</strong> {$one['remark']} - {$one['remark2']} - {$one['notes']}</span><!--{/if}--></td>
+                              <td align="center">${date('d/m/Y H:i:s',$one['create_time'])}</td>
+                              <td align="center" <!--{if $maso['maso']>0}-->rowspan=2<!--{/if}-->>{$one['quantity']}</td>
+                              <td align="center" <!--{if $maso['maso']>0}-->rowspan=2<!--{/if}-->>${print_price(moneyit($one['price']))}</td>
+                              <td align="center" <!--{if $maso['maso']>0}-->rowspan=2<!--{/if}-->>
+${print_price(moneyit($one['origin']))}</td><td align="center" <!--{if $maso['maso']>0}-->rowspan=2<!--{/if}-->>
+                              ${print_price(moneyit($one['shipping_cost']))}</td><td align="center" <!--{if $maso['maso']>0}-->rowspan=2<!--{/if}-->>
+                   ${print_price(moneyit($one['payment_cost']))}</td>
+                              
+                              
+                              
+                              
+                              <td align="center" <!--{if $maso['maso']>0}-->rowspan=2<!--{/if}-->>
+                              <!--${$sub_total = $one['origin']+ $one['shipping_cost'] + $one['payment_cost'];}-->${print_price(moneyit($sub_total))}</td><td align="center" <!--{if $maso['maso']>0}-->rowspan=2<!--{/if}-->><!--{if $login_user['money']>0}--> 
+                                ${print_price(moneyit($login_user['money']))} 
+                                <!--{else}-->0<!--{/if}--></td>
+                              <td align="center" <!--{if $maso['maso']>0}-->rowspan=2<!--{/if}--> style="font-weight:bold" id="td_{$one['id']}"><!--{if $one['team_id']==$id_promotion}-->Đã tham gia<!--{else}-->{$status_name}<!--{/if}--><!--{if $one['state']=='unpay'}--><a href="/team/buy.php?id={$one['team_id']}&edit=true"><br />
+                              &raquo; Sửa đơn hàng</a><br /><a href="/order/view.php?id={$one['id']}"><b>&raquo; Xem chi tiết</b></a><!--{else}--><br /><b><a href="/order/view.php?id={$one['id']}"><b>&raquo; Xem chi tiết</b></a><!--{/if}--></td>
+                            </tr>
+                            
+                <!--{if $maso['maso']>0}-->
+                <tr bgcolor="#{$status_color}"><td valign="top" align="left" style="padding-top:12px;" colspan="2"><strong>Mã số dự thưởng</strong><span colspan="9" style="font-size:20px; font-family:Arial; color:#c40000; font-weight:bold">&nbsp;{$maso['maso']}</span></td></tr><!--{/if}-->
+                            <!--{/loop}-->
+                          </tbody>
+                        </table>
+                        <div>{$pagestring}</div>
+                        <div align="left" style="padding-left:20px; padding-bottom:10px;padding-top:10px;">
+                          <ul>
+                            <strong>Chú thích trạng thái đơn hàng:</strong>
+                            <li style="padding-left:15px;">- <strong style="color:#c40000">Đã xác nhận:</strong> Đã được xác nhận từ {$INI['system']['abbreviation']}. {$INI['system']['abbreviation']} đang lên kế hoạch giao hàng.</li>
+                            <li style="padding-left:15px;">- <strong style="color:#c40000"> Đang giao hàng:</strong> {$INI['system']['abbreviation']} đang trên đường giao.</li>
+                            <li style="padding-left:15px;">- <strong style="color:#c40000"> Giao không thành công:</strong> Nhân viên của {$INI['system']['abbreviation']} đã đi giao hàng nhưng vì nhiều lý do khác nhau nên chưa giao kịp cho quý khách. {$INI['system']['abbreviation']} sẽ lên kế hoạch giao hàng vào hôm khác.</li>
+                            <li style="padding-left:15px;">- <strong style="color:#c40000"> Đã giao:</strong> Đã giao voucher cho khách hàng.</li>
+                            <li style="padding-left:15px;">- <strong style="color:#c40000"> Hủy bởi khách hàng:</strong> Đơn hàng bạn đã đặt mua tại {$INI['system']['abbreviation']} đã được hủy, nếu bạn không yêu cầu hủy đơn hàng vui lòng liên hệ <strong>08.73024401</strong> để được giải đáp.
+</li><li style="padding-left:15px;">- <strong style="color:#c40000"> Hủy bởi dealsoc:</strong> Đơn hàng bạn đã đặt mua tại {$INI['system']['abbreviation']} đã được hủy với nhiều lý do như: hết hạn giao hàng, deal không đạt được số người mua tối thiểu,...</li>
+                          </ul>
+                          <ul>
+                            <strong>Ghi chú:</strong>
+                            <li style="padding-left:15px;"><strong style="color:#c40000; font-weight:normal">Tất cả các đơn hàng đã được giao cho bộ phận giao hàng, sau 3 lần đi giao mà không giao được thì {$INI['system']['abbreviation']} sẽ tự động hủy đơn hàng đó. Nếu bộ phận giao hàng của {$INI['system']['abbreviation']} không liên hệ với quý khách sau 3 lần giao, vui lòng liên hệ <strong>08.73024401</strong> để thông báo với {$INI['system']['abbreviation']} về tình trạng đơn hàng. {$INI['system']['abbreviation']} luôn trân trọng sự góp ý của khách hàng để {$INI['system']['abbreviation']} phục vụ quý khách hàng ngày một tốt hơn</li>
+                          </ul>
+                        </div>
+                        <div style="margin-top:10px; color: rgb(102, 102, 102); font-weight: normal; line-height: 22px;" align="left"> - Bạn cần đem theo phiếu (voucher) của <strong>Dealsoc</strong> đến nơi cung cấp sản phẩm/dịch vụ để  nhận được sản phẩm/dịch vụ giảm giá.<br />
+                          - Thời gian giao hàng dự kiến: Từ 3- 5 ngày không tính thứ 7 & CN.<br />
+                          - Quyền lợi của khách hàng là trách nhiệm của <strong>Dealsoc</strong>. Khi nhận phiếu/hàng vui lòng ký vào biên bản xác nhận của nhận viên giao hàng. <strong>Dealsoc</strong> sẽ không chịu trách nhiệm bất cứ khiếu nại nào nếu không có chữ ký của khách hàng trong biên bản xác nhận.</div>
+                      </td>
+                      
+                    </tr>
+                   
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="box-bottom"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- bd end --> 
+</div>
+<!-- bdw end --> 
+
+<!--{include footer}--> 

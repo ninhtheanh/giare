@@ -1,0 +1,248 @@
+<!--{include header}-->
+<div id="atbreadcrum">
+<div class="atbreadcrum">
+	<a href="">Khuyến mãi </a> > <a href="#">Thời trang</a> > <span>Product</span>
+</div>
+</div>
+<div class="atcontainer">
+<table width="100%" class="detailtablebox">
+	<tr>
+    	<td valign="top">
+        <div class="detail_info_content_top">
+        <div id="atdetail_slider">
+        	<div id="at_slider" class="at_nivoSlider" style="width:500px; height:380px;">
+               <img src="${team_image($team['image1'],true,500)}" alt="" title="" />
+               <img src="${team_image($team['image2'],true,500)}" alt="" title="" />
+               <img src="${team_image($team['image3'],true,500)}" alt="" title="" />
+            </div>
+        </div>
+        <div id="atdetail_info">
+        	<div class="atinfo_productat">
+            	<span class="atinfopatt">Giao sản phẩm <!--{if $team['delivery_properties']==1 || ($city['id']==556 && $team['group_id']!=23)}--><img src="/static/img/icon_product.png" align="absmiddle" alt="Giao sản phẩm" /><!--{else}--><img src="/static/img/icon_voucher.png" align="absmiddle" alt="Giao voucher" /><!--{/if}--></span>
+                <span class="atinfonumview">Số người xem: 30000</span>
+            </div>
+            <div class="atdetail_title">
+            	<h1>{$team['short_title']}</h1>
+            </div>
+            <div class="deal_summary">
+            	{$team['title']}
+            </div>
+            <?php  if(isset($team['condbuy']) && $team['condbuy'] !=''): 
+                  $condbuy = nanooption($team['condbuy']);
+                 ?>
+              <div class="color" style="margin: 10px 0px;">
+              	<label style="font-weight: bold;margin-right: 7px;">Màu sắc: </label>
+                 <?php  foreach($condbuy as $color): ?>
+                 <a style="border:1px solid #999;width:16px; height:16px; display:inline-block; margin-right:5px; background:<?php  echo $color; ?>"></a>
+                 <?php  endforeach; ?>
+               </div>
+            <?php  endif; ?>
+            <div class="price_btn_order">
+            	 <div class="box_detail_price">
+                 	<div class="detail_team_price">${print_price(moneyit($team[team_price]))} <sub>VNĐ</sub></div>
+                    <div class="detail_market_price">${print_price(moneyit($team[market_price]))} đ</div>
+                 </div>
+                 <div class="box_btn_order">
+                 
+                 	<span><a ${$team['begin_time']<time()?'href="/team/ataddcart.php?id='.$team['id'].'"':''} class="ataddcart"><img src="/static/css/images/but_buynow.gif" width="134" height="41" alt="Mua ngay hotdeal giá rẻ" /></a></span>
+                 </div>
+            </div>
+            <div class="box_detail_sale_buycount">
+            	<div class="detail_infoleft">
+                	<span class="detail_discountper">${ceil(moneyit((100*($team['market_price'] - $team['team_price'])/$team['market_price'])))}%</span>
+                    <span class="detail_info_discounttext">Tiết kiệm</span>
+                </div>
+                <div class="detail_info_right">
+                	<div class="detail_info_buy">
+                    	<span>{$team['now_number']}</span>
+                        <span>Số người mua</span>
+                    </div>
+                    <div class="facebook_share">
+                    	<div class="fb-like" data-send="true" data-layout="button_count" data-width="200" data-show-faces="false"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		 $('#at_slider').nivoSlider({
+        directionNav:true,
+        pauseOnHover:true,
+        manualAdvance:false
+    });
+	});
+</script>     
+		<div class="box_detail_inofo">   
+        <table width="100%" class="tabledetail">
+        	<tr>
+            	<td width="50%" valign="top" class="tbtableboxsummary">
+                	<div class="detail_title_condition">
+                    	<h2>Điểm Nổi Bật</h2>
+                    </div>
+                    <div class="detail_content_more">
+                    {$team['summary']}
+                    </div>
+                </td>
+                <td width="50%" valign="top">
+                	<div class="detail_title_condition">
+                    	<h2>Điều Kiện</h2>
+                    </div>
+                    <div class="detail_content_more">
+                    {$team['notice']}
+                    </div>
+                </td>
+            </tr>
+        </table>
+        </div>
+        <div class="detail_box_info_coment">
+        	 <div class="tabbed_area">  
+                    <ul class="tabs">  
+                       <li><a title="content_1" class="tab active">Thông tin</a></li>  
+                        <li><a title="content_2" class="tab">Thảo luận</a></li>  
+                    </ul>
+                    <div class="atboxinfocoment">
+                    	<div id="content_1" class="tabcontent">
+                        	 <div id="team_desc">${htmlspecialchars_decode($team['detail'])}</div>
+                             <!-- share social -->
+                             <div class="box_sharesocial">
+                             <div class="facebook_share itemshare">
+                                   <div class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="true"></div>
+                                </div>
+                            <div class="itemshare">
+                            	<a href="https://twitter.com/share" class="twitter-share-button" data-related="jasoncosta" data-lang="en" data-size="small" data-count="horizontal">Tweet</a>
+                            </div>
+                            <div class="itemshare">
+                            	<g:plusone size='Small'></g:plusone>
+                            </div>
+                            <div class="itemshare">
+                            	<div class='addthis_toolbox addthis_default_style '>
+                                <a class='addthis_counter addthis_pill_style'></a>
+                                </div>
+
+                            </div>
+                            
+                            
+                            </div>
+                         
+                             <!-- end share social -->
+                        </div>  
+                        <div id="content_2" class="tabcontent" style="display:none;">
+                        	<table width="100%" border="0">
+              <tr>
+                <td width="20%" align="left" valign="top" style="padding-left:20px;"><div class="deal-price"> 
+                    <!--{if ($team['state']=='soldout')}--> 
+                    <span class="deal-price-soldout"></span> 
+                    <!--{elseif $team['close_time']}--> 
+                    <span class="deal-price-expire"></span> 
+                    <!--{else}--><span><a ${$team['begin_time']<time()?'href="/team/buy.php?id='.$team['id'].'"':''}><img src="/static/css/images/but_buynow.gif" width="134" height="41" alt="Mua Ngay hotdeal giá rẻ" /></a></span><!--{/if}--></div></td>
+                <td width="20%" align="left" valign="top" style="padding-left:15px;"><a href="/{$city['slug']}/${seo_url($team['short_title'],$team['id'],$url_suffix)}?comment=display#div_dealcomment"><img src="/static/css/images/comment.gif" height="41" width="134" alt="Thảo luận hotdeal giá rẻ" border="0" /></a></td>
+                <td width="60%" align="left" valign="top" style="padding-left:10px;"><div align="left" style="white-space:nowrap"><strong style="font-size:100%">Nhóm mua chung hotdeal giá rẻ cùng bạn bè</strong>:</div>
+                  <div align="left" style="padding-left:5px; overflow:hidden;">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td align="left" valign="top" nowrap="nowrap"><div align="left" style="width:175px; height:27px; overflow:hidden; white-space:nowrap"><a href="${share_facebook($team)}"><img src="/static/css/images/facebook.gif" width="27" height="27" border="0" /></a>&nbsp;&nbsp;<a href="${share_twitter($team)}"><img src="/static/css/images/twitter.gif" width="27" height="27" border="0" /></a>&nbsp;&nbsp;<a href="${share_mail($team)}"><img src="/static/css/images/mail.gif" width="27" height="27" border="0" /></a>&nbsp;&nbsp;
+                            <g:plusone></g:plusone>
+                          </div></td>
+                        <td align="left" valign="top" style="padding-top:5px; padding-left:5px;" width="46"><div id="fb-root"></div>
+                          <fb:like href="http://www.dealsoc.vn/{$city['slug']}/${seo_url($team['short_title'],$team['id'],$url_suffix)}" send="false" layout="button_count" width="46" show_faces="true" action="like" font="arial"></fb:like></td>
+                      </tr>
+                    </table>
+                  </div></td>
+              </tr>
+            </table>
+                        </div>   
+                    </div>
+              </div>
+              <script>  
+  
+  // When the document loads do everything inside here ...  
+  jQuery(document).ready(function(){  
+    jQuery("a.tab").click(function () {  
+        jQuery(".active").removeClass("active");  
+        jQuery(this).addClass("active");  
+        jQuery("div.tabcontent").hide();  
+        var content_show = jQuery(this).attr("title");  
+        jQuery("#"+content_show).show();  
+        
+    });  
+  
+  });  
+ </script>  
+
+        </div>
+        <div class="boxpricebuttnmid">
+        		<div class="detailmidbox1">${print_price(moneyit($team[team_price]))} VNĐ</div>
+                <div class="detailmidbox2">${print_price(moneyit($team[market_price]))}đ</div>
+                <div class="detailmidbox3">
+                <span><a ${$team['begin_time']<time()?'href="/team/buy.php?id='.$team['id'].'"':''}><img src="/static/css/images/but_buynow.gif" width="134" height="41" alt="Mua ngay hotdeal giá rẻ" /></a></span>
+                </div>
+                <div class="detailmidbox4">
+                	<span>
+                    	<strong>48%</strong>
+                        <label>tiết kiệm</label>
+                    </span>
+                    <span>
+                    	<strong>13</strong>
+                        <label>người mua</label>
+                    </span>
+                </div>
+        </div>
+        <div class="detail_boxaddress">
+        	<table width="100%" class="detail_map_deal">
+            	<tr>
+                	<td class="atmap" valign="top">
+                    	<div class="detail_add_title">Bản đồ</div>
+                        <div class="detail_add_container">
+                        	<div align="center"><img src="/static/{$partner['image1']}" alt="{$partner['title']}" /></div>
+                        </div>
+                    </td>
+                    <td valign="top">
+                    	<div class="detail_add_title">Địa chỉ</div>
+                <div class="detail_add_container">
+                    {$partner['location']}
+                </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </td>
+        <td width="244" valign="top">
+        	<!--{if !empty($other_deal)}-->
+                <ul class="atmore_dealright">
+                    <!--{loop $other_deal $index $one}-->
+                    <!--${
+                        $new_icon = $one['begin_time']+86400;
+                        if($new_icon>time()){
+                            $class = ' class="new"';
+                        }else{
+                            $class = '';
+                        }
+                        
+                        $total_comment = DB::GetQueryResult("SELECT count(id) as total FROM topic WHERE team_id=".$one['id']);
+                        $ids .= $one['id'].",";
+                        $arr_group = array(16,23);
+                        if(in_array($ip,$ip_arr)){
+                            $now_number = RandomBuy($one['now_number'],$one['virtual_buy']);
+                        }elseif(in_array($one['group_id'],$arr_group) && $one['close_time']){
+                            $now_number = $one['now_number']*2;
+                        }else{
+                            $now_number = $one['now_number'];
+                        }
+                    }-->
+                  <li{$class}>
+                  <a href="/{$city['slug']}/${seo_url($one['short_title'],$one['id'],$url_suffix)}" class=""><img src="${team_image($one['image'])}" alt="" title="" width="219" height="316" class="img_more_right" /></a>
+                  <a href="/{$city['slug']}/${seo_url($one['short_title'],$one['id'],$url_suffix)}" class="linktitlemoreright">{$one['short_title']}</a>
+                  <div class="box_right_price_sale">
+                  <span class="pricetoge">${print_price(moneyit($one['team_price']))}đ</span>
+                  <span class="right_marketprice">${print_price(moneyit($one['market_price']))}đ</span>
+                  <span class="right_sale">Giảm ${ceil(moneyit((100*($one['market_price'] - $one['team_price'])/$one['market_price'])))}%</span>
+                  </div>
+                  </li>
+                  <!--{/loop}-->
+                </ul><!--{/if}-->
+        </td>
+    </tr>
+</table>
+</div>
+<!--{include footer}-->

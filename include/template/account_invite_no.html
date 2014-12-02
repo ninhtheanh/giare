@@ -1,0 +1,38 @@
+<!--{include header}-->
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="referrals">
+    <div id="content" class="refers">
+        <div class="box clear">
+            <div class="box-top"></div>
+            <div class="box-content">
+                <div class="head"><h2>Invite and get rebate</h2></div>
+                <div class="sect islogin">
+					<!--{if $money}-->
+					<p class="notice-total">You've have invited <strong>{$count}</strong> friends, and in total you've got <strong><span class="money">{$currency}</span>{$count*$INI['system']['invitecredit']}</strong> {$currency} rebate，<a href="/account/refer.php">check list of invited friends</a>。</p>
+					<!--{/if}-->
+					<div class="share-links">
+                    <ul class="share-list cf">
+                        <li class="site">
+                            <a class="logo" href="javascript:void 0" id="referrals-share-others-link"><img src="{$INI['system']['wwwprefix']}/static/css/images/logo_msn.png" /></a>
+                            <p class="im">This is your exclusive link for inviting friends, and please send it on Chat：
+                                <input id="share-copy-text" type="text" value="{$INI['system']['wwwprefix']}/r.php?r={$login_user_id}" size="35" class="f-input" onfocus="this.select()" />
+                            </p>
+                        </li>
+                    </ul>
+					<div class="nodeal cf">
+						<ul class="share-list">
+							<li><a class="logo" href="${share_mail($team)}" target="_blank" title="Friends click the link and buy, you will receive {$INI['system']['invitecredit']} Profit"><img src="/static/css/images/logo_email.gif" /></a><p class="link"><a href="${share_mail($team)}" target="_blank" title="Friends click the link and buy, you will receive {$INI['system']['invitecredit']} 元返利">Sent to friends via e-mail</a></p></li>
+						</ul>
+						</div>
+					</div>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+    <div id="sidebar"></div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+<!--{include footer}--> 

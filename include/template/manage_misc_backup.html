@@ -1,0 +1,40 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_misc('backup')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="subbox-top"><div class="subhead"><h2>Database backup</h2><ul class="filter">
+						<li class="label"> </li>
+						${mcurrent_misc_backup('backup')}
+					</ul></div></div>
+            <div class="box-content">
+                <div class="sect">
+
+<form method="post">
+<table width="96%" border="0" align="center" class="coupons-table">
+    <tr><td width="510px">Backup option：</td><td rowspan="11" valign="top" style="padding-left:20px"><font color="red"><b>Notes：</b></font><br/>Server backup directory is: include/data<br/>For big tables, multi-volume backup is strongly recommended.<br/>To realize multi-volume backup, you have to backup your data on servers.</td></tr>
+    <tr><td width="510px"><input type="radio" name="bfzl" value="quanbubiao" checked>all data backup: <span class="gray"> backup all data tables to one backup file.</span></td></tr>
+    <tr><td width="510px"><input type="radio" name="bfzl" value="danbiao">single data table backup: &nbsp;<select name="tablename">${Utility::Option($option_table, null, 'please select a data table')}</select>&nbsp;&nbsp;<span class="gray"> backup a single table to the backup file.</span></td></tr>
+    <tr><td width="510px"><hr style="border:1px dashed; height:1px" color="#DDDDDD"></td></tr>
+    <tr><td width="510px">Multiple volume backup：</td></tr>
+    <tr><td width="510px"><input type="checkbox" name="fenjuan" value="yes">multiple volume backup <input name="filesize" type="text" value="512" size="10"> K</td></tr>
+    <tr><td width="510px"><hr style="border:1px dashed; height:1px" color="#DDDDDD"></td></tr>
+    <tr><td width="510px">Select a target location：</td></tr>
+    <tr><td width="510px"><input type="radio" name="weizhi" value="server" checked>backup to server</td></tr><tr class="cells">
+    <td width="510px"> <input type="radio" name="weizhi" value="localpc">backup to your computer</td></tr>
+    <tr><td align='left' width="510px"><input type="hidden" name="action" value="back"><input type="submit" class="formbutton"d="orders-list" value="backup"></td></tr>
+</table>
+</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+<!--{include manage_footer}-->

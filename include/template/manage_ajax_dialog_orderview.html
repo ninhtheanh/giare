@@ -1,0 +1,223 @@
+<div id="order-pay-dialog" class="order-pay-dialog-c" style="width:780px;"><h3><span id="order-pay-dialog-close" class="close" onclick="return X.boxClose();">Close</span>Chi tiết đơn hàng {$order['id']}<!--{if $order['delivery_code'] !=""}--> - Mã số BG: {$order['ship_id']}<!--{/if}--></h3>
+    <div align="left" style="padding-left:10px; color:#C40000">
+	<!--${$notes = DB::GetQueryResult("SELECT notes FROM `credit_gift` WHERE user_id='".$order['user_id']."' AND deal_id='".$order['team_id']."'")}-->{$notes['notes']}</div>
+	<div style="overflow-x:hidden;padding:5px;" id="dialog-order-id" oid="{$order['id']}">
+    <table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table" width="98%">                   
+					<th width="70">Trạng thái</th>
+					<th width="120">Người xử lý</th>                    
+					<th width="120" nowrap>Ngày xử lý</th>
+                    <th width="120" nowrap>Ngày hết hạn</th>	
+                    <th width="120" nowrap>Người tiếp nhận</th>                   					
+					</tr> 
+					<!--{loop $his $index $one}-->  
+                    <!--{if $one['head']==1}--><tr><td colspan="7"><h3>{$one['order_id']}</h3></td></tr><!--{/if}-->
+                  
+					<tr style="background-color:#${getStatusColor($one['status_code'])}">	
+                    				
+						<td>{$one['status_code']}</td>
+						<td>{$one['user']}</td>						
+						<td>{$one['date']}</td>
+                       <td>{$one['expires']}</td> 
+                       <td>{$one['assign_to']}</td>                     
+					</tr>
+                    <!--{if $one['note']}-->
+                    <tr style="background-color:#${getStatusColor($one['status_code'])}"><td colspan="5">{$one['note']}</td></tr>
+                    <!--{/if}-->
+					<!--{/loop}-->
+					<tr><td colspan="7">{$pagestring}</td></tr>
+                    </table>
+   <!--${
+           
+         
+           
+            $vcode = DB::GetQueryResult("SELECT serial, code FROM `voucher_code` WHERE order_id='".$order['id']."' AND team_id='".$order['team_id']."'", false);
+            $group_id = DB::GetQueryResult("SELECT group_id FROM `team` WHERE id='".$order['team_id']."'");
+            if((count($vcode)<$order['quantity'] || count($vcode)>$order['quantity']) && $group_id['group_id']==23){
+                DB::Delete('voucher_code',array(
+                    'order_id' => $order['id'],
+                    'team_id'=>$order['team_id'],));
+                $create_time = date("Y-m-d H:i:s");
+                for($i=0;$i<$order['quantity'];$i++){
+                    $vid = Utility::GenSecret(6, Utility::CHAR_NUM);
+                    $vouchercode = Utility::VerifyCode($vid);
+                    $voucher_code = array(
+                        'order_id' => $order['id'],
+                        'team_id' => $order['team_id'],
+                        'user_id' => $order['user_id'],
+                        'realname' => $order['realname'],
+                        'code' => $vouchercode,
+                        'create_time' => $create_time,
+                    );
+                    DB::Insert('voucher_code', $voucher_code);
+                }
+            }else{
+                if(empty($vcode) && $group_id['group_id']==23){
+                    $seri = DB::GetQueryResult("SELECT serial FROM `voucher_code` WHERE team_id='".$order['team_id']."' AND order_id='".$order['id']."'");
+                    if($group_id['group_id']==23 && $order['team_id']>=94 && (int)$seri['serial']==0){
+                        $create_time = date("Y-m-d H:i:s");
+                        for($i=0;$i<$order['quantity'];$i++){
+                            $vid = Utility::GenSecret(6, Utility::CHAR_NUM);
+                            $vouchercode = Utility::VerifyCode($vid);
+                            $voucher_code = array(
+                                'order_id' => $order['id'],
+                                'team_id' => $order['team_id'],
+                                'user_id' => $order['user_id'],
+                                'realname' => $order['realname'],
+                                'code' => $vouchercode,
+                                'create_time' => $create_time,
+                            );
+                            DB::Insert('voucher_code', $voucher_code);
+                        }
+                    }
+                }
+            }
+            $se_vou = "";
+            for($j=0;$j<count($vcode);$j++){
+                $se_vou .= $vcode[$j]['serial']." - ".$vcode[$j]['code'].", ";
+            }
+        }-->
+        <!--{if $vcode}--><div align="left" style="color:#C40000"><b>Serial - Voucher Code:</b>&nbsp;<span style="color:#0033CC">${trim($se_vou,", ")}</span></div><!--{/if}-->
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-bottom:1px solid #999999;border-top:1px solid #999999;border-left:1px solid #999999;border-right:1px solid #999999;">
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999;border-left:none">Mã đơn hàng</td>
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-left:none; border-right:none"><strong>{$order['id']}</strong></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none;border-left:none">Ngày đặt hàng</td>
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none; border-left:none; border-right:none"><strong>${date('d-m-Y H:i:s', $order['create_time'])}</strong></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none;border-left:none;">Trạng thái</td>
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none; border-left:none; border-right:none"><strong>${getStatusName($order['state'])}</strong></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none;border-left:none">Phương thức thanh toán</td>
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border-bottom:1px solid #999999;"><strong>${GetPaymentName($order['payment_id'])}</strong></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none;border-left:none">Phương thức vận chuyển</td>
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border-bottom:1px solid #999999;"><strong>${GetShippingName($order['shipping_id'])}</strong></td>
+    </tr>
+   
+    <tr bgcolor="#53BBF0">
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px;border-right:1px solid #999999;border-bottom:1px solid #999999; color:#FFFFFF"><strong>Thông tin thanh toán</strong></td>
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px;border-bottom:1px solid #999999; color:#FFFFFF"><strong>Thông tin vận chuyển</strong></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:10px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none;border-left:none">Họ tên: {$order['realname']}</td>
+      <td style="padding-left:10px; padding-right:5px; padding-bottom:3px; padding-top:3px; border-bottom:1px solid #999999;">Họ tên: <!--{if $order['shipping_fullname']!=''}-->{$order['brealname']}<!--{else}-->{$order['realname']}<!--{/if}--></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:10px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none; border-left:none">
+      <!--${
+
+          $s = DB::GetQueryResult("SELECT money FROM `user` WHERE id=".$order['user_id']);
+      
+      	if($order['note_address']!=''){
+        	$note_address = htmlspecialchars($order['note_address']).", ";
+        }
+        $order['billing_address'] = $note_address.htmlspecialchars($order['address']);
+        if(ward_name($order['dist_id'],$order['ward_id'])){
+			$wardname = ward_name($order['dist_id'],$order['ward_id']);
+			$order['billing_address'] .=", ".strip_input($wardname['ward_name']);
+		}
+		if(ename_dist($order['dist_id'])){
+			$dists = ename_dist($order['dist_id']);
+			$order['billing_address'] .=", ".strip_input($dists['dist_name']);		
+		}
+		if(id_city($order['city_id'])){
+			$citys = id_city($order['city_id']);
+			$order['billing_address'] .=", ".strip_input($citys['name']);		
+		}
+        
+        
+        if($order['bnote_address']!=''){
+        	$note_address = htmlspecialchars($order['bnote_address']).", ";
+        }
+        $order['shipping_address'] = $note_address.htmlspecialchars($order['baddress']);
+        if(ward_name($order['bdist_id'],$order['bward_id'])){
+			$wardname = ward_name($order['bdist_id'],$order['bward_id']);
+			$order['shipping_address'] .=", ".strip_input($wardname['ward_name']);
+		}
+		if(ename_dist($order['bdist_id'])){
+			$dists = ename_dist($order['bdist_id']);
+			$order['shipping_address'] .=", ".strip_input($dists['dist_name']);		
+		}
+		if(id_city($order['bcity_id'])){
+			$citys = id_city($order['bcity_id']);
+			$order['shipping_address'] .=", ".strip_input($citys['name']);		
+		}
+        
+      }-->
+      Địa chỉ: {$order['billing_address']}<!--{if $order['is_home']=='yes'}--><span style="color:#c40000"><strong>&nbsp;(Nhà riêng)</strong></span><!--{/if}--></td>
+      <td style="padding-left:10px; padding-right:5px; padding-bottom:3px; padding-top:3px; border-bottom:1px solid #999999;">Địa chỉ: <!--{if $order['shipping_address']!=''}-->{$order['shipping_address']}<!--{else}-->{$order['billing_address']}<!--{/if}--></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:10px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none; border-left:none">Điện thoại: {$order['mobile']}</td>
+      <td style="padding-left:10px; padding-right:5px; padding-bottom:3px; padding-top:3px; border-bottom:1px solid #999999;">Điện thoại: <!--{if $order['bmobile']!=''}-->{$order['bmobile']}<!--{else}-->{$order['mobile']}<!--{/if}--></td>
+    </tr>
+    <tr>
+      <td colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="left" valign="top" style="background-color:#FDFA9D;border-right:solid 1px #999999; border-bottom:solid 1px #999999; border-left:none;color:#07519a;font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;line-height:16px;padding:8px;text-align:left;white-space:nowrap;">Mã</td>
+            <td align="left" valign="top" style="background-color:#FDFA9D;border-right:solid 1px #999999; border-bottom:solid 1px #999999; border-left:none;color:#07519a;font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;line-height:16px;padding:8px;text-align:left;white-space:nowrap;">Tên Deal</td>
+            <td align="left" valign="top" style="background-color:#FDFA9D;border-right:solid 1px #999999; border-bottom:solid 1px #999999; border-left:none;color:#07519a;font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;line-height:16px;padding:8px;text-align:left;white-space:nowrap;">Số lượng</td>
+            <td align="left" valign="top" style="background-color:#FDFA9D;border-right:solid 1px #999999; border-bottom:solid 1px #999999; border-left:none;color:#07519a;font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;line-height:16px;padding:8px;text-align:left;white-space:nowrap;">Trọng lượng (gr)</td>
+            <td align="left" valign="top" style="background-color:#FDFA9D;border-right:solid 1px #999999; border-bottom:solid 1px #999999; border-left:none;color:#07519a;font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;line-height:16px;padding:8px;text-align:left;white-space:nowrap;">Đơn giá (VNĐ)</td>
+            <td align="left" valign="top" style="background-color:#FDFA9D;color:#07519a; border-bottom:solid 1px #999999;font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;line-height:16px;padding:8px;text-align:left;white-space:nowrap;">Thành tiền (VNĐ)</td>
+          </tr>
+         <tr bgcolor="#FFFFFF"><td align="left" valign="top" style="padding:5px;border-bottom:solid 1px #999999;border-right:solid 1px #999999;">{$order['id']}</td>
+			  <td align="left" valign="top" style="padding:5px;border-bottom:solid 1px #999999;border-right:solid 1px #999999;">{$team['short_title']}</td>
+			  <td align="center" valign="top" style="padding:5px;border-bottom:solid 1px #999999;border-right:solid 1px #999999;">{$order['quantity']}</td>
+			  <td align="center" valign="top" style="padding:5px;border-bottom:solid 1px #999999;border-right:solid 1px #999999;"><!--{if $team['weight']>0}-->{$team['weight']}<!--{else}-->100<!--{/if}--></td>
+			  <td align="right" valign="top" style="padding:5px;border-bottom:solid 1px #999999;border-right:solid 1px #999999;">${print_price(moneyit($order['price']))}</td>
+			  <td align="right" valign="top" style="padding:5px;border-bottom:solid 1px #999999;">${print_price(moneyit($order['origin']))}</td>
+			</tr>
+          <tr bgcolor="#f6fcff">
+            
+            <td align="right" valign="top" style="padding:3px;">&nbsp;</td>
+            <td align="right" valign="top" style="padding:3px;">&nbsp;</td>
+            <td align="right" valign="top" style="padding:3px;">&nbsp;</td>
+            <td align="left" valign="top" style="padding:3px;"><strong>Tổng TL:</strong> <!--{if $order['total_weight']>0}-->{$order['total_weight']}<!--{else}--><!--{if $team['weight']>0}-->{$order['quantity']*$team['weight']}<!--{else}-->{$order['quantity']*100}<!--{/if}--><!--{/if}--> gr</td>
+            <td align="right" valign="top" style="padding:3px;" colspan="2">&nbsp;</td>
+          </tr>
+          <tr bgcolor="#f6fcff">
+            <td colspan="5" align="right" valign="top" style="padding:3px;">Phí thanh toán</td>
+            <td align="right" valign="top" style="padding:3px;" colspan="2">${print_price(moneyit($order['payment_cost']))} VNĐ</td>
+          </tr>
+          <tr bgcolor="#f6fcff">
+            <td colspan="5" align="right" valign="top" style="padding:3px;">Phí vận chuyển</td>
+            <td align="right" valign="top" style="padding:3px;" colspan="2">${print_price(moneyit($order['shipping_cost']))} VNĐ</td>
+          </tr>
+          <tr bgcolor="#f6fcff">
+            <td colspan="5" align="right" valign="top" style="padding:3px;">Tổng tiền</td>
+            <td align="right" valign="top" style="padding:3px;" nowrap="nowrap" colspan="2"><font size="+1"><strong>${print_price(moneyit(TotalOrder($order['id'])))} VNĐ</strong></font></td>
+          </tr>
+          <!--{if $order['credit']>0 || $order['money']>0}-->
+          <tr bgcolor="#f6fcff">
+            <td  colspan="5" align="right" valign="top" style="padding:3px;">Đã thanh toán:</td>
+            <td align="right" valign="top" style="padding:3px;" nowrap="nowrap" colspan="2"><font size="+1"><strong>
+            <!--{if $order['credit']>0}-->${print_price(moneyit($order['credit']))}<!--{elseif $order['money']>0}-->${print_price(moneyit($order['money']))}
+           <!--{else}-->0<!--{/if}-->&nbsp;VNĐ</strong></font></td>
+          </tr><!--{/if}-->
+          <tr bgcolor="#f6fcff">
+            <td colspan="5" align="right" valign="top" style="padding:3px;">Số dư tài khoản còn lại:</td>
+            <td align="right" valign="top" style="padding:3px;" nowrap="nowrap" colspan="2"><font size="+1"><strong>
+            <!--{if $s['money']>0}-->${print_price(moneyit($s['money']))}<!--{else}-->0<!--{/if}-->&nbsp;VNĐ</strong></font></td>
+          </tr>
+          
+      </table></td>
+    </tr>
+    <tr bgcolor="#f6fcff">
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr bgcolor="#f6fcff">
+    <td colspan="2" align="left" style="padding-left:5px;"><strong>Ghi ch&uacute;:</strong>${htmlspecialchars($order['remark'])} - ${htmlspecialchars($order['remark2'])} - ${htmlspecialchars($order['notes'])}</td>
+  </tr>
+  </table>
+<div style="padding-top:10px; padding-bottom:10px;"><!--{if $order['state']=='unpay'}--><input type="submit" value="   Confirm Order   " onclick="return X.manage.orderconfirm();"/>
+    	<!--&nbsp;<input type="button" value="   Cancel Order   " onclick="return X.manage.ordercancel();"/>-->
+    	<!--{elseif $order['state']=='canceled'}--><input type="submit" value="   Confirm Order   " onclick="return X.manage.orderconfirm();"/>
+    	<!--{elseif $order['state']=='confirmed'}--><!--<input type="button" value="   Cancel Order   " onclick="return X.manage.ordercancel();"/>--><!--{/if}--></div>
+	</div>
+</div>

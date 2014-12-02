@@ -1,0 +1,101 @@
+<!--{include manage_header}-->
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_order('warning')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="box-top"></div>
+            <div class="box-content">
+                <div class="head">
+                    <h2>ĐƠN HÀNG CẢNH BÁO</h2>
+				</div>
+				<div class="sect" style="padding:0 10px;">
+					<form method="get" id="target">
+       
+			    <p style="margin:5px 0;"><table width="100%" border="0" cellspacing="0" cellpadding="0" style="background:#FFFFCC">
+                          <tr>
+                            <td align="right"><p>Số HĐ <input type="text" name="id" value="{$id}" class="h-input"/></p>
+                            <p style="padding-top:3px;">Số Deal <input type="text" name="team_id" class="h-input number" value="{$team_id}" /></p>                           </td>
+                            <td align="right">
+                             <p style="padding-top:3px;">User <input type="text" name="uemail" class="h-input" value="${htmlspecialchars($uemail)}" /></p>
+                            <p style="padding-top:3px;">ĐTDĐ <input type="text" class="h-input" name="mobile" value="{$mobile}" /></p>                            </td>
+                            <td align="right">
+                            <p>Ngày đặt hàng <input type="text" class="h-input" onfocus="WdatePicker({isShowClear:false,readOnly:true})" name="cbday" value="{$cbday}" /></p><p style="padding-top:3px;">đến <input type="text" class="h-input" onfocus="WdatePicker({isShowClear:false,readOnly:true})" name="ceday" value="{$ceday}" /></p>
+                            </td>
+                            <td align="right">
+<p style="padding-top:3px;">
+
+
+
+<script src="/static/js/jchain.js" type="text/javascript"></script><script type="text/javascript">				               
+							jQuery(document).ready(function() {	
+								$("#dist_id").chained("#city_id"); 
+							});						
+						</script>
+                       <label id="enter-address-city-label" for="signup-city">Thành phố</label>
+						<select name="city_id" id="city_id" class="f-city"><option value="">---Chọn---</option>${Utility::Option(Utility::OptionArray($allcities,'id','name'), $city['id'])}</select>
+                    <BR />
+                       <label  id="enter-address-dist-label" for="signup-dist">Quận/Huyện</label>
+							<select name="dist_id" id="dist_id" class="f-city" require="true" datatype="require"><option value="">---Chọn---</option>${optiondistrict($dist_id)}</select>
+                            </p>                                               </td>
+                            
+                            <td valign="top" align="left" style="padding-left:10px;"><input type="submit" value="Lọc dữ liệu" class="formbutton"  style="padding:3px 6px;"/></td>
+                  </tr>
+                        </table>
+</p>
+					</form>
+				</div>
+                 <style>
+				.coupons-table tr,.coupons-table td
+				{
+					background:none
+				}
+				</style>
+                <div class="sect">
+                <form method="post" action="./delivery_shipper.php">
+                	<input type="hidden" name="team_id" value="{$team_id}" >
+                    <input type="hidden" name="dist_id" value="{$dist_id}" >
+                    <input type="hidden" name="city_id" value="{$city_id}" >
+                    <input type="hidden" name="id" value="{$id}" >
+                    <input type="hidden" name="uemail" value="{$uemail}" >
+                
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+					<tr><th width="20">&nbsp;&nbsp;<input type="checkbox" name="checkall" id="checkall" onclick="jqCheckAll( this.id, 'myinput' )" /></th>
+					<th width="400">Deal</th>
+					<th width="340">User</th><th width="20" nowrap>Q.ty</th>
+					<th width="60" nowrap>Total (<span class="money">{$currency}</span>)</th><!--<th width="160" nowrap>express</th>-->
+					<th width="50" nowrap>Task</th>
+					</tr>
+					<!--{loop $orders $index $one}-->
+					<tr style="background-color:#${getStatusColor($one['state'])}" id="order-list-id-{$one['id']}">
+						<td align="center"><input name="myinput[]" value="{$one['id']}" type="checkbox">{$one['id']}</td>
+						<td>{$one['team_id']}&nbsp;(<a class="deal-title" href="/team.php?id={$one['team_id']}" target="_blank">{$teams[$one['team_id']]['title']}</a>)</td>
+						<td><a href="/ajax/manage.php?action=userview&id={$one['user_id']}" class="ajaxlink">{$one['realname']}<br />{$one['mobile']}</a><br/><b style="color:#FA6D18">{$one['address']}, <!--{if ename_dist($one['dist_id'])}--><!--${$dists = ename_dist($one['dist_id'])}-->{$dists['dist_name']}<!--{/if}--></b><!--{if Utility::IsMobile($users[$one['user_id']]['mobile'])}-->&nbsp;&raquo;&nbsp;<a href="/ajax/misc.php?action=sms&v={$users[$one['user_id']]['mobile']}" class="ajaxlink">SMS</a><!--{/if}--></td>
+						<td>{$one['quantity']}</td>
+						<td>${print_price(moneyit($one['origin']))}</td>
+                        <!--<td>{$option_service[$one['service']]}</td>-->
+						<td class="op" nowrap>
+                        {$one['state']}<br />                      
+                        
+                        
+                        <!--{if $one['state']!='pay' && $one['state']!='delivered'}--><a href="/ajax/manage.php?action=orderedit&id={$one['id']}" class="ajaxlink">edit</a><!--{/if}--> | <a href="/ajax/manage.php?action=orderview&id={$one['id']}" class="ajaxlink">detail</a><!--{if $one['state']=='unpay'}--> | <a href="/ajax/manage.php?action=orderconfirm&id={$one['id']}" class="ajaxlink">confirm</a> | <a href="/ajax/manage.php?action=ordercancel&id={$one['id']}" class="ajaxlink" ask="sure to cancel it?">cancel</a><!--{elseif $one['state']=='canceled'}--><a href="/ajax/manage.php?action=orderconfirm&id={$one['id']}" class="ajaxlink">confirm</a> <!--{elseif $one['state']=='confirmed'}-->| <a href="/ajax/manage.php?action=ordercancel&id={$one['id']}" class="ajaxlink" ask="sure to cancel it?">cancel</a> <!--{elseif $one['state']=='delivered'}--> | <a href="/ajax/manage.php?action=ordercancel&id={$one['id']}" class="ajaxlink" ask="sure to cancel it?">cancel</a><!--{/if}-->
+                        
+                        
+                        </td>
+					</tr>
+					<!--{/loop}-->                    
+					<tr><td colspan="9">{$pagestring}</tr>
+                    </table></form>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

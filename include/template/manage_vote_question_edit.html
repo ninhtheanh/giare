@@ -1,0 +1,65 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="help">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_vote('question')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="box-top"></div>
+            <div class="box-content">
+                <div class="head">
+                    <h2>
+						<!--{if $action == 'add'}-->
+							Add questions
+						<!--{else}-->
+							Edit questions
+						<!--{/if}-->
+					</h2>
+					<ul class="filter">
+						<li>
+						</li>
+						<li>
+							<a href="question.php?action=list-is_show-1">List of questions being surveyed</a>
+							<a href="question.php">List of all questions</a>
+						</li>
+					</ul>
+				</div>
+                <div class="sect">
+					<form method="post" action="?action=${$action=='add' ? 'add_submit' : 'edit_submit'}">
+						<div class="field">
+                            <label>Title</label>
+                            <input type="text" size="30" name="question[title]" class="f-input" value="{$question['title']}"/>
+                            <span class="inputtip">no more than 1000 characters</span>
+                        </div>
+						<div class="field">
+                            <label>Type</label>
+                            <input type="radio" name="question[type]" value="radio" <!--{if $question['type'] != 'checkbox'}-->checked<!--{/if}-->/>only choice
+                            <input type="radio" name="question[type]" value="checkbox" <!--{if $question['type'] == 'checkbox'}-->checked<!--{/if}-->/>multiple choice
+                        </div>
+						<div class="field">
+                            <label>Display or not</label>
+                            <input type="radio" name="question[is_show]" value="1" <!--{if $question['is_show']}-->checked<!--{/if}-->/>display
+                            <input type="radio" name="question[is_show]" value="0" <!--{if !$question['is_show']}-->checked<!--{/if}-->/>hide
+                        </div>
+						<div class="field">
+                            <label>Sort</label>
+                            <input type="text" size="30" name="question[order]" class="number" value="{$question['order']}"/>
+                        </div>
+                        <div class="act">
+							<input type="hidden" name="question[id]" value="{$question['id']}"/>
+                            <input type="submit" value="<!--{if $action=='add'}-->add<!--{else}-->edit<!--{/if}-->" name="commit" class="formbutton"/>
+                        </div>
+					</form>
+				</div>
+			</div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include footer}-->

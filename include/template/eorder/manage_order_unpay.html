@@ -1,0 +1,67 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_order('unpay')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="subbox-top"><div class="subhead">
+                    <h2>Đơn hàng chưa xác nhận</h2>
+					<ul class="filter">${current_manageorder('', 0)}</ul>
+				</div></div>
+            <div class="box-content">
+					<form method="get">
+                    	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="filter-table">
+                          <tr>
+                            <td width="9%" align="right"><p style="margin:5px 0;"><strong>Order No.:</strong></p></td><td width="12%"><input type="text" name="id" value="${htmlspecialchars($id)}" class="h-input"/></td><td width="2%" align="right" style="padding-left:3px;"><strong>User:</strong></td>
+                            <td width="10%"><input type="text" name="uemail" class="h-input" value="${htmlspecialchars($uemail)}" ></td>
+                            <td width="4%" align="right"><strong>Deal No.</strong></td>
+                            <td width="10%"><input type="text" name="team_id" class="h-input number" value="{$team_id}" ></td>
+                            <td width="2%" align="right" style="padding-left:3px;"><strong>TP:</strong></td>
+                            <td width="10%"><select name="city_id" class="h-input" require="true" onchange="this.form.submit();"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray($allcities,'id','name'),$city_id)}</select></td>
+                            <td width="7%" align="right"><!--{if $city_id}--><strong>Quận/Huyện:</strong></td>
+                            <td width="34%"><select name="dist_id" onchange="this.form.submit();" class="h-input" require="true"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray(option_district('VN', $city_id, false, true),'dist_id','dist_name'),$dist_id)}</select><!--{/if}--></td>
+                          </tr>
+                          <tr>
+                            <td align="right" nowrap="nowrap"><p style="margin:5px 0;"><strong>Order time:</strong></p></td><td><input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="cbday" value="{$cbday}" /></td><td align="center">-</td><td><input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="ceday" value="{$ceday}" /></td>
+                            <td align="right" nowrap="nowrap" style="padding-left:3px;"><strong>Pay time:</strong></td><td><input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="pbday" value="{$pbday}" /></td><td align="center">-</td><td><input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="peday" value="{$peday}" /></td><td style="padding-left:10px;"><p style="margin:5px 0;"><input type="submit" value="Lọc dữ liệu" class="formbutton"  style="padding:3px 6px;"/></p></td>
+                          </tr>
+                        </table>
+					<form>
+                <div class="sect">
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+					<tr><th width="20">ID</th><th width="400">deal</th><th width="300">user</th><th width="20" nowrap>q.ty</th><th width="60" nowrap>total (<span class="money">{$currency}</span>)</th><!--<th width="60" nowrap>Unpaid (<span class="money">{$currency}</span>)</th><th width="60" nowrap>due (<span class="money">{$currency}</span>)</th><th width="120" nowrap>express</th>--><th width="110" nowrap>operation</th></tr>
+					<!--{loop $orders $index $one}-->
+					<tr ${$index%2?'':'class="alt"'} id="order-list-id-{$one['id']}">
+						<td>{$one['id']}</td>
+						<td>{$one['team_id']}&nbsp;(<a class="deal-title" href="/team.php?id={$one['team_id']}" target="_blank">{$teams[$one['team_id']]['title']}</a>)<!--<br /><img src="/backend/barcode/?barcode={$one['id']}" border="0" alt="" />--></td>
+						<td><a href="/ajax/manage.php?action=userview&id={$one['user_id']}" class="ajaxlink">{$one['realname']}<br />{$one['mobile']}</a><br/><b style="color:#FA6D18"><!--${if ($one['note_address']!=''){$note_address = $one['note_address'].", ";}else{$note_address="";}}-->{$note_address}{$one['address']}, <!--{if wardname($one['dist_id'],$one['ward_id'])}--><!--${$wardname = wardname($one['dist_id'],$one['ward_id'])}-->{$wardname['ward_name']},<!--{/if}--> <!--{if ename_dist($one['dist_id'])}--><!--${$dists = ename_dist($one['dist_id'])}-->{$dists['dist_name']}<!--{/if}--></b>&nbsp;
+                        	<!--${
+                            	$list = check_address_list($one['dist_id'], $one['ward_id'], $one['address']);
+                                if($list['id']>0){
+                                	$img="<img src=\"/static/css/images/tick.png\" alt=\"Địa chỉ đã được duyệt\" align=\"absmiddle\" />";
+                                 }else{$img="<img src=\"/static/css/images/no.png\" alt=\"Địa chỉ chưa duyệt\" />";}}-->{$img}<br /><!--{if total_order_user($users[$one['user_id']]['id'])>0}--><b style="color:#FA6D18">${$old_cus='Khách hàng cũ'}</b><!--{else}--><b style="color:#C40000">${$old_cus='Khách hàng mới'}</b><!--{/if}--><!--{if Utility::IsMobile($users[$one['user_id']]['mobile'])}-->&nbsp;&raquo;&nbsp;<a href="/ajax/misc.php?action=sms&v={$users[$one['user_id']]['mobile']}" class="ajaxlink">SMS</a><!--{/if}--></td>
+						<td>{$one['quantity']}</td>
+						<td align="right"><strong>${print_price(moneyit($one['origin']))}</strong></td>
+						<!--<td>${print_price(moneyit($one['credit']))}</td>
+						<td>${print_price(moneyit($one['origin']-$one['credit']))}</td>-->
+						<!--<td>{$option_delivery[$teams[$one['team_id']]['delivery']]}${$one['express_id']?'Y':''}{$service[$one['service']]}</td>-->
+						<td align="center"><a href="/ajax/manage.php?action=orderedit&id={$one['id']}" class="ajaxlink">edit</a> | <a href="/ajax/manage.php?action=orderview&id={$one['id']}" class="ajaxlink">detail</a> | <a href="/ajax/manage.php?action=orderconfirm&id={$one['id']}" class="ajaxlink">confirm</a> | <a href="/ajax/manage.php?action=ordercancel&id={$one['id']}" class="ajaxlink" ask="sure to cancel it?">cancel</a> | <a href="/ajax/manage.php?action=ordertransfer&id={$one['id']}" class="ajaxlink">transfer</a> | <a href="/ajax/manage.php?action=orderoffice&id={$one['id']}" class="ajaxlink">Office | <a href="/ajax/manage.php?action=orderhanging&id={$one['id']}" class="ajaxlink">Tạm hoãn</a><!-- | <a href="/ajax/manage.php?action=orderremove&id={$one['id']}" class="ajaxlink" ask="sure to delete this order?">delete</a>--></td>
+					</tr>
+					<!--{/loop}-->
+                    <tr><td colspan="9" align="right"><strong>{$total_voucher} voucher</strong></td></tr>
+					<tr><td colspan="9">{$pagestring}</tr>
+                    </table>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

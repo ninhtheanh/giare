@@ -1,0 +1,181 @@
+<?php include template("header");?>
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="content" class="mainwide">
+    <div id="deal-buy" class="box">
+        <div class="subbox-content" style="min-height:470px;_height:470px"><div style="background-color:#FFFFFF; min-height:470px;_height:470px"><div align="left" style="padding:10px; padding-bottom:10px;"><div align="left" style="font-size:20px; padding-bottom:10px;">
+          <h2>Thông tin Thanh toán và Vận chuyển</h2>
+        </div>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="left" valign="top">
+                	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tbody>
+                        <tr>
+                          <td width="24"><img src="/static/css/images/faqbox_topleft.gif" width="24" height="20"></td>
+                          <td style="background: url(&quot;/static/css/images/faqbox_topbg.gif&quot;) repeat-x scroll 0% 0% transparent;"></td>
+                          <td width="23"><img src="/static/css/images/faqbox_topright.gif" width="23" height="20"></td>
+                        </tr>
+                        <tr>
+                          <td style="background: url(&quot;/static/css/images/faqbox_leftbg.gif&quot;) repeat-y scroll right center transparent;">&nbsp;</td>
+                          <td bgcolor="#f1f1f1" style="padding-top:5px;"><table class="order-table">
+                    <tr>
+                        <th class="deal-buy-desc">Deal</th>
+                        <th class="deal-buy-quantity">Số lượng <!--quantity--></th>
+                        <th class="deal-buy-multi"><?php if($condbuy=nanooption($team['condbuy'])){?>Size - Màu sắc<?php }?></th>
+                        <th class="deal-buy-price">Đơn giá (<span class="money"><?php echo $currency; ?></span>)<!--price--></th>
+                        <th class="deal-buy-equal"></th>
+                        <th class="deal-buy-total">Thành tiền (<span class="money"><?php echo $currency; ?></span>)<!--total--></th>
+                    </tr>
+                    <tr>
+                        <td class="deal-buy-desc"><?php echo $team['title']; ?></td>
+                        <td class="deal-buy-quantity"><?php echo $order['quantity']; ?><br />trên tổng số lần mua</td>
+                        <td class="deal-buy-multi"><?php if($order['condbuy']){?><?php echo $order['condbuy']; ?><?php } else { ?>x<?php }?></td>
+                        <td class="deal-buy-price" id="deal-buy-price"><?php echo print_price(moneyit($order['price'])); ?></td>
+                        <td class="deal-buy-equal">=</td>
+                        <td class="deal-buy-total" id="deal-buy-total" style="BORDER-RIGHT: #b1d1e6 1px solid;"><?php echo print_price(moneyit($order['price']*$order['quantity'])); ?></td>
+                    </tr>
+					<?php if($team['delivery']=='express'){?>
+					<tr>
+						<td class="deal-buy-desc">express</td>
+						<td class="deal-buy-quantity"></td>
+						<td class="deal-buy-multi"></td>
+						<td class="deal-buy-price"><span class="money"><?php echo $currency; ?></span><span id="deal-express-price"><?php echo $team['fare']; ?></span></td>
+						<td class="deal-buy-equal">=</td>
+						<td class="deal-buy-total"><span class="money"><?php echo $currency; ?></span><span id="deal-express-total"><?php echo ($team['farefree']==0||$order['quantity']); ?></span></td>
+					</tr>
+					<?php }?>
+                                       
+					<?php if($order['card']>0){?>
+				   <tr id="cardcode-row">
+						<td class="deal-buy-desc">card：<span id="cardcode-row-n"><?php echo $order['card_id']; ?></span></td>
+						<td class="deal-buy-quantity"></td>
+						<td class="deal-buy-multi"></td>
+
+						<td class="deal-buy-price"><span class="money"><?php echo $currency; ?></span><?php echo print_price(moneyit($order['card'])); ?></td>
+						<td class="deal-buy-equal">=</td>
+						<td class="deal-buy-total">-<span class="money"><?php echo $currency; ?></span><span id="cardcode-row-t"><?php echo $order['card']; ?></span></td>
+					</tr>
+					<?php }?>
+					<tr class="order-total" style="">
+                        <td class="deal-buy-desc" style="BORDER-LEFT: #b1d1e6 1px solid;BORDER-BOTTOM: #b1d1e6 1px solid;background-color:#FDFA9D"></td>
+                        <td class="deal-buy-quantity" style="BORDER-BOTTOM: #b1d1e6 1px solid;background-color:#FDFA9D"></td>
+                        <td class="deal-buy-multi" style="BORDER-BOTTOM: #b1d1e6 1px solid;background-color:#FDFA9D"></td>
+                        <td class="deal-buy-price" nowrap="nowrap" style="BORDER-BOTTOM: #b1d1e6 1px solid;background-color:#FDFA9D"><strong>Tổng số tiền:</strong></td>
+                        <td class="deal-buy-equal" style="border:none;BORDER-BOTTOM: #b1d1e6 1px solid;background-color:#FDFA9D">&nbsp;</td>
+                        <td class="deal-buy-total" nowrap="nowrap" style="BORDER-RIGHT: #b1d1e6 1px solid;BORDER-BOTTOM: #b1d1e6 1px solid;background-color:#FDFA9D"><?php echo print_price($order['origin']); ?></td>
+                    </tr>
+					
+                </table>
+                <style type="text/css">.text_bold{
+	font-weight:bold;
+	color: #002cf0;
+	font-size:13px;
+	font-family: arial, helvetica, sans-serif; 
+}</style><script type="text/javascript" language="javascript">
+	function GetCheckedValue(radioObj){
+		if(!radioObj)
+			return "";
+		var radioLength = radioObj.length;
+		if(radioLength == undefined)
+			if(radioObj.checked)
+				return radioObj.value;
+			else
+				return "";
+		for(var i = 0; i < radioLength; i++){
+			if(radioObj[i].checked) 
+			{
+				return radioObj[i].value;
+			}
+		}
+		return "";
+	}
+	function CheckSubmit(formobj){
+		if(GetCheckedValue(formobj.payment)==""){
+			alert('Vui lòng chọn phương thức thanh toán');		
+			return false;
+		}	
+		if(GetCheckedValue(formobj.shipping)==""){
+			alert('Vui lòng chọn phương thức vận chuyển');					
+			return false;
+		}			
+		return true;
+	}
+	function ToggleStatus(obj, obj1) {
+		if ($('#'+obj).is(':checked')) {
+			$('#'+obj1).toggle(400);
+		}else{
+			$('#'+obj1).toggle(400);
+		}   
+	}
+</script>
+				<div class="paytype">
+                <form action="/order/BillingShipping.php?id=<?php echo $id; ?>" method="post" class="validator"  onSubmit="return CheckSubmit(this)">
+                <table width="100%" border="0" cellspacing="4" cellpadding="0">
+                  <tr>
+                    <td align="left" valign="top" style="font-size:14px; padding-top:10px; font-family:Arial, Helvetica, sans-serif; color:#C40000; text-transform:uppercase"><h4>Phương thức thanh toán</h4></td>
+                    <td width="4%"></td>
+                    <td align="left" valign="top" style="font-size:14px; padding-top:10px; font-family:Arial, Helvetica, sans-serif; color:#C40000; text-transform:uppercase"><h4>Phương thức vận chuyển</h4></td>
+                  </tr>
+                  
+                  <tr>
+                    <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                    <td width="2%"></td>
+                    <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                  </tr>
+                  <tr>
+                    <td align="left" valign="top" style="padding-left:10px; padding-top:7px;" width="49%"><table cellspacing="5" cellpadding="5"><?php echo $payment_list; ?></table></td>
+                    <td width="4%"></td>
+                    <td align="left" valign="top" style="padding-left:10px; padding-top:7px;" width="49%"><table cellspacing="5" cellpadding="5"><?php echo $shipping_list; ?></table></td>
+                  </tr>
+                  
+                  <tr>
+                    <td align="left" height="35"><div><strong>Ghi chú thanh toán</strong></div><div>
+                        
+                        <textarea name="methods[remark]" id="remark" style="width:350px;height:80px;padding:2px; border:#1B94C1 1px solid"><?php echo htmlspecialchars($order['remark']); ?></textarea>
+                      </div></td><td width="4%"></td>
+                     <td height="35" align="left" valign="top"><div><strong>Ghi chú giao hàng</strong></div>
+                     <div>
+                      <textarea name="methods[remark2]" id="remark2" style="width:350px;height:80px;padding:2px; border:#1B94C1 1px solid"><?php echo htmlspecialchars($order['remark2']); ?></textarea>
+                    </div></td>
+                    </tr>
+                  </table>
+					<?php if($credityes || false==$creditonly){?>
+					<div class="clear"></div>
+					<div class="check-act" align="center">
+					<input type="hidden" name="order_id" value="<?php echo $order['id']; ?>" />
+                    <input type="hidden" name="service" value="<?php echo $order['service']; ?>" />
+					<input type="hidden" name="team_id" value="<?php echo $order['team_id']; ?>" />
+					<input type="hidden" name="cardcode" value="" />
+                    
+					<input type="hidden" name="quantity" value="<?php echo $order['quantity']; ?>" />
+					<input type="hidden" name="address" value="<?php echo $order['address']; ?>" />
+					<input type="hidden" name="express" value="<?php echo $order['express']; ?>" />
+					<input type="hidden" name="remark" value="<?php echo $order['remark']; ?>" />
+					<input type="submit" value="Tiếp tục mua" class="formbutton" style="padding:7px" />
+					
+					&nbsp;&nbsp;&nbsp;<input type="button" value="Sửa đơn đặt hàng" class="formbutton" style="padding:7px" onclick="location.href='/team/buy.php?id=<?php echo $order['team_id']; ?>&edit=true';" /></div>
+                    <?php }?>
+                </form>
+				</div></td>
+                          <td style="background: url(&quot;/static/css/images/faqbox_rightbg.gif&quot;) repeat-y scroll right center transparent;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td><img src="/static/css/images/faqbox_bottomleft.gif" alt="" width="24" border="0" height="21"></td>
+                          <td style="background: url(&quot;/static/css/images/faqbox_bottombg.gif&quot;) repeat-x scroll 0% 0% transparent;"></td>
+                          <td><img src="/static/css/images/faqbox_bottomright.gif" alt="" width="23" border="0" height="21"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </td>
+          
+              </tr>
+            </table></div></div>
+		</div>
+	</div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<?php include template("footer");?>

@@ -1,0 +1,68 @@
+<!--{include wap_header}-->
+<h2>My order</h2>
+<p><a href="myorder.php">paid</a>&nbsp;|&nbsp;<a href="myorder.php?s=unpay">to be paid</a></p>
+<h2>Details of order</h2>
+<p>Deal name：<a href="team.php?{$team['id']}">{$team['title']}</a></p>
+<p>Order No.：{$order['id']}</p>
+<p>Ordering time：${date('Y-m-d H:i',$order['create_time'])}</p>
+<h2>Detail</h2>
+<p>Price：${moneyit($order['price'])}</p>
+<p>Quantity：{$order['quantity']}</p>
+<p>Usable card value：${moneyit($order['card'])}</p>
+<p>Express fee：${$express?moneyit($team['fare']):0}</p>
+<p>Total：${moneyit($order['origin'])}</p>
+
+<h2>Dilevery</h2>
+
+<!--{if $team['delivery']=='coupon'}-->
+<table cellspacing="0" cellpadding="0" border="0" class="data-table">
+    <tr>
+        <td align="right">{$INI['system']['couponname']}：</th>
+        <td class="other-coupon"><!--{if empty($coupons)}-->{$INI['system']['couponname']}would be sent by the system automatically after the deal tipped，Issued automatically by the system<!--{/if}--><!--{loop $coupons $one}--><p>{$one['id']} - {$one['secret']}</p><!--{/loop}--></td>
+    </tr>
+    <tr>
+        <td align="right">using method：</th>
+        <td>For consumption, please show{$INI['system']['couponname']}，and verify the coupon No. and code with the biz.</td>
+    </tr>
+</table>
+<!--{elseif $team['delivery']=='express'}-->
+<table cellspacing="0" cellpadding="0" border="0" class="data-table">
+    <tr>
+        <td align="right">Express：</td>
+	<!--{if $order['express_id']}-->
+        <td>{$option_express[$order['express_id']]}：{$order['express_no']}</td>
+	<!--{else}-->
+        <td class="other-coupon">Please wait for the dilevery patiently</td>
+	<!--{/if}-->
+    </tr>
+    <tr>
+        <td align="right">real name：</td>
+        <td>{$order['realname']}</td>
+    </tr>
+    <tr>
+        <td align="right">address：</td>
+        <td>{$order['address']}</td>
+    </tr>
+    <tr>
+        <td align="right">mobile number：</td>
+        <td>{$order['mobile']}</td>
+    </tr>
+</table>
+<!--{elseif $team['delivery']=='pickup'}-->
+<table cellspacing="0" cellpadding="0" border="0" class="data-table">
+    <tr>
+        <td align="right">self dilevery：</td>
+        <td class="other-coupon"></td>
+    </tr>
+    <tr>
+        <td align="right">location of the biz：</td>
+        <td>{$team['address']}</td>
+    </tr>
+    <tr>
+        <td align="right">telphone：</td>
+        <td>{$team['mobile']}</td>
+    </tr>
+</table>
+<!--{/if}-->
+
+<!--{include wap_footer}-->

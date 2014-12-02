@@ -1,0 +1,1 @@
+<?php $IEM = $tpl->Get('IEM'); ?>&nbsp;&nbsp;<a id="hrefSegmentManageEdit_<?php if(isset($GLOBALS['SegmentID'])) print $GLOBALS['SegmentID']; ?>" class="SegmentManageEditLink" href="index.php?Page=Segment&Action=Edit&id=<?php if(isset($GLOBALS['SegmentID'])) print $GLOBALS['SegmentID']; ?>"><?php print GetLang('Edit'); ?></a>

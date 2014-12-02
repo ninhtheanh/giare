@@ -1,0 +1,244 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_order('delivery')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="subbox-top"> <div class="subhead">
+                    <h2>Trả đơn hàng đã bàn giao</h2>
+				</div></div>
+            <div class="box-content">
+                    	<form method="get"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="filter-table">
+                          <tr>
+                            <td width="20%" align="right">
+						<p style="margin:5px 0;"><strong>Order No.</strong>
+						  <input type="text" name="id" value="${htmlspecialchars($id)}" class="h-input"/></p>
+						<p style="margin:5px 0;"><strong>User </strong>
+						  <input type="text" name="uemail" class="h-input" value="${htmlspecialchars($uemail)}" ></p>
+						<p><strong>Deal No.</strong>
+						  <input type="text" name="team_id" class="h-input number" value="{$team_id}" ></p></td><td width="26%" align="right"><p style="margin:5px 0;"><strong>Mobile</strong>
+						    <input type="text" class="h-input" name="mobile" value="{$mobile}" /></p>
+						  <p style="margin:5px 0;"><strong>TP</strong>
+<select name="city_id" class="h-input" require="true" onchange="this.form.submit();"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray($allcities,'id','name'),$city_id)}</select><!--{if $city_id}--></p>
+						  <p style="margin:5px 0;"><strong>Quận/Huyện </strong>
+						    <select name="dist_id" onchange="this.form.submit();" class="h-input" require="true"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray(option_district('VN', $city_id, false, true),'dist_id','dist_name'),$dist_id)}</select><!--{/if}--></p></td><td width="24%" align="right"><p style="margin:5px 0;"><strong>Shipper
+    </strong>
+  <select name="shipper_id" onchange="this.form.submit();" id="shipper_id" class="h-input" require="true"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray($allshipper,'id','shipper_name'),$shipper_id)}</select></p>
+<p style="margin:5px 0;"><strong>Delivery time </strong>
+  <select name="delivery_time" onchange="this.form.submit();" id="delivery_time" class="h-input" require="true"><option value='0'>--Chon--</option><!--{if $shipper_id}-->${option_delivered_time($delivery_time, $shipper_id)}<!--{/if}--></select></p><p style="margin:5px 0;"><strong>Mã bàn giao</strong>
+    <input type="text" class="h-input" name="delivery_code" value="{$delivery_code}" /></p></td><td width="30%" rowspan="3" style="padding-left:10px;">&nbsp;</td></table><p style="margin:5px;"><input type="submit" name="order" value="    Lọc dữ liệu    " class="formbutton"  style="padding:3px 6px;"/><span style="padding-top:5px; float:right">Đã bàn giao: <strong style="color:#ff0000">{$total_voucher} voucher</strong></span></p>
+					</form>                      
+                <div class="sect">&nbsp;<!--{if $_GET['delivery_code']>0}--> 
+                <script type="text/javascript" language="javascript">
+					$(document).ready(function(){
+						$("input.#AllRC1").click(function() {
+							if($(this).is(':checked')){
+								$("input:radio[class*='RC1']").attr("checked","checked"); 
+							}else{
+								$("input:radio[class*='RC1']").removeAttr("checked"); 
+							}
+						});
+					});
+					</script>
+                <form method="post" action="{$_SERVER['REQUEST_URI']}" name="f_paid">
+                	<input type="hidden" name="team_id" value="{$team_id}" >
+                    <input type="hidden" name="dist_id" value="{$dist_id}" >
+                    <input type="hidden" name="city_id" value="{$city_id}" >
+                    <input type="hidden" name="shipper_id" value="{$shipper_id}" >
+                    <input type="hidden" name="delivery_code" value="{$delivery_code}" >
+                    <input type="hidden" name="id" value="{$id}" >
+                    <input type="hidden" name="uemail" value="{$uemail}" >
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table" width="100%">
+					<tr>
+                    <!--{if $total_voucher>0}-->
+                    <th width="20" colspan="3">
+                    <input type="submit" value="Xác nhận trả bàn giao" class="formbutton" name="process" style="padding:4px 6px;" onclick="return confirm('Xác nhận trả BG?');" />                    </th>
+					  <th width="10" rowspan="2">SL</th>
+					  <th width="60" rowspan="2" nowrap>Thành tiền</th>
+					  <th colspan="4" nowrap>Trạng thái</th>
+                       <th rowspan="2" nowrap>SL TC</th>
+					  <th width="260" rowspan="2" nowrap>Ghi chú</th>
+                      <!--{/if}-->
+					</tr>
+					<tr>
+                   	 <th width="20">STT</th>
+					  <th width="40"><a href="{$request_uri}&sortid=desc">MSĐH</a></th>
+					  <th>Voucher</th>
+					  <th width="4" nowrap>TC</th>
+					  <th width="6" nowrap>H</th>
+					  <th width="14" nowrap>CT</th>
+                      <th width="14" nowrap align="center">Tạm Hoãn</th>
+					  </tr>
+					<!--{loop $orders $index $one}-->
+					<tr ${$index%2?'class="alts"':'class="alt"'} id="order-list-id-{$one['id']}">
+						<td rowspan="2">${$index+1}</td>
+						<td rowspan="2">
+                        <a href="/ajax/manage.php?action=orderview&id={$one['id']}" class="ajaxlink">{$one['id']}</a>
+                        </td>
+						<td>&nbsp;
+					    {$one['team_id']}&nbsp;(<a class="deal-title" href="/team.php?id={$one['team_id']}" target="_blank">{$teams[$one['team_id']]['short_title']}</a>)</td>
+						<td> {$one['quantity']}</td>
+						<td align="right">${print_price(moneyit($one['origin']))}</td>
+						<td onmouseover="this.style.backgroundColor='#09F'" onmouseout="this.style.backgroundColor=''"><input type="hidden" name="orderid[]" id="orderid2" value="{$one['id']}" />
+                        <script type="text/javascript" language="javascript">
+							$(document).ready(function(){
+								var n = $("div #se_num{$one['id']}").length;
+								for(i=0;i<n;i++){
+									$("#vcode{$one['id']}_"+i).attr("checked","checked");
+								}
+								$("#{$one['id']}_h").click(function() {
+									$("#qty{$one['id']}").val(0);
+									$("#date_received_{$one['id']}").val("0000-00-00");
+									$("#input_date_hanging_{$one[id]}").hide();
+									for(i=0;i<n;i++){
+										$("#vcode{$one['id']}_"+i).removeAttr("checked");
+										$("#vcode{$one['id']}_"+i).attr("disabled","disabled"); 
+									}
+								});
+								$("#{$one['id']}_c").click(function() {
+									$("#qty{$one['id']}").val(0);
+									$("#date_received_{$one['id']}").val("0000-00-00");
+									$("#input_date_hanging_{$one[id]}").hide();		
+									for(i=0;i<n;i++){
+										$("#vcode{$one['id']}_"+i).removeAttr("checked");
+										$("#vcode{$one['id']}_"+i).attr("disabled","disabled"); 
+									}
+								});
+								$("#{$one['id']}_th").click(function() {
+									$("#qty{$one['id']}").val(0);
+									$("#date_received_{$one['id']}").val("0000-00-00");
+									$("#input_date_hanging_{$one[id]}").show();
+								});
+								if( $("#{$one['id']}_th").is(':checked')){
+									$("#input_date_hanging_{$one[id]}").show();
+								}else{
+									$("#input_date_hanging_{$one[id]}").hide();	
+								}
+								$("#{$one['id']}").click(function() {
+									$("#qty{$one['id']}").val("{$one['quantity']}");
+									$("#date_received_{$one['id']}").val("0000-00-00");
+									$("#input_date_hanging_{$one[id]}").hide();
+									for(i=0;i<n;i++){
+										$("#vcode{$one['id']}_"+i).removeAttr("disabled");
+										$("#vcode{$one['id']}_"+i).attr("checked","checked");
+										$("#divvcode{$one['id']}_"+i).show();
+									}
+								});
+								var qty = $("#qty{$one['id']}").val();
+								 $("#qty{$one['id']}").bind("keyup", function () {
+									var max_qty = $one['quantity'];
+									var qty = $("#qty{$one['id']}").val();
+									if(max_qty>0){
+										if(qty>max_qty){
+											alert("Số lượng thành công không được lớn hơn "+max_qty);
+											$("#qty{$one['id']}").val("{$one['quantity']}");
+										}
+										if(qty==0 && $("#{$one['id']}").is(':checked')){	
+											alert("Số lượng thành công không thể bằng "+qty);
+											$("#qty{$one['id']}").val("{$one['quantity']}");
+										}
+									}
+									if(qty<n && qty>0){
+										for(i=qty;i<n;i++){
+											if(qty>0){
+												var a = qty-1;
+												$("#divvcode{$one['id']}_"+a).show();
+												$("#vcode{$one['id']}_"+a).attr("checked","checked");
+											}
+											$("#divvcode{$one['id']}_"+i).hide();
+											$("#vcode{$one['id']}_"+i).removeAttr("checked"); 													
+										}
+									}else{
+										for(i=0;i<n;i++){
+											$("#divvcode{$one['id']}_"+i).show(); 
+											$("#vcode{$one['id']}_"+i).attr("checked","checked");
+										}	
+									}
+								});
+						});
+                        </script>
+                        <!--${
+                        	$checked_pay = "";$checked_cancel = "";$checked_pending = "";$checked_hanging = "";
+                        	$o = DB::GetQueryResult("SELECT state FROM `ship_out_data` WHERE out_id=".$delivery_code." AND order_id=".$one['id']);
+                            if($o['state']=='pay'){
+                            	$checked_pay = "checked=\"checked\"";
+                            }elseif($o['state']=='canceled'){
+                            	$checked_cancel = "checked=\"checked\"";
+                            }elseif($o['state']=='pending'){
+                            	$checked_pending = "checked=\"checked\"";
+                            }elseif($o['state']=='hanging'){
+                            	$checked_hanging = "checked=\"checked\"";
+                            }else{
+                            	$checked_pay = "checked=\"checked\"";
+                            }
+                        }-->
+						<input name="row{$one[id]}" id="{$one['id']}" value="pay" type="radio" class="RC1" {$checked_pay} /></td>							
+
+						<td onmouseover="this.style.backgroundColor='#09F'" onmouseout="this.style.backgroundColor=''">                       
+						  <input name="row{$one[id]}" id="{$one['id']}_h" value="canceled" type="radio" class="RC2" {$checked_cancel} /></td>
+                          
+						<td onmouseover="this.style.backgroundColor='#09F'" onmouseout="this.style.backgroundColor=''">                       
+						  <input name="row{$one[id]}" id="{$one['id']}_c" value="pending" type="radio" class="RC3" {$checked_pending}/> </td><td align="center" onmouseover="this.style.backgroundColor='#09F'" onmouseout="this.style.backgroundColor=''" nowrap="nowrap">                       
+						  <input name="row{$one[id]}" id="{$one['id']}_th" value="hanging" type="radio" class="RC4" {$checked_hanging} /><span id="input_date_hanging_{$one[id]}"> <!--${                          	
+                            $sdate = DB::GetQueryResult("SELECT date_received FROM `ship_out_data` WHERE out_id=".$delivery_code." AND order_id=".$one['id']);
+                            if($one['date_received']!=''){
+                            	$sdate['date_received'] = $one['date_received'];
+                            }
+                          }-->&nbsp;<input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="date_received_{$one['id']}" id="date_received_{$one['id']}" value="{$sdate['date_received']}" style="width:63px" /></span></td>
+                          <td>
+                          <!--${                          	
+                            $sqty = DB::GetQueryResult("SELECT qty_successful, notes FROM `ship_out_data` WHERE out_id=".$delivery_code." AND order_id=".$one['id']);
+                            if($sqty['qty_successful']==0){
+                            	$sqty['qty_successful'] = $one['quantity'];
+                            }
+
+                          }-->
+                          <input type="text" id="qty{$one['id']}" name="qty{$one['id']}" class="h-input" value="{$sqty['qty_successful']}" style="width:20px;" {$disable} />
+                          </td>
+                          
+						<td>
+                        <input type="hidden" name="money{$one['id']}" value="{$one['money']}" />
+                        <input type="hidden" name="user{$one['id']}" value="{$one['user_id']}" />
+                        <input type="hidden" name="quantity{$one['id']}" value="{$one['quantity']}" />
+                        <input name="note{$one[id]}" value="{$sqty['notes']}" type="text" style="width:100%" /></td>
+					  </tr>
+                      <!--${
+                        $vcode = DB::GetQueryResult("SELECT `serial`, `code`, `status` FROM `voucher_code` WHERE order_id='".$one['id']."' AND team_id='".$one['team_id']."'",false);
+                        $serial = "";$j=0;
+                        for($i=0;$i<count($vcode);$i++){
+                            $j+=1;
+		                    $checked = "";
+                            if($vcode[$i]['status']=='A'){
+                            	$checked = "checked";
+                            }
+                            if($j%5==0){
+                            	$br = "<br />";
+                            }else{
+                            	$br="";
+                            }
+                            $serial .= "<div id=\"se_num".$one['id']."\"><span id=\"divvcode".$one['id']."_".$i."\"><input ".$checked." id=\"vcode".$one['id']."_".$i."\" name=\"vcode[]\" value=\"".$vcode[$i]['serial']."\" type=\"checkbox\">&nbsp;<b>".$vcode[$i]['serial']." - ".$vcode[$i]['code']."</b></span></div>";
+                        }
+                    }-->
+                      <tr ${$index%2?'class="alts"':'class="alt"'} id="order-list-id-{$one['id']}">
+						  <td colspan="9" align="left" style="line-height:18px;"><style type="text/css">  div #se_num{$one['id']}{ width:130px; margin:2px; float:left; white-space:nowrap;}</style>              
+<!--{if $serial}--><div align="left" style="width:65px; float:left; font-size:11px; font-family:Arial"><em><strong>Serial No.&nbsp;</strong></em></div>{$serial}<!--{/if}--></td>
+						 
+					  </tr>
+					<!--{/loop}-->                  
+                    </table>
+				  <p align="center">{$pagestring}</p>
+                </form><!--{/if}-->
+				</div>
+            </div>
+        </div><div class="box-bottom"></div>
+
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

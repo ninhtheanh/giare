@@ -1,0 +1,41 @@
+<!--{include manage_html_header}-->
+<script type="text/javascript" src="/static/js/xheditor/xheditor.js"></script> 
+<div id="hdw" style="height:120px;">
+	<div id="hd">
+		<div id="logo" align="left"><a href="/tp-ho-chi-minh/" class="link" target="_blank"><img src="/static/css/images/logo.jpg" height="80" /></a></div>
+		<div class="guides">
+			<div class="city" style="margin-top:-20px;">
+				<h2>Backend - {$city['name']}</h2>
+			</div>
+			<!--<div id="guides-city-change" class="change">&nbsp;</div>-->           
+            <!--{if is_manager()}--><div align="right">{$login_user['realname']}&nbsp;&raquo;&nbsp;<a href="/backend/logout.php" style="color:#000000"><strong>Manager Logout</strong></a></div><!--{/if}-->
+		</div>
+		<ul class="nav2 cf">${current_backend('super')}</ul>
+	</div>
+</div>
+<!--{if $session_notice=Session::Get('notice',true)}-->
+<div class="sysmsgw" id="sysmsg-success"><div class="sysmsg"><p>{$session_notice}<span class="close">close</span></p></div></div> 
+<!--{/if}-->
+<!--{if $session_notice=Session::Get('error',true)}-->
+<div class="sysmsgw" id="sysmsg-error"><div class="sysmsg"><p>{$session_notice}<span class="close">close</span></p></div></div> 
+<!--{/if}-->
+<script language="javascript" src="/static/js/jquery.tooltip.min.js"></script>
+
+
+<!--!in_array($login_user['id'],array(1,33921,61,18,35379,35122,58094,2185,14,31265,103739))-->
+<!--{if $login_user && (strpos($_SERVER['REQUEST_URI'],'/backend/team/')===false || strpos($_SERVER['REQUEST_URI'],'/backend/order/')===false)}-->    
+	<!--<script type="text/javascript">                                          
+        jQuery(document).ready(function() {	
+            $("select[name=city_id]").attr("disabled", 'disabled');
+        });                           
+    </script>    
+{/if}-->
+<style type="text/css">#tooltip {
+	position: absolute;
+	z-index: 3000;
+	border: 1px solid #111;
+	background-color: #eee;
+	padding: 5px;
+	opacity: 0.85;
+}
+#tooltip h3, #tooltip div { margin: 0; }</style>

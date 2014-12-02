@@ -1,0 +1,18 @@
+<div id="order-pay-dialog" class="order-pay-dialog-c" style="width:380px;">
+	<h3><span id="order-pay-dialog-close" class="close" onclick="return X.boxClose();">close</span>${$link?'edit':'add'} friend link</h3>
+	<div style="overflow-x:hidden;padding:10px;">
+	<p>site name. website：must be typed</p>
+<form method="post" action="/backend/misc/linkedit.php" class="validator">
+	<input type="hidden" name="id" value="{$link['id']}" />
+	<table width="96%" class="coupons-table">
+		<tr><td width="80" nowrap><b>site name：</b></td><td><input type="text" name="title" value="{$link['title']}" require="true" datatype="require" class="f-input" /></td></tr>
+		<tr><td nowrap><b>website：</b></td><td><input type="text" name="url" value="{$link['url']}" require="true" datatype="require" class="f-input" /></td></tr>
+		<tr><td nowrap><b>LOGO site：</b></td><td><input type="text" name="logo" value="{$link['logo']}" require="require" datatype="require" class="f-input" /></td></tr>
+		<tr><td nowrap><b>sort(descending order)：</b></td><td><input type="text" name="sort_order" value="${intval($link['sort_order'])}" class="f-input" /></td></tr>
+		<tr><td nowrap><b>homepage display(Y/N)：</b></td><td><input type="text" name="display" value="{$link['display']}" class="f-input" style="text-transform:uppercase;"/></td></tr>
+		<tr><td colspan="2" height="10">&nbsp;</td></tr>
+		<tr><td></td><td><input type="submit" value="Submit" class="formbutton" /></td></tr>
+	</table>
+</form>
+	</div>
+</div>

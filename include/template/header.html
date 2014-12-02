@@ -1,0 +1,203 @@
+<!--{include html_header}-->
+<div id="top-menu-hotine">
+	<div class="top-container">
+        <ul class="nav cf">
+            ${current_top()}
+        </ul>
+        <span class="hotlinetop">Hotline: 0123 456 789</span>
+    </div>
+</div>
+<div id="hdw">
+  <div id="hd">  
+  fdsafdsafd sfdafds
+  a
+  fd
+  as 
+  fd
+  a	
+  <?php  print_r($city); ?>
+    <div id="logo" align="left"><a href="/{$city['slug']}/" class="link"><img src="/static/css/images/logo.png" alt="logo {$INI['system']['sitename']}: cùng mua chung theo nhóm mua hot deal khuyen mai" /></a></div>
+
+	<div id="atsearchh">
+    	<form id="topSearch" method="get" action="/team/search.php">
+        	<input type="hidden" name="gid" value="0" id="catgroupid" />
+<?php  
+$atlist = array(0=>"Tất cả",55=>"Thời trang",56=>"Túi sách");
+$s = strtolower($_GET["s"]);
+ ?>
+    	<div class="box-searchtop">
+        	<div class="boxslectsearch">
+        		<span id="selectcategory" style="margin: 5px 3px; cursor:pointer;display: block;"><?php  
+                echo $atlist[abs(intval($_GET['gid']))];
+                 ?></span>
+                <ul class="listdealcategory">
+                	<?php  foreach($atlist as $key=>$op): ?>
+                	<li value="<?php  echo $key; ?>"><?php  echo $op; ?></li>
+                    <?php  endforeach; ?>
+                </ul>
+            </div>
+            <div class="searchcontent_formbox">
+                  
+                    <div class="searchcontent_formbox1">
+                      <input type="text" value="{$s}" name="s" id="sdeal" class="searchcontent_formtextbox"  autocomplete="off" placeholder="Vui lòng nhập từ khóa tìm kiếm" required="required" />
+                   
+                    </div>
+                  
+                </div>
+                <div class="searthbutton">
+                	<input type="submit" value="Go" class="searchcontent_formbtn" />
+                </div>
+              </div>
+        </form>
+    </div>
+    <div id="atmoduserh">
+    	<!--{if $login_user}-->
+         <div class="textsignuphe">
+                Chào, 
+                <!--{if $login_user['realname']}-->
+                {$login_user['realname']}！
+                <!--{else}-->
+                {$login_user['email']}
+                <!--{/if}-->
+         </div>
+         <ul id="myaccount-menunew">
+          ${current_account(null)}
+          <li><a style="padding:5px;" href="/account/logout.php">Đăng xuất</a></li>
+        </ul>
+    
+         <!--{else}-->
+      <ul class="links_login">
+        <li class="atsignup">
+          <a href="/account/signup.php">Đăng ký</a>
+         </li>
+         <li class="atlogin">
+          <a href="/account/login.php">Đăng nhập</a>
+        </li>
+      </ul>
+      <!--{/if}-->
+      
+    </div>
+    
+    <?php  
+    $carts = Session::Get('carts');
+    $atcarttotal = 0;
+    if($carts != null && !empty($carts)){
+    	foreach($carts as $cart)
+        {
+        	$atcarttotal += $cart['quantity'];
+        }
+    }
+     ?>
+    <div id="atviewcart">
+    	<div class="boxviewcart">
+        	<span class="product-number"><?php  echo $atcarttotal; ?></span>
+            <span class="cart-text"><a href="http://thietkeachau.com/cheapdeal/ajax/cart.php?action=show" id="showcart">Giỏ hàng</a></span>
+        </div>
+    </div>
+    <?php   /* 
+    //city select
+
+    <div class="guides">
+   
+      <div class="city" id="city-change" style="cursor:pointer; margin-top:-3px;">
+       
+       <!--{if $city}--> 
+        <h2>{$city['name']}&nbsp;<span id="guides-city-change"><img align="absmiddle" src="/static/css/images/btn_nextnum.gif" alt="Chọn thành phố" width="17" height="17"  alt="thanh pho {$INI['system']['sitename']}: cùng mua chung theo nhóm mua hot deal khuyen mai" /></span></h2>
+        <!--{else}--><h2>TP Hồ Chí Minh</h2>
+        <!--{/if}-->
+        <h4>Giá cả mang bạn đến, chất lượng giữ chân bạn</h4>
+      </div>
+      <!--{if count($j_hotcities)>1}-->     
+      <div id="guides-city-list" class="city-list">
+        <ul>
+          ${current_city($city['name'], $j_hotcities)}
+        </ul>
+      </div>      
+      <!--{/if}-->  
+     
+
+      
+      <div class="clear"></div>
+    </div>
+     */ ?>    
+<?php  /*     
+//AT dang nhap dang xuat
+    <div class="logins">
+   
+   
+      <!--{if $login_user}-->
+      <ul class="links">
+        <li class="username">
+          <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td rowspan="3" align="left" valign="top" nowrap="nowrap"><!--{if $login_user['avatar']!=""}-->
+                <div style="margin-right:10px; border:1px #ccc solid;background:#fff;padding:2px; width:28px;height:28px"><img src="${user_image($login_user['avatar'])}" width="28" height="28"  alt="avatar {$INI['system']['sitename']}: cùng mua chung theo nhóm mua hot deal khuyen mai" /></div>
+                <!--{else}-->
+                <!--{if $login_user['fb_userid']}-->
+                <div style="margin-right:10px; border:1px #ccc solid;background:#fff;padding:2px; width:28px;height:28px"><img src="https://graph.facebook.com/{$login_user['fb_userid']}/picture" width="28" height="28" />
+                  <div style="position:absolute; left:56px; bottom:15px;"><img src="/static/css/images/f16.jpg" width="12" height="12" /></div>
+                </div>
+                <!--{else}-->
+                <div style="margin-right:10px; border:1px #ccc solid;background:#fff;padding:2px; width:28px;height:28px"><img src="/static/css/images/noavatar.jpg" width="28" height="28"  alt="user {$INI['system']['sitename']}: cùng mua chung theo nhóm mua hot deal khuyen mai" /></div>
+                <!--{/if}-->
+                <!--{/if}--></td>
+              <td align="left" valign="top" colspan="2" style="padding-bottom:5px;padding-top:7px;font-weight:bold"> Chào, 
+                <!--{if $login_user['realname']}-->
+                {$login_user['realname']}！
+                <!--{else}-->
+                {$login_user['email']}
+                <!--{/if}-->
+   
+   
+              <td align="left" valign="top" class="account" >
+              <ul id="myaccount"><li><a href="/order/index.php" class="account" style="padding:5px;">My {$INI['system']['abbreviation']}</a>
+              <ul id="myaccount-menu">
+      ${current_account(null)}
+    </ul></li></ul>
+</td>
+              <td align="left" valign="top" class="logout" style="padding-top:5px"><a style="padding:5px;" href="/account/logout.php">Đăng xuất</a></td>
+            </tr>
+          </table>
+        </li>
+      </ul>
+      <!--{else}-->
+      <ul class="links">
+        <li class="login">
+          <a href="/account/signup.php">Đăng ký</a>&nbsp;&nbsp;<img src="/static/css/images/menu_spacer.gif" align="absmiddle" />&nbsp;&nbsp;<a href="/account/login.php">Đăng nhập</a>&nbsp;&nbsp;<img src="/static/css/images/menu_spacer.gif" align="absmiddle" />&nbsp;&nbsp;
+          <span  style="font-size:13px; font-family:Arial; font-weight:bold">Đăng nhập bằng</span>&nbsp;<a href="javascript:void(0)" title="Yahoo"><img src="/static/css/images/yahoo_connect.gif" title="Yahoo Login" onclick="yahoo_login();" border="0" align="absmiddle"></a>&nbsp;<a href="javascript:void(0)" title="Gmail"> <img src="/static/css/images/google_connect.gif" onclick="google_login();" title="Gmail" border="0" align="absmiddle"></a>
+        </li>
+      </ul>
+      <!--{/if}-->
+    </div>
+*/ ?>
+
+<?php    /*    <div class="subscribe" align="center">
+        <form action="/subscribe.php" method="post" id="header-subscribe-form"  class="validator">
+        <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="left" valign="top" nowrap="nowrap" class="label-big-subscription" colspan="3" style="padding-left:10px;">Nhập email để nhận deal tốt mỗi ngày</td></tr><tr>
+            <td align="left" style="padding-left:10px;"><input id="header-subscribe-email" type="text" xtip="Your Email Address" value="" class="f-text-top" name="email" require="true" datatype="require" /></td>
+            <td align="left"><select name="city_id" class="f-input-top">${Utility::Option(Utility::OptionArray($allcities,'id','name'), $city['id'])}</select></td>
+            <td align="left"><input value="Gửi" type="submit" class="submit"></td>
+          </tr>
+        </table>
+        </form>
+    </div>  */ ?>
+   	
+  </div>
+</div>
+
+<!--{if $session_notice=Session::Get('notice',true)}-->
+<div class="sysmsgw" id="sysmsg-success">
+  <div class="sysmsg">
+    <p>{$session_notice}<span class="close">Đóng</span></p>
+  </div>
+</div>
+<!--{/if}-->
+<!--{if $session_notice=Session::Get('error',true)}-->
+<div class="sysmsgw" id="sysmsg-error">
+  <div class="sysmsg">
+    <p>{$session_notice}<span class="close">Đóng</span></p>
+  </div>
+</div>
+<!--{/if}-->

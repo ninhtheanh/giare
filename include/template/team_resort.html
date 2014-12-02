@@ -1,0 +1,158 @@
+﻿<!--{include header}-->
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="recent-deals">
+<!--{if option_yes('cateteam')}-->
+	<div class="dashboard" id="dashboard">
+		<ul>${current_teamcategory($group_id)}</ul>
+	</div>
+<!--{else}-->
+<table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td align="left" valign="top" nowrap="nowrap" width="85%"><div class="dashboard" id="dashboard">
+              <ul style="white-space:nowrap">
+                ${current_frontend()}
+              </ul>
+            </div></td><td align="left" valign="top" width="15%"><div class="searchcontent_box">
+                	<div class="searchcontent_formbox">
+                    <form id="topSearch" method="get" action="/team/search.php">
+                    <div class="searchcontent_formbox1">
+                    <input type="text" value="{$q}" name="s" id="sd" class="searchcontent_formtextbox"  autocomplete="off" onfocus="if (this.value == 'Type keyword here...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Type keyword here...';}" />
+                    </div>
+                    <div class="searchcontent_formbox2">
+                    <input type="submit" value="" class="searchcontent_formbtn" />
+                    </div>
+                    </form>
+                    </div>                
+                </div></td>
+         
+        </tr>
+      </table>    
+<!--{/if}-->
+     <div id="content" class="mainwide">
+      <div class="box clear">
+      <div class="subbox-content"><div style="background-color:#FFFFFF;min-height:450px;_height:450px">
+       <div class="slider-wrapper theme-default">
+       <div class="ribbon"></div><div id="slider" class="nivoSlider">
+       <!--{include flashbanner}-->
+	   
+	   
+	   
+	   </div>
+ 
+
+					
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td align="left" valign="top" style="padding-left:3px; padding-top:6px;">
+                          <!--{loop $teams $index $one}-->
+                            <!--${
+                            $left = array();
+                            $now = time();
+                            if($one['end_time']<$one['begin_time']){$one['end_time']=$one['begin_time'];}
+                            
+                           $diff_time = $left_time = $one['end_time']-$now;
+                            if ( $one['team_type'] == 'seconds' && $one['begin_time'] >= $now ) {
+                                $diff_time = $left_time = $one['begin_time']-$now;
+                            }
+                            
+                            $left_day = floor($diff_time/86400);
+                            $left_time = $left_time % 86400;
+                            $left_hour = floor($left_time/3600);
+                            $left_time = $left_time % 3600;
+                            $left_minute = floor($left_time/60);
+                            $left_time = $left_time % 60;
+                          }-->
+                            
+                            <!--${$team_cat = Table::Fetch('category', $one['group_id']);}-->
+                            <div class="two_up ${($index+1)%2==0?'last':''}">
+                        	<div class="csbox" onclick="window.location.href='/{$city['slug']}/${seo_url($one['short_title'],$one['id'],$url_suffix)}'" style="cursor:pointer">
+                            <div align="left"> <a href="/{$city['slug']}/${seo_url($one['short_title'],$one['id'],$url_suffix)}" title="{$one['short_title']}" style="color:#1f95c5; font-family:Arial; font-size:15px"><strong>{$one['short_title']}</strong></a></div>
+                          	<div class="image trackable">
+                                <div class="inner"><a href="/{$city['slug']}/${seo_url($one['short_title'],$one['id'],$url_suffix)}" title="{$one['title']}"><img alt="{$one['title']}" src="<!--{if $one['image7']!=''}-->${team_image($one['image7'],false)}<!--{else}-->${team_image($one['image'],false)}<!--{/if}-->" /></a></div>
+                                <div class="index_tooltip">
+                                    <span><!--{if $one['delivery_properties']==1 || ($city['id']==556 && $one['group_id']!=23)}-->
+                                        <img src="/static/img/icon_product.png" width="30" height="30" align="absmiddle" alt="Dealsoc giao sản phẩm tận nơi" />Giao sản phẩm<!--{else}--><img src="/static/img/icon_voucher.png" width="30" height="30" align="absmiddle" alt="Dealsoc giao voucher tận nơi" />Giao voucher<!--{/if}-->&nbsp;&nbsp;&nbsp;<!--{if !$one['close_time']}--><strong style="color:#3399ff; font-size:140%;">{$one['now_number']}</strong>&nbsp;người đã mua<!--{else}--><strong style="font-size:11px;">(<!--{if $one['city_id']==11}-->Hồ Chí Minh<!--{else}-->Toàn Quốc<!--{/if}--> - ${date('d/m/Y', $one['begin_time'])})</strong><!--{/if}--></span>
+                                </div>
+                            </div>
+                          
+                          <div align="left">
+                          	<table width="100%" border="0">
+                              <tr>
+                                <td align="center" valign="top" style="padding-bottom:3px;"><strong class="old" style="font-size:170%; text-decoration:line-through; white-space:nowrap">${print_price(moneyit($one['market_price']))}<sup style="font-size:60%; text-transform:none; text-decoration:none;">{$currency}</sup></strong></td><td align="center" valign="top" style="padding-bottom:3px;"><strong class="old" style="font-size:170%; color:#c40000; white-space:nowrap">${print_price(moneyit($one['team_price']))}<sup style="font-size:60%; text-transform:none">{$currency}</sup></strong></td><td align="right" rowspan="2"><div class="view-deal-button"><!--{if $one['state']=='soldout' }--><a class="button-soldout small trackable" title="{$one['short_title']}" 
+    href="#">Cháy Hàng</a><!--{else if $one['state']=='expired' }--><a class="button-expired small trackable" title="{$one['short_title']}" 
+    href="#">Hết hạn</a>			
+												 <!--{else}-->
+														<a class="button small trackable" title="{$one['short_title']}" 
+    href="/{$city['slug']}/${seo_url($one['short_title'],$one['id'],$url_suffix)}">MUA</a>
+												<!--{/if}--></div></td></tr><tr>
+                                <td align="center" valign="top" style="padding-right:10px"><div style="font-size:11px;">Tiết kiệm</div><div align="center"><strong class="old" style="font-size:110%; color:#000000">${ceil(moneyit((100*($one['market_price'] - $one['team_price'])/$one['market_price'])))}%</strong></div></td>
+                                <td align="left" valign="top" style="border-left:#CCC 1px solid">
+                                <!--{if $one['close_time']}-->
+                                <div class="deal-box deal-timeleft deal-off" id="deal-timeleft-{$team['id']}" curtime="{$now}" diff="{$diff_time}" style="margin:0px; padding:0px">
+                                    <div align="center" style="padding-left:15px;">
+                                      <!--{if !$one['close_time']}--><span style="font-size:11px;">Có </span><!--{/if}-->
+                                      <strong style="color:#3399ff; font-size:130%;">{$one['now_number']*2}</strong><span style="font-size:11px;"><br />người đã mua</span>
+                                    </div>
+                      			</div>
+                                <!--{else}-->
+                                <div style="font-size:11px;" align="center">Thời gian còn lại</div><div class="deal-timeleft deal-on" id="deal-timeleft-{$one['id']}" curtime="{$now}" diff="{$diff_time}" style=" margin:0px; padding:0px;">
+                                	<ul id="counter-{$one['id']}" style="background:none; margin:0px; padding:0px; padding-left:30px;"><li><span style="color:#000000; font-size:14px;">${$left_hour+(24*$left_day)}:{$left_minute}:{$left_time}</span></li></ul>
+                        		</div>
+                                <!--{/if}--></td>
+                              </tr>
+                            </table>
+                           
+                          </div>
+                        </div>
+                      </div> 
+                        	<!--{/loop}-->
+                        
+                        <div class="clear"></div>
+                        
+                        <!--{if $count>$home_side_ns}--><div style="padding:0;margin:0;float:right;margin-right:10px; margin-top:10px;text-align:center;z-index:99;">{$pagestring}</div><!--{/if}-->
+                        
+                     </td>
+                     </tr></table>
+					<div class="clear"></div>					
+				</div>
+            </div>
+        </div><div class="clear"></div>
+    </div>
+</div>
+    </div> <!-- bd end -->
+</div> <!-- bdw end -->
+<script language="javascript" type="text/javascript">
+	  var sec = {};
+	  function getInitTime(){
+		  $('div.deal-timeleft').each(function(){
+			 var jobj = $(this);
+			 var SysSecond = parseInt(jobj.attr('diff'));
+			 var theid = parseInt((jobj.attr('id')).replace(/deal-timeleft-/,''));
+			 sec[theid]= SysSecond;
+		  });
+	  }
+	  getInitTime();
+	  function SetRemainTime() {
+			for(var i in sec){
+				setRemainTimeSite(i,sec[i]);
+			}
+	   }
+	  function setRemainTimeSite(theid,SysSecond){
+		  if (SysSecond > 0) {
+			   SysSecond = SysSecond - 1;
+			   var second = Math.floor(SysSecond % 60).toString();
+			   var minite = Math.floor((SysSecond / 60) % 60).toString();
+			  /* var hour = Math.floor((SysSecond / 3600) % 24).toString();*/
+			  var hour = Math.floor(SysSecond / 3600).toString();
+			   var day = Math.floor((SysSecond / 3600) / 24).toString();
+			   $("#counter-"+theid).html("<li><span style='color:#000000; font-size:14px;'>"+hour+":"+minite+":"+second+"</span></li>");
+			   sec[theid]--;
+		  }else{
+			return;
+		  }
+		}
+	  window.setInterval(SetRemainTime,1000);
+	 	  
+</script>
+<!--{include footer}-->

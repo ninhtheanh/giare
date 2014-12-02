@@ -1,0 +1,69 @@
+<!--{include header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="signup">
+    <div id="content" class="signup-box">
+        <div class="box">
+            <div class="box-top"></div>
+            <div class="box-content">
+                <div class="head"><h2>Login</h2><span>&nbsp;or <a href="/account/login.php">register</a></span></div>
+                <div class="sect">
+                    <form id="signup-user-form" method="post" action="/account/signup.php" class="validator">
+                        <div class="field email">
+                            <label for="signup-email-address">Email</label>
+                            <input type="text" size="30" name="email" id="signup-email-address" class="f-input" value="{$_POST['email']}" require="true" datatype="email|ajax" url="${WEB_ROOT}/ajax/validator.php" vname="signupemail" msg="Email incorrect format | Email has already been registered" /> 
+                            <span class="hint">For login or getting back your password. It'll be safe with us.</span>
+                        </div>
+                        <div class="field username">
+                            <label for="signup-username">Username</label>
+                            <input type="text" size="30" name="username" id="signup-username" class="f-input" value="{$_POST['username']}" datatype="limit|ajax" require="true" min="2" max="16" maxLength="16" url="${WEB_ROOT}/ajax/validator.php" vname="signupname" msg="|" />
+                            <span class="hint">Please fill up with 4-16 characters.</span>
+                        </div>
+                        <div class="field password">
+                            <label for="signup-password">Password</label>
+                            <input type="password" size="30" name="password" id="signup-password" class="f-input" require="true" datatype="require" />
+                            <span class="hint">For the safety of your account, please fill up with at least 6 characters.</span>
+                        </div>
+                        <div class="field password">
+                            <label for="signup-password-confirm">Password again</label>
+                            <input type="password" size="30" name="password2" id="signup-password-confirm" class="f-input" require="true" datatype="compare" compare="signup-password" />
+                        </div>
+                        <div class="field">
+                            <label for="signup-password-confirm">Mobile number</label>
+                            <input type="text" size="30" name="mobile" id="signup-mobile" class="number" require="${option_yes('needmobile')?'true':'require'}" datatype="mobile|ajax" url="${WEB_ROOT}/ajax/validator.php" vname="signupmobile" msg="Incorrect phone number | phone number has been registered" /><span class="inputtip">Your mobie number is the primary way to contact you, and is used to receive {$INI['system']['couponname']} SMS from us.</span>
+                        </div>
+						<div class="field city">
+                            <label id="enter-address-city-label" for="signup-city">Your city</label>
+							<select name="city_id" class="f-city">${Utility::Option(Utility::OptionArray($allcities,'id','name'), $city['id'])}<option value='0'>Other</option></select>
+                        </div>
+						 <div class="field subscribe">
+                            <input tabindex="3" type="checkbox" value="1" name="subscribe" id="subscribe" class="f-check" checked="checked" />
+                            <label for="subscribe">Subscribe daily deals</label>
+                        </div>
+                        <div class="act">
+                            <input type="submit" value="Sign up" name="commit" id="signup-submit" class="formbutton"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+    <div id="sidebar">
+        <div class="sbox">
+            <div class="sbox-top"></div>
+            <div class="sbox-content">
+                <div class="side-tip">
+                    <h2>Existing account?</h2>
+                    <p>Click <a href="/account/login.php">Log In</a></p>
+                </div>
+            </div>
+            <div class="sbox-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include footer}-->

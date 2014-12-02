@@ -1,0 +1,45 @@
+<!--{include header}-->
+<!--{include atmenucolspan}-->
+<div id="bdw" class="bdw">
+  <div id="bd" class="cf">
+            <div id="topwrapper" > 
+        <div id="recent-deals">
+        <?php
+           $rows = $teams;
+           $count_total =  count($rows);
+           $_cols = 4;
+           $_rows = ceil($count_total/$_cols);
+           $per = 25;
+          ?>
+          <table width="100%">
+            <?php  for($i=0;$i<$_rows;$i++): ?>
+            <tr>
+                <?php  for($j=0;$j<$_cols;$j++): ?>
+                <td width="<?php  echo $per; ?>">
+                    <?php  $k = $i*$_cols+$j; ?>
+                    <?php  if(isset($rows[$k])): $team = $rows[$k];?>
+                        <div class="box_deal_home  team_column_<?php  echo $k%4; ?>">
+                            <div class="box_img_home">
+                             <a href="/{$city['slug']}/${seo_url($team['short_title'],$team['id'],$url_suffix)}">
+                             <img src="/static/img/grey.gif" data-original="${team_image($team['image'],true,240)}" alt="{$INI['system']['abbreviation']}: phiếu giảm giá {$team['short_title']}" class="loadlazy img_deal_home" /></a>
+                            </div>
+                        <div class="box-title-home">
+                            <a href="/{$city['slug']}/${seo_url($team['short_title'],$team['id'],$url_suffix)}">{$team['short_title']}</a>
+                        </div>
+                        <div class="box-price-sale">
+                        <div class="team_price">${print_price(moneyit($team['team_price']))} đ</div>
+                         <div class="market_price">${print_price(moneyit($team['market_price']))} đ</div>
+                         <div class="saleper">Giảm ${ceil(moneyit((100*($team['market_price'] - $team['team_price'])/$team['market_price'])))}%</div>
+                        </div>
+                       </div> 
+                    <?php  endif; ?>
+                </td>
+                <?php  endfor; ?>
+            </tr>
+            <?php  endfor; ?>
+           </table> 
+            </div>
+          </div>
+      </div>
+  </div>
+  <!--{include footer}-->

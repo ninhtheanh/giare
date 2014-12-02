@@ -1,0 +1,13 @@
+<!--{include wap_header}-->
+
+<h2>account detail&nbsp;|&nbsp;<a href="myflow.php">income and expenditure record</a></h2>
+
+<p>Real name：{$login_user['realname']}</p>
+<p>Mobile number：{$login_user['mobile']}</p>
+<p>Account balance：${moneyit($login_user['money'])}{$currency}</p>
+<p>Credit left：${moneyit($login_user['credit'])} Points</p>
+<p>Times of consumption：{$consume_times}</p>
+<p>Address：{$login_user['address']}</p>
+<p>Zipcode：{$login_user['zipcode']}</p>
+
+<!--{include wap_footer}-->

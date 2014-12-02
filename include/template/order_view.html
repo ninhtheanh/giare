@@ -1,0 +1,212 @@
+<!--{include header}-->
+
+<div id="bdw" class="bdw">
+  <div id="bd" class="cf">
+    <div id="order-detail">
+      <div class="dashboard" id="dashboard">
+        <ul>
+          ${current_account(null)}
+        </ul>
+      </div>
+      <div id="content" class="mainwide">
+        <div class="box clear">
+          <div class="box-top"></div>
+          <div class="box-content">
+            <div class="head">
+              <h2>Chi tiết đơn hàng số {$order['id']}<span style="float:right"><a href="javascript:void(0)" onclick="PrintOrder()"><img src="/static/img/print.png" align="absmiddle" /> In đơn hàng</a></span></h2></div>
+            <div class="sect">
+				<script type="text/javascript" language="javascript">
+					function PrintOrder(){
+						var settings = 'toolbar=yes,scrollbars=yes,location=no,directories=yes,menubar=yes,fullscreen=yes';
+						var content = document.getElementById('ordercontent').innerHTML;
+						var docprint=window.open('','',settings);
+						docprint.document.open();
+						docprint.document.write('<html><head><title>dealsoc.vn</title>');
+						docprint.document.write('</head><body onLoad="self.print()"><center>');
+						docprint.document.write(content);
+						docprint.document.write('</center></body></html>');
+						docprint.document.close();
+						docprint.focus();
+					}
+				</script>
+                <div class="myaccount-box" id="ordercontent" align="center">
+                 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-bottom:1px solid #999999;border-top:1px solid #999999;border-left:1px solid #999999;border-right:1px solid #999999;">
+    <tr bgcolor="#FFFFFF">
+      <td align="left" valign="top" style="padding-top:3px; padding-bottom:10px;"><img src="http://www.dealsoc.vn/static/css/images/LogoConfirmOrder.jpg" border="0" width="145" height="60" /></td>
+      <td align="right" valign="top"><img src="/barcode/?barcode={$order_id}" border="0" alt="" /></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td align="center" valign="top" colspan="2" style="margin: 10px 0px 5px 5px; text-align: center; font-weight: bold; font-size: 30px;">HÓA ĐƠN</td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999;border-left:none">Mã đơn hàng</td>
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-left:none; border-right:none"><strong>{$order_id}</strong></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none;border-left:none">Ngày đặt hàng</td>
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none; border-left:none; border-right:none"><strong>{$content_order['order_date']}</strong></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none;border-left:none;">Trạng thái</td>
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none; border-left:none; border-right:none"><strong>{$content_order['order_status']}</strong></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none;border-left:none">Phương thức thanh toán</td>
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border-bottom:1px solid #999999;"><strong>{$content_order['billing_method']}</strong></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none;border-left:none">Phương thức vận chuyển</td>
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px; border-bottom:1px solid #999999;"><strong>{$content_order['shipping_method']}</strong></td>
+    </tr>
+   
+    <tr bgcolor="#53BBF0">
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px;border-right:1px solid #999999;border-bottom:1px solid #999999; color:#FFFFFF"><strong>Thông tin thanh toán</strong></td>
+      <td style="padding-left:5px; padding-right:5px; padding-bottom:3px; padding-top:3px;border-bottom:1px solid #999999; color:#FFFFFF"><strong>Thông tin vận chuyển</strong></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:10px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none;border-left:none">Họ tên: {$content_order['billing_fullname']}</td>
+      <td style="padding-left:10px; padding-right:5px; padding-bottom:3px; padding-top:3px; border-bottom:1px solid #999999;">Họ tên: <!--{if $content_order['shipping_fullname']!=''}-->{$content_order['shipping_fullname']}<!--{else}-->{$content_order['billing_fullname']}<!--{/if}--></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:10px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none; border-left:none">Địa chỉ: {$content_order['billing_address']}</td>
+      <td style="padding-left:10px; padding-right:5px; padding-bottom:3px; padding-top:3px; border-bottom:1px solid #999999;">Địa chỉ: <!--{if $content_order['shipping_address']!=''}-->{$content_order['shipping_address']}<!--{else}-->{$content_order['billing_address']}<!--{/if}--></td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td style="padding-left:10px; padding-right:5px; padding-bottom:3px; padding-top:3px; border:1px solid #999999; border-top:none; border-left:none">Điện thoại: {$content_order['billing_phone']}</td>
+      <td style="padding-left:10px; padding-right:5px; padding-bottom:3px; padding-top:3px; border-bottom:1px solid #999999;">Điện thoại: <!--{if $content_order['shipping_phone']!=''}-->{$content_order['shipping_phone']}<!--{else}-->{$content_order['billing_phone']}<!--{/if}--></td>
+    </tr>
+    <tr>
+      <td colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="left" valign="top" style="background-color:#FDFA9D;border-right:solid 1px #999999; border-bottom:solid 1px #999999; border-left:none;color:#07519a;font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;line-height:16px;padding:8px;text-align:left;white-space:nowrap;">Mã</td>
+            <td align="left" valign="top" style="background-color:#FDFA9D;border-right:solid 1px #999999; border-bottom:solid 1px #999999; border-left:none;color:#07519a;font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;line-height:16px;padding:8px;text-align:left;white-space:nowrap;">Tên Deal</td>
+            <td align="left" valign="top" style="background-color:#FDFA9D;border-right:solid 1px #999999; border-bottom:solid 1px #999999; border-left:none;color:#07519a;font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;line-height:16px;padding:8px;text-align:left;white-space:nowrap;">Số lượng</td>
+            <td align="left" valign="top" style="background-color:#FDFA9D;border-right:solid 1px #999999; border-bottom:solid 1px #999999; border-left:none;color:#07519a;font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;line-height:16px;padding:8px;text-align:left;white-space:nowrap;">Trọng lượng (gr)</td>
+            <td align="left" valign="top" style="background-color:#FDFA9D;border-right:solid 1px #999999; border-bottom:solid 1px #999999; border-left:none;color:#07519a;font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;line-height:16px;padding:8px;text-align:left;white-space:nowrap;">Đơn giá (VNĐ)</td>
+            <td align="left" valign="top" style="background-color:#FDFA9D;color:#07519a; border-bottom:solid 1px #999999;font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;line-height:16px;padding:8px;text-align:left;white-space:nowrap;">Thành tiền (VNĐ)</td>
+          </tr>
+          {$content_order['product_list_of_order']}
+          <tr bgcolor="#f6fcff">
+            
+            <td align="right" valign="top" style="padding:3px;">&nbsp;</td>
+            <td align="right" valign="top" style="padding:3px;">&nbsp;</td>
+            <td align="right" valign="top" style="padding:3px;">&nbsp;</td>
+            <td align="left" valign="top" style="padding:3px;"><strong>Tổng TL:</strong> <!--{if $content_order['total_weight']>0}-->{$content_order['total_weight']}<!--{else}--><!--{if $team['weight']>0}-->{$order['quantity']*$team['weight']}<!--{else}-->{$order['quantity']*100}<!--{/if}--><!--{/if}--> gr</td>
+            <td align="right" valign="top" style="padding:3px;" colspan="2">&nbsp;</td>
+          </tr>
+          <tr bgcolor="#f6fcff">
+            <td colspan="5" align="right" valign="top" style="padding:3px;">Phí thanh toán</td>
+            <td align="right" valign="top" style="padding:3px;" colspan="2">{$content_order['billing_cost']} VNĐ</td>
+          </tr>
+          <tr bgcolor="#f6fcff">
+            <td colspan="5" align="right" valign="top" style="padding:3px;">Phí vận chuyển</td>
+            <td align="right" valign="top" style="padding:3px;" colspan="2">{$content_order['shipping_cost']} VNĐ</td>
+          </tr>
+          <tr bgcolor="#f6fcff">
+            <td colspan="5" align="right" valign="top" style="padding:3px;">Tổng tiền</td>
+            <td align="right" valign="top" style="padding:3px;" nowrap="nowrap" colspan="2"><font size="+1"><strong>{$content_order['total_amount']} VNĐ</strong></font></td>
+          </tr>
+          <tr bgcolor="#f6fcff">
+            <td colspan="5" align="right" valign="top" style="padding:3px;">Số dư tài khoản:</td>
+            <td align="right" valign="top" style="padding:3px;" nowrap="nowrap" colspan="2"><font size="+1"><strong>
+            <!--{if $login_user['money']>0}-->${print_price(moneyit($login_user['money']))}<!--{else}-->0<!--{/if}-->&nbsp;VNĐ</strong></font></td>
+          </tr>
+      </table></td>
+    </tr>
+    <tr bgcolor="#f6fcff">
+      <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr bgcolor="#f6fcff">
+    <td colspan="2" align="left" style="padding-left:5px;"><strong>Ghi ch&uacute;:</strong>{$order_notes}</td>
+  </tr>
+  </table></div><!--${
+                   $his = DB::GetQueryResult("SELECT * FROM order_history WHERE order_id=".$order_id." AND status_code NOT IN ('changed') GROUP BY status_code ORDER BY date DESC, order_id",false);
+                }-->       
+              <!--{if $team['delivery']=='normal'}-->
+              <!--{if !empty($his)}--><table cellspacing="0" cellpadding="0" border="0" class="order-table" width="98%">
+                                  <tr>
+                                    <th width="15%" style="background-color:#f1f3f5">Trạng thái</th>
+                                    <th width="20%" nowrap style="background-color:#f1f3f5">Ngày xử lý</th>
+                                    <th width="40%" nowrap style="background-color:#f1f3f5">Ghi chú</th>
+                                    <th width="23%" nowrap style="background-color:#f1f3f5">NV giao hàng</th>
+                                  </tr>
+                                  
+                                  <!--{loop $his $index $ones}--> 
+                                  <!--{if $ones['head']==1}-->
+                                  <tr>
+                                    <td colspan="7"><h3>{$ones['order_id']}</h3></td>
+                                  </tr>
+                                  <!--{/if}-->
+                                  <tr style="background-color:#ffffff">
+                                    <td nowrap="nowrap">${getStatusName($ones['status_code'])}</td>
+                                    <td>{$ones['date']}</td>
+                                    <td>{$ones['note']}</td>
+                                    <td>{$ones['assign_to']}<!--{if $ones['assign_to']}--><br />
+                                      <strong>Tel: </strong>${getMobileShipper($ones['assign_to'])}<!--{/if}--></td>
+                                  </tr>
+                                  <!--{/loop}-->
+                                </table>
+                            <!--{/if}--> 
+              <table cellspacing="0" cellpadding="0" border="0" class="data-table">
+                
+                <!--${
+                	
+                    $maso = DB::GetQueryResult("SELECT maso FROM masoduthuong WHERE order_id=".$order_id." AND team_id=".$order['team_id']." AND user_id=".$login_user['id'])
+                }-->
+                <!--{if $maso['maso']>0}-->
+                <tr><td nowrap="nowrap" style="padding-top:12px"><strong>Mã số dự thưởng</strong></td><td align="left" valign="top" style="font-size:20px; font-family:Arial; color:#c40000; font-weight:bold">&nbsp;{$maso['maso']}</td></tr><!--{/if}-->
+                <tr>
+                  <td nowrap="nowrap">Cách thức sử dụng:</td>
+                  <td style="padding-left:5px;" align="left">Bạn cần đem theo phiếu (voucher) của <strong>Dealsoc</strong> đến nơi cung cấp sản phẩm/dịch vụ để  nhận được sản phẩm/dịch vụ giảm giá.</td>
+                </tr>
+              </table>
+              <!--{elseif $team['delivery']=='express'}-->
+              <table cellspacing="0" cellpadding="0" border="0" class="data-table">
+                <tr>
+                  <th>Express:</th>
+                  <!--{if $order['express_id']}-->
+                  <td>{$option_express[$order['express_id']]}:{$order['express_no']}</td>
+                  <!--{else}-->
+                  <td class="other-coupon">Please wait for the delivery.</td>
+                  <!--{/if}-->
+                </tr>
+                <tr>
+                  <th>Receiver：</th>
+                  <td>{$order['realname']}</td>
+                </tr>
+                <tr>
+                  <th>Address：</th>
+                  <td>{$order['address']}</td>
+                </tr>
+                <tr>
+                  <th>Mobile number：</th>
+                  <td>{$order['mobile']}</td>
+                </tr>
+              </table>
+              <!--{elseif $team['delivery']=='pickup'}-->
+              <table cellspacing="0" cellpadding="0" border="0" class="data-table">
+                <tr>
+                  <th>Self delivery：</th>
+                  <td class="other-coupon"></td>
+                </tr>
+                <tr>
+                  <th>Location：</th>
+                  <td>{$team['address']}</td>
+                </tr>
+                <tr>
+                  <th>Telephone：</th>
+                  <td>{$team['mobile']}</td>
+                </tr>
+              </table>
+              <!--{/if}-->
+            </div>
+          </div>
+          <div class="box-bottom"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- bd end -->
+</div>
+<!-- bdw end -->
+<!--{include footer}-->

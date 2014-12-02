@@ -1,0 +1,96 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_misc('aff')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="subbox-top"><div class="subhead">
+				<!--{if 'index'==$s}-->
+                    <h2>Affiliate: tất cả ({$count} - Tổng cộng : &nbsp;${print_price($summary)} <span class="currency">{$currency}</span>)</h2>
+				<!--{elseif 'pending'==$s}-->
+                 <h2>Affiliate: chờ duyệt ({$count} - Tổng cộng : &nbsp;${print_price($summary)} <span class="currency">{$currency}</span>)</h2>
+				<!--{elseif 'record'==$s}-->
+                    <h2>Affiliate: đã duyệt ({$count} - Tổng cộng : &nbsp;${print_price($summary)} <span class="currency">{$currency}</span>)</h2>
+                 <!--{elseif 'cancel'==$s}-->
+                    <h2>Affiliate: Hủy ({$count} - Tổng cộng : &nbsp;${print_price($summary)} <span class="currency">{$currency}</span>)</h2>
+				<!--{else}-->
+                    <h2>Affiliate: chưa hoàn tất ({$count} - Tổng cộng : &nbsp;${print_price($summary)} <span class="currency">{$currency}</span>)</h2>
+			  <!--{/if}--></div></div>
+            <div class="box-content">
+                <div class="head">
+					<ul class="filter">${mcurrent_misc_aff($s)}</ul>
+				</div>
+				<div class="sect" style="padding:5px; background:#FFFFCC;">
+					<form method="get">
+						<input type="hidden" name="s" value="{$s}" />
+						<p style="margin:5px 0;">
+                        Affiliate
+                        <select name="iuser" id="iuser" class="h-input">
+                        <option value="0">-----</option>
+                        <!--{loop $uaffs $index $one}-->
+                        
+                        <option value="{$one['id']}" <!--{if $one[id]==$iuser}-->selected=true<!--{/if}-->>{$one['email']}</option>
+                        <!--{/loop}-->
+                        </select>                      
+                        &nbsp;buy user ：<input type="text" name="puser" value="${htmlspecialchars($puser)}" class="h-input" />&nbsp;click time：<input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="iday" value="{$iday}" />&nbsp;purchase time：<input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="pday" value="{$pday}" />&nbsp;<input type="submit" value="select" class="formbutton"  style="padding:1px 6px;"/>&nbsp;<input type="button" value="All" class="formbutton"  style="padding:1px 6px;" onclick="location.href='/backend/misc/aff.php'"/></p>
+					<form>
+				</div>
+                <div class="sect">
+                
+              
+                <br />
+                 <form name="fde" id="fde" method="post">                	
+                    <input type="hidden" name="id" value="{$id}" >
+                    <!--{if $s=='pending'}-->
+                   <input name="fdeSubmit" type="submit" value="Xác nhận thanh toán các Record đã chọn" class="formbutton"  style="padding:1px 6px;" onclick="return confirm('Bạn có chắc muốn xác nhận?')"/>
+                   <!--{/if}-->
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table" width="100%" style="white-space:normal">
+					<tr>
+                    <th width="20">&nbsp;<input type="checkbox" name="checkall" id="checkall" onclick="jqCheckAll( this.id, 'myinput' )" /></th>
+                    <th>Order/Deal</th><th width="150">User</th><th width="150">Buy user</th><th width="140">Domain/IP/Click/Buy time</th><!--{if 'index'==$s}--><th width="150">operation</th><!--{else}--><th width="150">Operator</th><!--{/if}--></tr>
+					<!--{loop $affs $index $one}-->
+					<tr valign="top" ${$index%2?'':'class="alt"'} id="order-list-id-{$one['id']}">
+                    <td align="center"><input name="myinput[]" value="{$one['id']}" type="checkbox">{$one['id']}</td>
+						<td>                        
+                        <a class="deal-title" href="/team.php?id={$one['team_id']}" target="_blank">${cut_string($teams[$one['team_id']]['title'],50,'...')}</a></td>
+						<td><a class="ajaxlink" href="/ajax/manage.php?action=userview&id={$one['pid']}">{$users[$one['pid']]['email']}</a><br />ID : {$one['pid']}<br/>{$users[$one['pid']]['username']}<br/>                        
+                       
+                        Bln : ${print_price(moneyit($users[$one['pid']]['money']))} VND<br /> 
+                        <!--{if Utility::IsMobile($users[$one['user_id']]['mobile'])}--><br/><a href="/ajax/misc.php?action=sms&v={$users[$one['pid']]['mobile']}" class="ajaxlink">{$users[$one['pid']]['mobile']}</a><!--{/if}--></td>
+						<td><a class="ajaxlink" href="/ajax/manage.php?action=userview&id={$one['buy_uid']}">{$users[$one['buy_uid']]['email']}</a><br/>
+                        ID : {$one['buy_uid']}<br/>{$users[$one['buy_uid']]['username']}<br/>{$one['buy_ip']}<!--{if Utility::IsMobile($users[$one['user_id']]['mobile'])}--><br/><a href="/ajax/misc.php?action=sms&v={$users[$one['buy_uid']]['mobile']}" class="ajaxlink">{$users[$one['buy_uid']]['mobile']}</a><!--{/if}--></td>
+						<td>{$one['click_ip']}<br/><a href="{$one['click_domain']}" target="_blank">${cut_string($one['click_domain'],50,'...')}</a><br/>{$one['click_time']}<br/>{$one['buy_time']}</td>
+						<td>
+                        OrderID : {$one['buy_oid']}<br />
+                        TeamID: {$one['team_id']}<br/>
+                        rebate: {$one['credit']} {$currency}<br/>
+                        <!--{if $one['pay']==0}-->
+                        unpaid - <a href="/ajax/manage.php?action=affok&id={$one['id']}" class="ajaxlink" ask="are you sure you've got the rebate ?">confirm</a>
+                        <!--{elseif $one['pay']==1}-->
+                        paid - <a href="/ajax/manage.php?action=affdel&id={$one['id']}" ask="sure to give up the rebate you're going to get?" class="ajaxlink">give up</a>
+                        <!--{elseif $one['pay']==2}-->
+                        canceled
+                        <!--{else}-->
+                        
+                        <!--{/if}-->
+                        {$users[$one['admin_id']]['email']}<br/>{$users[$one['admin_id']]['username']}
+                        </td>
+					</tr>
+					<!--{/loop}-->
+					<tr><td colspan="8">{$pagestring}</tr>
+                    </table>
+                    </form>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

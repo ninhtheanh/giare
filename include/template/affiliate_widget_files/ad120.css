@@ -1,0 +1,62 @@
+#grouponAdContainer * {
+	margin: 0px;
+	padding: 0px;
+}
+#grouponAdContainer {
+	width: 120px;
+	height: 90px;
+	font-size: 12px;
+	font-family: arial;
+	color: #000000;
+}
+#grouponAdContents {
+	position: relative;
+	width: 112px;
+	height: 82px;
+	_height: 90px; /* ie hack */
+	border: 4px solid #8bc53f;
+	background-color: #ffffff;
+}
+#grouponCity {
+	background-color: #8bc53f;
+	width: 112px;
+	height: 14px;
+	font-weight: bold;
+	font-size: 10px;
+	color: #FFFFFF;
+}
+#grouponCity p {
+	margin-left: 2px;
+}
+#grouponTitle {
+	position: absolute;
+	overflow: hidden;
+	color: #1B75BB;
+	width: 108px;
+	max-height: 26px;
+	font-size: 9px;
+	font-weight: bold;
+	top: 16px;
+	left: 2px;
+}
+#grouponImage {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	width: 70px;
+	height: 42px;
+}
+#grouponTag {
+	position: absolute;
+	width: 48px;
+	height: 38px;
+	left: -4px;
+	bottom: 2px;
+	padding-top: 2px;
+	font-size: 12px;
+	text-decoration: none;
+	color: #FFFFFF;
+	background-image: url('/images/tag_120.90.png');
+	background-repeat: no-repeat;
+	text-align: center;
+}

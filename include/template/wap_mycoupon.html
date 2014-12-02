@@ -1,0 +1,16 @@
+<!--{include wap_header}-->
+<h2>My{$INI['system']['couponname']}</h2>
+<p>usable&nbsp;|&nbsp;<a href="mycoupon.php?s=consumed">used</a>&nbsp;|&nbsp;<a href="mycoupon.php?s=expired">expired</a></p>
+
+<!--{loop $coupons $index $one}-->
+<table id="order-list" style="margin:5px 0;" cellspacing="1" cellpadding="2" border="0" bgcolor="#999999" width="100%">
+	<tr><td bgcolor="#CCCCCC">No.：</td><td bgcolor="#FFFFFF">{$one['id']}</td></tr>
+	<tr><td bgcolor="#CCCCCC">code：</td><td bgcolor="#FFFFFF">{$one['secret']}</td></tr>
+	<tr><td bgcolor="#CCCCCC">deal：</td><td bgcolor="#FFFFFF">{$teams[$one['team_id']]['product']}</td></tr>
+	<tr><td bgcolor="#CCCCCC" width="60" nowrap>due：</td><td bgcolor="#FFFFFF">${date('Y-m-d', $one['expire_time'])}</td></tr>
+</table>
+<!--{/loop}-->
+
+<table><td>{$pagestring}</td></tr></table>
+
+<!--{include wap_footer}-->

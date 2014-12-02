@@ -1,0 +1,287 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+  <div id="bd" class="cf">
+    <div id="coupons">
+      <div class="subdashboard" id="dashboard">
+        <ul>
+          ${mcurrent_order('index')}
+        </ul>
+      </div>
+      <div id="content" class="coupons-box clear mainwide">
+        <div class="box clear">
+          <div class="subbox-top">
+            <div class="subhead">
+              <h2>Sửa thông tin đơn hàng số {$order['id']}</h2>
+            </div>
+          </div>
+          <div class="box-content">
+            <div style="padding:10px;">
+              <link rel="stylesheet" type="text/css" href="/static/css/jquery.autocomplete.css" />
+              <script type='text/javascript' src="/static/js/jquery.autocomplete.js"></script> 
+            
+              <script type='text/javascript'>						                
+				jQuery(document).ready(function() {	
+				
+					// cloning
+					var opt = '<option value=0>--Chọn--</option>';
+					//clone selectboxs on load		
+					<!--{if !$order}-->										  
+					$('#city_id option').clone().appendTo('#bcity_id');
+					$('#bcity_id option[value=' + $("#city_id").val() + ']').attr('selected', 'selected');
+					$('#dist_id option').clone().appendTo('#bdist_id');
+					$('#bdist_id option[value=' + $("#dist_id").val() + ']').attr('selected', 'selected');
+					$('#ward_id option').clone().appendTo('#bward_id');
+					$('#bward_id option[value=' + $("#ward_id").val() + ']').attr('selected', 'selected');
+					<!--{/if}-->	  
+					//ajax load cities, districts, wards				
+					$('#city_id').change(function() {	
+									
+						$.get('/ajax/city.php?city_id='+$("#city_id").val(), function(ret) {					 		 
+						  $('#dist_id,#bdist_id').empty().append(opt+ret);
+						  $('#bcity_id,#ward_id,#bward_id').empty();
+						  $('#city_id option').clone().appendTo('#bcity_id');	
+						  $('#bcity_id option[value=' + $("#city_id").val() + ']').attr('selected', 'selected');	
+						});
+					});
+					$('#dist_id').change(function() {
+						$.get('/ajax/city.php?dist_id='+$("#dist_id").val(), function(ret) {					 
+						  $('#ward_id,#bward_id').empty().append(opt+ret);	
+						  $('#bdist_id').empty();				 					 				  
+						  $('#dist_id option').clone().appendTo('#bdist_id');
+						  $('#bdist_id option[value=' + $("#dist_id").val() + ']').attr('selected', 'selected');
+						});
+					});
+					$('#ward_id').change(function() {	
+						  $('#bward_id').empty();				  			  				  
+						  $('#ward_id option').clone().appendTo('#bward_id');
+						  $('#bward_id option[value=' + $("#ward_id").val() + ']').attr('selected', 'selected');					
+					});
+					
+					//ajax load cities, districts, wards 2				
+					$('#bcity_id').change(function() {
+						$.get('/ajax/city.php?city_id='+$("#bcity_id").val(), function(ret) {					 		 
+						  $('#bdist_id').empty().append(opt+ret);
+						  $('#bward_id').empty();					 
+						});
+					});
+					$('#bdist_id').change(function() {
+						$.get('/ajax/city.php?dist_id='+$("#bdist_id").val(), function(ret) {					 
+						  $('#bward_id').empty().append(opt+ret);
+						});
+					});
+					//text input clone				
+					$('#billing_fields input', ':visible', document.body).each(function(i) {					
+						$(this).keyup(function(){						
+							$("#shipping_fields input").eq(i).val($(this).val());
+						});							
+					});
+					//select all
+					$('#shipping_fields input', ':visible', document.body).each(function(i) {
+						$(this).focus(function(){
+							$(this).select();
+						});											
+					});				
+					
+				});	
+				
+				
+				function searchSuggest(){
+					$("#street_name").autocomplete('/team/search_address_list.php', {width: 308});	
+				}
+				function searchbSuggest(){
+					$("#bstreet_name").autocomplete('/team/search_address_list.php', {width: 308});	
+				}
+				function checkSubmit(){
+					var max_qty = "{$team['per_number']}";
+					var qty = $("#quantity").val();
+					if(max_qty>0){
+						if(qty>max_qty){
+							alert("Số lượng không được lớn hơn "+max_qty);
+							$("#quantity").val("{$order['quantity']}");
+							return false;
+						}
+					}
+					return true;
+				}	
+		</script>
+              <form id="main" method="post" action="/backend/order/orderedit.php?id={$order['id']}&redirect={$_SERVER['REQUEST_URI']}" class="validator" onsubmit="return checkSubmit();">
+                <input type="hidden" name="id" value="{$order['id']}" />
+                <table width="100%" border="0">
+                  <tr>
+                    <td align="right" nowrap="nowrap"><b>Họ tên</b></td>
+                    <td align="left" style="padding:5px"><input type="text" name="realname" value="{$order['realname']}" require="true" datatype="require" class="f-input" style="width:200px" /></td>
+                    <td>&nbsp;</td>
+                    <td align="right" nowrap="nowrap" style="padding:5px"><strong>Số lượng</strong></td>
+                    <td><input <!--{if $team['per_number']>0}-->maxlength="3"<!--{/if}--> type="text" name="quantity" id="quantity" value="{$order['quantity']}" require="true" datatype="require" class="f-input" /><!--{if $team['per_number']>0}-->&nbsp;<font color="red" style="font-size:11px;"><strong>Số lượng tối đa: {$team['per_number']}</strong></font><!--{/if}--></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="color:#c40000; padding:5px;"><strong>Thông tin thanh toán</strong></td>
+                    <td>&nbsp;</td>
+                    <td colspan="2" style="color:#c40000; padding:5px;"><strong>Thông tin giao hàng</strong></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="0" id="billing_fields">
+                        <tr>
+                          <td width="10%" align="right"><strong>Tỉnh/TP</strong></td>
+                          <td width="90%" align="left" style="padding:5px"><select name="city_id" id="city_id" class="f-input">
+                              
+                              
+                              
+              ${Utility::Option(Utility::OptionArray($allcities, 'id', 'name'), $order['city_id'])}
+            
+                            
+                            
+                            </select></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Quận/Huyện</strong></td>
+                          <td align="left" style="padding:5px;"><select name="dist_id" id="dist_id"  class="f-input" datatype="require" require="true">
+                              
+                              
+                              
+              ${optiondistrict($order['dist_id'],$order['city_id'])}
+            
+                            
+                            
+                            </select></td>
+                        </tr>
+                        <tr>
+                        <tr>
+                          <td><div align="right"><strong>Phường/Xã</strong></div></td>
+                          <td align="left" style="padding:5px;"><select name="ward_id" id="ward_id"  class="f-input" datatype="require" require="true">
+                              <option value="">---Chọn---</option>
+                              
+                              
+                              
+              ${optionward($order['ward_id'],$order['dist_id'])}
+            
+                            
+                            
+                            </select></td>
+                        </tr>
+                        <tr>
+                          <td><div align="right"><strong>Tên đường</strong></div></td>
+                          <td align="left" style="padding:5px;"><input type="text" name="street_name" autocomplete="off" onfocus="searchSuggest()" id="street_name" value="{$order['street_name']}" require="true" datatype="require" class="f-input" style="width:250px" /></td>
+                        </tr>
+                        <tr>
+                          <td><div align="right"><strong>Số nhà</strong></div></td>
+                          <td align="left" style="padding:5px;"><input type="text" name="house_number" id="house_number" value="{$order['house_number']}" require="true" datatype="require" class="f-input" style="width:100px" /></td>
+                        </tr>
+                        <tr>
+                          <td><div align="right"><strong>Phòng-lầu-tòa nhà</strong></div></td>
+                          <td align="left" style="padding:5px;"><input type="text" name="note_address" value="{$order['note_address']}" class="f-input" style="width:250px" /></td>
+                        </tr>
+                        <tr>
+                          <td><div align="right"><strong>Điện thoại</strong></div></td>
+                          <td align="left" style="padding:5px;"><input type="text" name="mobile" value="{$order['mobile']}" require="true" datatype="mobile" class="f-input number" style="width:250px" /></td>
+                        </tr>
+                        <tr>
+                          <td><div align="right" style="white-space:nowrap"><strong>Phương thức </strong></div></td>
+                          <td align="left" style="padding:5px;"><select name="payment_id" id="payment_id" class="f-input" >
+                              <option value='' selected>---Select---</option>
+                              <!--{if in_array($order['ward_id'],array(313,316))}-->
+                              <option value="1">Thanh toán bằng tiền mặt</option>
+                              <!--{/if}-->
+                {$payment_lst}
+            
+                            
+                            
+                            </select>
+                            <script type="text/javascript" language="javascript">$("#payment_id").val("{$payment_id}");</script></td>
+                        </tr>
+                      </table></td>
+                    <td>&nbsp;</td>
+                    <td colspan="2" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0" id="shipping_fields">
+                        <tr>
+                          <td align="right"><strong>Tỉnh/TP</strong></td>
+                          <td align="left" style="padding:5px"><select name="bcity_id" id="bcity_id"  class="f-city" require="true" datatype="require" style="width:180px">
+                              <!--{if $order}-->	
+                                                  ${Utility::Option(Utility::OptionArray($allcities,'id','name'),$order['bcity_id'])}
+                                                  <!--{/if}-->
+                            </select></td>
+                        </tr>
+                        <tr>
+                          <td align="right"><strong>Quận/Huyện</strong></td>
+                          <td align="left" style="padding:5px;"><select name="bdist_id" id="bdist_id"  class="f-input" datatype="require" require="true">
+                              
+                              <!--{if $order}-->	
+                                                  ${optiondistrict($order['bdist_id'],$order['bcity_id'])}
+                                                  <!--{/if}-->
+                              
+                            </select></td>
+                        </tr>
+                        <tr>
+                          <td><div align="right"><strong>Phường/Xã</strong></div></td>
+                          <td align="left" style="padding:5px;"><select name="bward_id" id="bward_id"  class="f-input" datatype="require" require="true">
+                              
+                              <!--{if $order}-->	
+                                                   ${optionward($order['bward_id'],$order['bdist_id'])}
+                                                  <!--{/if}-->
+                              
+                            </select></td>
+                        </tr>
+                        <tr>
+                          <td><div align="right"><strong>Tên đường</strong></div></td>
+                          <td align="left" style="padding:5px;"><input type="text" name="bstreet_name" autocomplete="off" onfocus="searchbSuggest()" id="bstreet_name" value="{$order['bstreet_name']}" require="true" datatype="require" class="f-input" style="width:250px" /></td>
+                        </tr>
+                        <tr>
+                          <td><div align="right"><strong>Số nhà</strong></div></td>
+                          <td align="left" style="padding:5px;"><input type="text" name="bhouse_number" id="bhouse_number" value="{$order['bhouse_number']}" require="true" datatype="require" class="f-input" style="width:100px" /></td>
+                        </tr>
+                        <tr>
+                          <td><div align="right"><strong>Phòng-lầu-tòa nhà</strong></div></td>
+                          <td align="left" style="padding:5px;"><input type="text" name="bnote_address" value="{$order['bnote_address']}"  class="f-input" style="width:250px" /></td>
+                        </tr>
+                        <tr>
+                          <td><div align="right"><strong>Điện thoại</strong></div></td>
+                          <td align="left" style="padding:5px;"><input type="text" name="bmobile" value="{$order['bmobile']}" require="true" datatype="mobile" class="f-input number" style="width:250px" /></td>
+                        </tr>
+                        <tr>
+                          <td align="right" valign="top"><strong>Phương thức</strong></td>
+                          <td align="left" style="padding:5px;"><div id="shippingmethod">
+                              <select name="shipping_id" id="shipping_id" class="f-input" >
+                                <option value=''>---Select---</option>
+                                <!--{if in_array($order['bward_id'],array(313,316))}-->
+                                <option value="1-0">Giao hàng tận nơi trong nội thành (Hồ Chí Minh)</option>
+                                <!--{/if}-->
+								{$shipping_lst}
+              
+                              
+                              
+                              </select>
+                              <script type="text/javascript" language="javascript">$("#shipping_id").val("{$order['shipping_id']}-{$order['shipping_cost']}");</script> 
+                            </div></td>
+                        </tr>
+                      </table></td>
+                  </tr>
+                  <tr>
+                    <td align="right"><strong>Ghi chú</strong></td>
+                    <td colspan="4" align="left" style="padding:5px;"><textarea name="notes" class="f-textarea" style="width:500px;">{$order['notes']}</textarea></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td colspan="4" align="left" style="padding:5px;"><input type="checkbox" name="is_update_address" value="1" />
+                      Cập nhật lại địa chỉ&nbsp;&nbsp;&nbsp;
+                      <input type="checkbox" name="is_home_address" value="1" />
+                      Nhà riêng</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td colspan="4"><input type="submit" value="Update" class="formbutton" /></td>
+                  </tr>
+                </table>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="box-bottom"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- bd end -->
+</div>
+<!-- bdw end --> 
+
+<!--{include manage_footer}--> 

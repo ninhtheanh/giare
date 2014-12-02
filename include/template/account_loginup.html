@@ -1,0 +1,256 @@
+<!--{include header}-->
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div class="dashboard" id="dashboard">
+        <ul>
+          ${current_frontend()}
+        </ul>
+      </div>
+<div id="contentfontend" class="mainwide clear">
+	<div class="subbox-content">
+        <div style="background-color:#FFFFFF;min-height:450px;_height:450px">
+        	<div align="left" style="padding:20px;padding-top:10px;padding-bottom:10px"><div align="left" style="font-size:20px;"><h2>Vui lòng đăng nhập hoặc đăng ký.</h2></div>
+            	<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td><form action="/account/signup.php" method="post" id="deal-buy-form-signup" class="validator" onsubmit="return check_submit();"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+                  <tbody>
+                    <tr>
+                      <td width="24"><img src="/static/css/images/faqbox_topleft.gif" width="24" height="20"></td>
+                      <td style="background: url(/static/css/images/faqbox_topbg.gif) repeat-x scroll 0% 0% transparent;"></td>
+                      <td width="23"><img src="/static/css/images/faqbox_topright.gif" width="23" height="20"></td>
+                    </tr>
+                    <tr>
+                      <td style="background: url(/static/css/images/faqbox_leftbg.gif) repeat-y scroll right center transparent;">&nbsp;</td>
+                      <td bgcolor="#f1f1f1">
+                      	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                              <td align="left" height="35"><div class="field email" style="width:420px;">
+                                        <label for="signup-email-address">Email</label>
+                                        <input type="text" class="f-input"  name="email" id="signup-email-address" require="true" datatype="email|ajax" msg="|" url="${WEB_ROOT}/ajax/validator.php" vname="signupemail" style="width:300px;" /><span class="hint">Để đăng nhập và tìm lại mật khẩu.</span>
+                                    </div></td>
+                            </tr>
+                            <tr align="left">
+                              <td style="background: url(/static/css/images/faqbox_break.gif) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                            </tr>
+                            <tr>
+                              <td align="left" height="35"><div class="field password" style="width:420px;">
+                                        <label for="signup-password">Mật khẩu</label>
+                                        <input type="password" size="20" name="password" id="signup-password" class="f-input" datatype="require" require="true" style="width:300px;" /> 
+                                        <span class="hint">Mật khẩu ít nhất 6 ký tự</span>
+                                    </div></td>
+                            </tr>
+                            <tr align="left">
+                              <td style="background: url(/static/css/images/faqbox_break.gif) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                            </tr>
+                               <tr>
+                              <td align="left" height="35"><div class="field password" style="width:420px;">
+                                        <label for="signup-password-confirm">Xác nhận mật khẩu</label> 
+                                        <input type="password" size="20" name="password2" id="signup-password-confirm" class="f-input" require="true" datatype="compare" compare="signup-password" style="width:300px;" />
+                                    </div></td>
+                            </tr>
+                            <tr align="left">
+                              <td style="background: url(/static/css/images/faqbox_break.gif) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                            </tr>  <tr>
+                              <td align="left" height="35"><div class="field password">
+                                            <label>Ngày sinh</label>
+                                            <table cellspacing="0" cellpadding="0"><tr><td style="padding-top:7px;"><script language="javascript">document.write(SetDay(1,31,0,'dob_d'));</script></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="padding-top:7px"><script language="javascript">document.write(SetMonth(1,12,0,'dob_m'));</script></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="padding-top:7px"><!--${$current_year = date("Y");$begin = $current_year-80;$end = $current_year-1;}--><script language="javascript">document.write(SetYear({$begin},{$end},0,'dob_y'));</script></td><td><span style="color:#C40000">*</span></td></tr></table>	
+                                        </div></td>
+                            </tr>
+                            <tr align="left">
+                              <td style="background: url(/static/css/images/faqbox_break.gif) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                            </tr><tr>
+                              <td align="left" height="35"><div class="field password">
+                                            <label>Giới tính</label>
+                                            <select name="gender" class="f-input" require="true" datatype="require"><option value="">---Chọn---</option>${Utility::Option($option_gender, '')}</select>
+                                        </div></td>
+                            </tr>
+                        </table>
+                        
+                      </td>
+                      <td style="background: url(/static/css/images/faqbox_rightbg.gif) repeat-y scroll right center transparent;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><img src="/static/css/images/faqbox_bottomleft.gif" alt="" width="24" border="0" height="21"></td>
+                      <td style="background: url(/static/css/images/faqbox_bottombg.gif) repeat-x scroll 0% 0% transparent;"></td>
+                      <td><img src="/static/css/images/faqbox_bottomright.gif" alt="" width="23" border="0" height="21"></td>
+                    </tr>
+                    <tr>
+                        <td height="10"></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td><img src="/static/css/images/faqbox_topleft.gif" width="24" height="20"></td>
+                        <td style="background: url(/static/css/images/faqbox_topbg.gif) repeat-x scroll 0% 0% transparent;"></td>
+                        <td><img src="/static/css/images/faqbox_topright.gif" width="23" height="20"></td>
+                      </tr>
+                      <tr>
+                        <td style="background: url(/static/css/images/faqbox_leftbg.gif) repeat-y scroll right center transparent;">&nbsp;</td>
+                        <td bgcolor="#f1f1f1"><table border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                              <tr>
+                                <td style="padding-right: 10px;" align="left" height="30"><div class="wholetip clear">
+                                    <h3>Thông tin giao hàng</h3>
+                                  </div></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35"><div class="field">
+                                        <label>Họ tên</label>
+                                        <input type="text" size="20" name="realname" id="settings-realname" class="f-input" require="true" datatype="require" style="width:300px;" />                      
+                                    </div></td>
+                              </tr>
+                              <tr>
+                                <td colspan="3" style="background: url(/static/css/images/faqbox_break.gif) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+    <td align="left" height="35">
+    <link rel="stylesheet" type="text/css" href="/static/css/jquery.autocomplete.css" />
+	<script type='text/javascript' src="/static/js/jquery.autocomplete.js"></script>
+    <!--<script src="/static/js/jchain.js" type="text/javascript"></script>-->
+    <script type="text/javascript">
+            var dist_id; var ward_id;
+            function getDistId(){
+                return $("#dist_id").val();
+            }
+            function getWardId(){
+                return $("#ward_id").val();
+            }
+            jQuery(document).ready(function() {	
+				var opt = '<option value=0>--Chọn--</option>';
+				$('#city_id').change(function() {	
+									
+					$.get('/ajax/city.php?city_id='+$("#city_id").val(), function(ret) {					 		 
+					  $('#dist_id').empty().append(opt+ret);
+					  $('#ward_id').empty();
+					});
+				});
+				$('#dist_id').change(function() {
+					$.get('/ajax/city.php?dist_id='+$("#dist_id").val(), function(ret) {					 
+					  $('#ward_id').empty().append(opt+ret);	
+					});
+				});
+            });		     
+            function searchSuggest(){
+                dist_id = getDistId();
+                ward_id = getWardId();
+                $("#settings-address").autocomplete('/team/search_address_list.php',{width: 308});
+            }
+        </script>
+    
+    <div class="field">
+        <label id="enter-address-city-label" for="signup-city">Tỉnh/thành</label>
+        <select name="city_id" id="city_id"  class="f-city" require="true" datatype="require" style="width:180px">
+          <option value="">---Chọn---</option>         
+          ${Utility::Option(Utility::OptionArray($allcities,'id','name'),$city['id'])}
+        </select>
+      </div></td>
+    </tr>
+     <tr align="left">
+        <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+      </tr>
+                              <tr>
+                                <td align="left" height="35"><div class="field">                                    
+                                    <label id="enter-address-dist-label" for="signup-dist">Quận/Huyện</label>
+                                    <select name="dist_id" id="dist_id" class="f-city" require="true" datatype="require">
+                                      <option value="">---Chọn---</option>
+                                  		${optiondistrict(1, $city['id'])}
+                                    </select>
+                                  </div></td>
+                              </tr>
+                              <tr>
+                                <td colspan="3" style="background: url(/static/css/images/faqbox_break.gif) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35"><div class="field">
+                                    <label  id="enter-address-ward-label" for="ward-dist">Phường/Xã</label>
+                                    <select name="ward_id" id="ward_id" class="f-city" require="false" datatype="require">
+                                      <option value="">---Chọn---</option>		                                 
+                                    </select>
+                                  </div></td>
+                              </tr>
+                              <tr>
+                                <td colspan="3" style="background: url(/static/css/images/faqbox_break.gif) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td colspan="3" style="background: url(/static/css/images/faqbox_break.gif) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35"><div class="field">
+                                        <label>Số nhà</label>
+                                        <input type="text" name="house_number" autocomplete="off" id="settings-house-number" class="f-input" style="width:100px" require="true" value="" datatype="require" /></div>
+                                 </td></tr>
+                                 <tr>
+                                <td colspan="3" style="background: url(/static/css/images/faqbox_break.gif) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr><tr>
+                                <td align="left" height="35">
+                                 
+                                 <div class="field"><label>Tên đường</label><input type="text" name="street_name" class="f-input" autocomplete="off" onfocus="searchSuggest()" id="settings-street-name" require="true" value="" datatype="require" style="width:300px;" />
+                                    </div></td>
+                              </tr>
+                              <tr>
+                                <td colspan="3" style="background: url(/static/css/images/faqbox_break.gif) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35"><div class="field" style="width:420px;">
+                                        <label>Phòng-lầu-tòa nhà</label>
+                                        <input type="text" name="note_address" id="settings-note-address" class="f-input" style="width:300px;" />
+                                        <span class="hint">Ví dụ: P907, Lầu 9, Cao Ốc Diamond Plaza</span>
+                                    </div></td>
+                              </tr>
+                              <tr>
+                                <td colspan="3" style="background: url(/static/css/images/faqbox_break.gif) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35"><div class="field" style="width:440px;">
+                                        <label for="signup-password-confirm">Di động</label>
+                                        <input type="text" class="f-input number" size="20" name="mobile" id="signup-mobile" require="${option_yes('needmobile')?'true':'require'}" datatype="mobile"  style="width:300px;" /><span class="hint">Số ĐTDĐ được dùng để liên lạc khi giao hàng.</span>
+                                    </div></td>
+                              </tr>
+                              <tr>
+                                <td colspan="3" style="background: url(/static/css/images/faqbox_break.gif) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35" style="padding-left:70px"><div class="act">
+                                        <input type="submit" value="Đăng ký" name="commit" id="signup-submit" class="formbutton"/>
+                                    </div></td>
+                              </tr>
+                              </tbody></table></td>
+                        <td style="background: url(/static/css/images/faqbox_rightbg.gif) repeat-y scroll right center transparent;">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td><img src="/static/css/images/faqbox_bottomleft.gif" alt="" width="24" border="0" height="21"></td>
+                        <td style="background: url(/static/css/images/faqbox_bottombg.gif) repeat-x scroll 0% 0% transparent;"></td>
+                        <td><img src="/static/css/images/faqbox_bottomright.gif" alt="" width="23" border="0" height="21"></td>
+                      </tr>
+                  </tbody>
+                </table></form></td><td align="left" valign="top" style="padding-left:7px"><div id="signup">
+                            <div id="deal-buy-login">
+                                <h3>Đã có tài khoản trên {$INI['system']['abbreviation']}</h3>
+                                        <script type="text/javascript" language="javascript">
+                                            function check_submit(){
+                                                var year = document.getElementById("dob_y").value;
+                                                if(year==""){
+                                                    alert("Vui lòng nhập đầy đủ các thông tin yêu cầu");
+                                                    return false;
+                                                }
+                                                return true;
+                                            }
+                                        </script>
+                                <form action="/account/login.php" method="post" id="deal-buy-form-login" class="validator">
+                                <div id="deal-buy-login-form">
+                                    <p><span>Email</span><input type="text" class="f-input" id="deal-buy-email" name="email" style="width:200px" size="30" require="true" datatype="require|limit" min="2" /></p>
+                                    <p><span>Mật khẩu</span><input type="password" class="f-input" name="password" size="30" style="width:200px" datatype="require" require="true" /></p>
+                                    <p><span>&nbsp;</span><input type="checkbox" value="1" name="auto-login" id="autologin" class="f-check" checked />&nbsp;<label for="autologin">Tự động đăng nhập</label></p>
+                                    <p class="act"><input type="submit"  class="formbutton" name="login" value="Đăng nhập"/></p>
+                                </div>
+                                </form>
+                            </div>
+                        </div></td></tr></table>
+            </div>
+      	</div>
+    </div>
+        
+</div>
+<!--<div id="sidebar">
+</div>-->
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+<!--{include footer}-->

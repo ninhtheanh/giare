@@ -1,0 +1,61 @@
+<!--{include manage_header}-->
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_order('canceled')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="subbox-top"> <div class="subhead">
+                    <h2>Đơn hàng đã hủy</h2>
+				</div></div>
+            <div class="box-content">
+               <form method="get" id="target">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="filter-table">
+                  <tr>
+                    <td align="left" colspan="2" style="padding-top:3px; padding-left:3px;"><strong>Số HĐ</strong>
+                      <input type="text" name="id" value="{$id}" class="h-input"/>
+                      &nbsp;&nbsp;<strong>Số Deal</strong>
+                      <input type="text" name="team_id" class="h-input number" value="{$team_id}" />
+                      &nbsp;&nbsp;<strong>User</strong>
+                      <input type="text" name="uemail" class="h-input" value="${htmlspecialchars($uemail)}" />
+                      &nbsp;&nbsp;<strong>ĐTDĐ</strong>
+                      <input type="text" class="h-input" name="mobile" value="{$mobile}" />
+                      &nbsp;&nbsp;<strong>TP</strong>                      <select name="city_id" class="h-input" require="true" onchange="$('#target').submit();">
+                          <option value='0'>--Chon--</option>
+                          ${Utility::Option(Utility::OptionArray($allcities,'id','name'),$city_id)}
+                        
+                      </select>                      </td>
+                  </tr>
+                     <tr><td align="left" valign="top" style="padding-top:3px; padding-left:3px; padding-bottom:7px;">
+                      <strong>Order time:</strong><input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="cbday" value="{$cbday}" /> - <input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="ceday" value="{$ceday}" />&nbsp;Mobile<input type="text" class="h-input" name="mobile" value="{$mobile}" />&nbsp;&nbsp;<input type="submit" value=" Lọc dữ liệu " class="formbutton"  style="padding:3px 6px;"/></td></tr>
+                </table>
+              </form>
+                <div class="sect">
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+					<tr><th width="20">ID</th><th width="400">deal</th><th width="340">user</th><th width="20" nowrap>Q.ty</th><th width="60" nowrap>Total (<span class="money">{$currency}</span>)</th><th width="80" nowrap>State</th><th width="50">Operation</th></tr>
+					<!--{loop $orders $index $one}-->
+					<tr style="background-color:#${getStatusColor($one['state'])}" id="order-list-id-{$one['id']}">
+						<td>{$one['id']}</td>
+						<td>{$one['team_id']}&nbsp;(<a class="deal-title" href="/team.php?id={$one['team_id']}" target="_blank">{$teams[$one['team_id']]['title']}</a>)</td>
+						<td><a href="/ajax/manage.php?action=userview&id={$one['user_id']}" class="ajaxlink">{$users[$one['user_id']]['email']}<br/>{$one['realname']}<br />{$one['mobile']}</a><br/><b style="color:#FA6D18">{$one['address']}, <!--{if ename_dist($one['dist_id'])}--><!--${$dists = ename_dist($one['dist_id'])}-->{$dists['dist_name']}<!--{/if}--></b><!--{if Utility::IsMobile($users[$one['user_id']]['mobile'])}-->&nbsp;&raquo;&nbsp;<a href="/ajax/misc.php?action=sms&v={$users[$one['user_id']]['mobile']}" class="ajaxlink">SMS</a><!--{/if}--></td>
+						<td>{$one['quantity']}</td>
+						<td>${print_price(moneyit($one['origin']))}</td>
+                        <td><strong>${getStatusName($one['state'])}</strong></td>
+						<td class="op"><a href="/ajax/manage.php?action=orderview&id={$one['id']}" class="ajaxlink">detail</a> | <a href="/ajax/manage.php?action=orderconfirm&id={$one['id']}" class="ajaxlink">confirm</a> | <a href="/ajax/manage.php?action=orderoffice&id={$one['id']}" class="ajaxlink">Office</td>
+					</tr>
+					<!--{/loop}-->
+                    <tr><td colspan="9" align="right"><strong>{$total_voucher} voucher</strong></td></tr>
+					<tr><td colspan="9">{$pagestring}</tr>
+                    </table>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

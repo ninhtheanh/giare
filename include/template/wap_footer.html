@@ -1,0 +1,19 @@
+<h2>About this website</h2>
+<p>This website is for groupbuying within a period. You may visit it on your phone and purchase with your account balance. Please recharge your account first.</p>
+<h2>fast navigation</h2>
+<p>0 <a href="index.php" accesskey="0">Today's deals</a></p>
+<!--{if is_login()}-->
+<p>1 <a href="myorder.php" accesskey="1">My order</a></p>
+<p>2 <a href="mycoupon.php" accesskey="2">My{$INI['system']['couponname']}</a></p>
+<p>3 <a href="my.php" accesskey="3">Personal account</a></p>
+<!--{/if}-->
+<p>8 <a href="city.php" accesskey="8">City switch</a></p>
+<p>9 <a href="index.php" accesskey="9">Back to home</a></p>
+<!--{if is_login()}-->
+<p>x <a href="logout.php" accesskey="x">Logout</a></p>
+<!--{else}-->
+<p>x <a href="login.php" accesskey="x">Login</a></p>
+<!--{/if}-->
+<div id="ft">&copy;2010 {$INI['system']['sitename']}</div>
+</body>
+</html>

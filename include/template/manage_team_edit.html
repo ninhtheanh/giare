@@ -1,0 +1,257 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="leader">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_team('team')}</ul>
+	</div>
+	<div id="content" class="clear mainwide">
+        <div class="clear box">
+            <div class="subbox-top"><div class="subhead">
+				<!--{if $team['id']}-->
+					<h2>Edit deals</h2>
+					<ul class="filter" style="margin-top:3px;">${current_manageteam('edit', $team['id'])}</ul>
+				<!--{else}-->
+					<h2>Creat deals</h2>
+				<!--{/if}-->
+				</div></div>
+            <div class="box-content">
+                
+                <div class="sect">
+				<form id="-user-form" method="post" action="/backend/team/edit.php?id={$team['id']}" enctype="multipart/form-data" class="validator">
+					<input type="hidden" name="id" value="{$team['id']}" /><input type="hidden" name="now_number" value="{$team['now_number']}" />
+					<div class="wholetip clear">
+					  <h3>1. Basic info</h3>
+					</div>
+					<div class="field">
+						<label>Deal type</label>
+						<select name="team_type" class="f-input" style="width:160px;" onchange="X.team.changetype(this.options[this.options.selectedIndex].value);">${Utility::Option($option_teamtype, $team['team_type'])}</select>
+                        <!--${$team['city_id'] = ($team['city_id']>0)?$team['city_id']:11;}-->
+                        <select name="city_id" class="f-input" style="width:160px;">${Utility::Option(Utility::OptionArray($allcities, 'id','name'), $team['city_id'], 'Toàn Quốc')}</select>
+						<select name="group_id" class="f-input" style="width:160px;">${Utility::Option($groups, $team['group_id'])}</select>
+					</div>
+					<div class="field" id="field_limit">
+						<label>Limitations</label>
+						<select name="conduser" class="f-input" style="width:450px;">${Utility::Option($option_cond, $team['conduser'])}</select>
+						<select name="buyonce" class="f-input" style="width:160px;">${Utility::Option($option_buyonce, $team['buyonce'])}</select>
+					</div>
+					<div class="field">
+						<label>Deal title</label>
+						<input type="text" size="30" name="title" id="team-create-title" class="f-input" value="${htmlspecialchars($team['title'])}" datatype="require" require="true" style="width:700px" />
+					</div>
+                    <div class="field">
+						<label>Deal short title</label>
+						<input type="text" size="50" maxlength="50" name="short_title" id="team-create-short-title" class="f-input" value="${htmlspecialchars($team['short_title'])}" style="width:700px" datatype="require" require="true" />
+					</div>
+					<div class="field">
+						<label>Market price</label>
+						<input type="text" size="10" name="market_price" id="team-create-market-price" class="number" value="${moneyit($team['market_price'])}" datatype="money" require="true" />
+						<label>Web price</label>
+						<input type="text" size="10" name="team_price" id="team-create-team-price" class="number" value="${moneyit($team['team_price'])}" datatype="double" require="true" />
+						<label>Virtual buyers</label>
+						<input type="text" size="10" name="pre_number" id="team-create-pre_number" class="number" value="${moneyit($team['pre_number'])}" datatype="number" require="true" />
+					</div>
+					<div class="field">
+						<label>Lower limit</label>
+						<input type="text" size="10" name="min_number" id="team-create-min-number" class="number" value="${intval($team['min_number'])}" maxLength="6" datatype="number" require="true" />
+						<label>Upper limit</label>
+						<input type="text" size="10" name="max_number" id="team-create-max-number" class="number" value="${intval($team['max_number'])}" maxLength="6" datatype="number" require="true" />
+						
+				    <label>Limit for one user</label>
+						<input type="text" size="10" name="per_number" id="team-create-per-number" class="number" value="${intval($team['per_number'])}" maxLength="6" datatype="number" require="true" />
+						<span class="hint">The lower limit must be bigger than 0, the biggest quantity/every user's limit of buying：0 means no upper limit (quantity of goods|numbers of buyers which are determined by the conditions of a successful deal)</span></div>
+					<div class="field">
+						<label>Start time</label>
+						<input type="text" size="30" name="begin_time" id="" class="number" style="width:160px;" xd="${date('Y-m-d', $team['begin_time'])}" xt="${date('H:i:s', $team['begin_time'])}" value="${date('Y-m-d H:i:s', $team['begin_time'])}" maxlength="30" /></div>
+<div class="field">
+						<label>End time</label>                       
+						<input type="text" size="30" name="end_time" id="" class="number" style="width:160px;" xd="${date('Y-m-d', $team['end_time'])}" xt="23:59:59" value="${date('Y-m-d', $team['end_time'])} 23:59:59" maxlength="30" /></div>
+<div class="field">
+						<label>{$INI['system']['couponname']} Due Time</label>
+						<input type="text" size="30" name="expire_time" id="" class="number" style="width:160px;" value="${date('Y-m-d', $team['expire_time'])}" maxLength="30" />
+						<span class="hint">Date/time format：YYYY-MM-DD HH:MM:SS （example：2010-06-10 23:12:09）</span>
+					</div>
+                    <div class="field" id="field_limit">
+						<label>Delivery Properties</label>
+						<select name="delivery_properties" class="f-input" id="delivery_properties" style="width:160px;"><option value="0">Giao Voucher</option><option value="1">Giao Sản phẩm</option><option value="2">Giao Voucher - Nhận SP tại VP Dealsoc</option></select>
+                        <script type="text/javascript" language="javascript">$("#delivery_properties").val("{$team['delivery_properties']}");</script>
+						<label>Number of contracts</label>
+						<input type="text" style="width:120px; height:20px;" name="number_of_contracts" id="number_of_contracts" class="number" value="{$team['number_of_contracts']}" datatype="require" require="true" />
+                        <label>Sale</label>
+						<select name="sale" class="f-input" id="sale" style="width:160px;" datatype="require" require="require"><option value="0">---Chọn---</option>${option_business_staff($team['sale'])}</select>
+                        <script type="text/javascript" language="javascript">$("#sale").val("{$team['sale']}");</script>
+					</div>
+					<div class="field">
+						<label>Điểm nổi bật</label>
+                        <div style="float:left;"><textarea cols="45" rows="5" name="summary" id="team-create-summary" class="f-textarea editor" datatype="require" require="true">${htmlspecialchars_decode($team['summary'])}</textarea></div>
+					</div>
+					<div class="field">
+						<label>Điều kiện</label>
+						<div style="float:left;"><textarea cols="45" rows="5" name="notice" id="team-create-notice" class="f-textarea editor" style="width:710px;height:150px;">${htmlspecialchars_decode($team['notice'])}</textarea></div>
+						<span class="hint">due time and descriptions of this deal</span>
+					</div>
+					<!--kxx 增加-->
+					<div class="field">
+						<label>sort</label>
+						<input type="text" size="10" name="sort_order" id="team-create-sort_order" class="number" value="${$team['sort_order'] ? $team['sort_order'] : 0}" datatype="number"/><span class="inputtip">Please fill out with figures which are ranked from big to small, and set a bigger one for the main deal</span>
+					</div>
+                    <div class="field">
+						<label>Weight</label>
+						<input type="text" size="10" name="weight" id="team-create-weight" class="number" value="${$team['weight'] ? $team['weight'] : 0}" datatype="number"/> gram
+					</div>
+					<!--xxk-->
+					<input type="hidden" name="guarantee" value="Y" />
+					<input type="hidden" name="system" value="Y" />
+					<div class="wholetip clear"><h3>2. deal info</h3></div>
+					<div class="field">
+						<label>Partner</label>
+						<select name="partner_id" datatype="require" require="require" class="f-input" style="width:200px;">${Utility::Option($partners, $team['partner_id'], '--- please select a Partner ---')}</select><span class="inputtip">Partner is optional</span>
+					</div>
+					<div class="field" id="field_card">
+						<label>card use</label>
+						<input type="text" size="10" name="card" id="team-create-card" class="number" value="${moneyit($team['card'])}" require="true" datatype="money" />
+						<span class="inputtip">The biggest card value can be used</span>
+					</div>
+					<div class="field" id="field_card">
+						<label>invitation rebate</label>
+						<input type="text" size="10" name="bonus" id="team-create-bonus" class="number" value="${moneyit($team['bonus'])}" require="true" datatype="money" />
+						<span class="inputtip">the amount of rebate which you get from your invited friend's buying</span>
+					</div>
+                    
+                    <div class="field" id="field_card">
+						<label>Affiliate rebate</label>
+						<input type="text" size="10" name="aff_rebate" id="aff-create-bonus" class="number" value="${moneyit($team['aff_rebate'])}" require="true" datatype="money" />
+						<span class="inputtip">% Rebate for Affiliates</span>
+					</div>
+                    
+					<div class="field">
+						<label>goods name</label>
+						<input type="text" size="30" name="product" id="team-create-product" class="f-input" value="{$team['product']}" datatype="require" require="true" />
+					</div>
+					<div class="field">
+						<label>essential options of buying</label>
+						<input type="text" size="30" name="condbuy" id="team-create-condbuy" class="f-input" value="{$team['condbuy']}" />
+						<span class="hint">format is as：{yellow}{green}{red}，user must choose one of them when buying</span>
+					</div>
+					<div class="field">
+						<label>goods pictures</label>
+						<input type="file" size="30" name="upload_image" id="team-create-image" class="f-input" />
+						<!--{if $team['image']}--><span class="hint">${team_image($team['image'])}</span><!--{/if}-->
+					</div>
+					<div class="field">
+						<label>goods picture 1</label>
+						<input type="file" size="30" name="upload_image1" id="team-create-image1" class="f-input" />
+						<!--{if $team['image1']}--><span class="hint" id="team_image_1">${team_image($team['image1'])}&nbsp;&nbsp;<a href="javascript:;" onclick="X.team.imageremove({$team['id']}, 1);">delete</a></span><!--{/if}-->
+					</div>
+					<div class="field">
+						<label>goods picture 2</label>
+						<input type="file" size="30" name="upload_image2" id="team-create-image2" class="f-input" />
+						<!--{if $team['image2']}--><span class="hint" id="team_image_2">${team_image($team['image2'])}&nbsp;&nbsp;<a href="javascript:;" onclick="X.team.imageremove({$team['id']}, 2);">delete</a></span><!--{/if}-->
+					</div>
+                    <div class="field">
+						<label>goods picture 3</label>
+						<input type="file" size="30" name="upload_image3" id="team-create-image3" class="f-input" />
+						<!--{if $team['image3']}--><span class="hint" id="team_image_3">${team_image($team['image3'])}&nbsp;&nbsp;<a href="javascript:;" onclick="X.team.imageremove({$team['id']}, 3);">delete</a></span><!--{/if}-->
+					</div>
+					<div class="field">
+						<label>goods picture 4</label>
+						<input type="file" size="30" name="upload_image4" id="team-create-image4" class="f-input" />
+						<!--{if $team['image4']}--><span class="hint" id="team_image_4">${team_image($team['image4'])}&nbsp;&nbsp;<a href="javascript:;" onclick="X.team.imageremove({$team['id']}, 4);">delete</a></span><!--{/if}-->
+					</div>
+					<div class="field">
+						<label>goods picture 5</label>
+						<input type="file" size="30" name="upload_image5" id="team-create-image5" class="f-input" />
+						<!--{if $team['image5']}--><span class="hint" id="team_image_5">${team_image($team['image5'])}&nbsp;&nbsp;<a href="javascript:;" onclick="X.team.imageremove({$team['id']}, 5);">delete</a></span><!--{/if}-->
+					</div>
+                    <div class="field">
+						<label>goods picture 6</label>
+						<input type="file" size="30" name="upload_image7" id="team-create-image7" class="f-input" />
+						<!--{if $team['image7']}--><span class="hint" id="team_image_7">${team_image($team['image7'])}&nbsp;&nbsp;<a href="javascript:;" onclick="X.team.imageremove({$team['id']}, 7);">delete</a></span><!--{/if}-->
+					</div>
+                    <div class="field">
+						<label>Picture Voucher</label>
+						<input type="file" size="30" name="upload_image6" id="team-create-image6" class="f-input" />
+						<!--{if $team['image6']}--><span class="hint" id="team_image_6">${team_image($team['image6'])}&nbsp;&nbsp;<a href="javascript:;" onclick="X.team.imageremove({$team['id']}, 6);">delete</a></span><!--{/if}-->
+					</div>
+                    
+					<div class="field">
+						<label>FLV.sw</label>
+						<input type="text" size="30" name="flv" id="team-create-flv" class="f-input" value="{$team['flv']}" />
+						<span class="hint">format is as：http://.../video.flv</span>
+					</div>
+					<div class="field">
+						<label>detail</label>
+						<div style="float:left;"><textarea style="height:300px"  name="detail" id="team-create-detail" class="f-textarea editor">${htmlspecialchars_decode($team['detail'])}</textarea></div>
+					</div>
+					<div class="field" id="field_userreview">
+						<label>User Reviews</label>
+						<div style="float:left;"><textarea cols="45" rows="5" name="userreview" id="team-create-userreview" class="f-textarea editor">${htmlspecialchars_decode($team['userreview'])}</textarea></div>
+						<span class="hint">Format:“Good with | Rita|http://ww....|XXX Network”，Write a comment per line</span>
+					</div>
+					<div class="field">
+						<label>{$INI['system']['abbreviation']} Says</label>
+						<div style="float:left;"><textarea cols="45" rows="5" name="systemreview" id="team-create-systemreview" class="f-textarea editor" style="width:710px;height:150px;">${htmlspecialchars_decode($team['systemreview'])}</textarea></div>
+					</div>
+					<div class="wholetip clear"><h3>3. Distribution of information</h3></div>
+					<div class="field">
+						<label>Mode of delivery</label>
+						<div style="margin-top:5px;" id="express-zone-div"><input type="radio" name="delivery" value="normal" ${$team['delivery']=='normal'?'checked':''} />&nbsp;Normal delivery&nbsp;<input type="radio" name="delivery" value="coupon" ${$team['delivery']=='coupon'?'checked':''} />&nbsp;{$INI['system']['couponname']}&nbsp;<input type="radio" name="delivery" value='express' ${$team['delivery']=='express'?'checked':''} />&nbsp;Express delivery</div>
+					</div>
+                    <!--{if $login_user_id==1}--><div class="field">
+						<label><strong>Hiển thị số người mua ảo:</strong></label><input type="text" style="width:120px; height:20px;" name="virtual_buy" id="virtual_buy" class="number" value="{$team['virtual_buy']}" datatype="require" require="true" /><span style="font-size:18px"><strong>%</strong></span></div><!--{/if}-->
+					<div id="express-zone-coupon" style="display:${$team['delivery']=='coupon'?'block':'none'};">
+						<div class="field">
+							<label>Consumer rebates</label>
+							<input type="text" size="10" name="credit" id="team-create-credit" class="number" value="${moneyit($team['credit'])}" datatype="money" require="true" />
+							<span class="inputtip">Consumer{$INI['system']['couponname']}Obtained when the account balance rebate, unit USD</span>
+						</div>
+					</div>
+					<div id="express-zone-pickup" style="display:${$team['delivery']=='pickup'?'block':'none'};">
+						<div class="field">
+							<label>Contact</label>
+							<input type="text" size="10" name="mobile" id="team-create-mobile" class="f-input" value="{$team['mobile']}" />
+						</div>
+						<div class="field">
+							<label>Self-created address</label>
+							<input type="text" size="10" name="address" id="team-create-address" class="f-input" value="{$team['address']}" />
+						</div>
+					</div>
+					<div id="express-zone-express" style="display:${$team['delivery']=='express'?'block':'none'};">
+						<div class="field">
+							<label>Delivery costs</label>
+							<input type="text" size="10" name="fare" id="team-create-fare" class="number" value="${intval($team['fare'])}" maxLength="6" datatype="money" require="true" />
+							<label>Fare</label>
+							<input type="text" size="10" name="farefree" id="team-create-farefree" class="number" value="${intval($team['farefree'])}" maxLength="6" datatype="money" require="true" />
+							<span class="hint">Courier costs, free single number: 0 can not help but freight, 2 said the purchase of two free shipping</span>
+						</div>
+						<div class="field">
+							<label>Delivery Help</label>
+							<div style="float:left;"><textarea cols="45" rows="5" name="express" id="team-create-express" class="f-textarea editor2">{$team['express']}</textarea></div>
+						</div>
+					</div>
+					<input type="submit" value="Save" name="commit" id="leader-submit" class="formbutton" style="margin:10px 0 0 120px;"/>
+				</form>
+                </div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+	</div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<script type="text/javascript">
+window.x_init_hook_teamchangetype = function(){
+	X.team.changetype("{$team['team_type']}");
+};
+window.x_init_hook_page = function() {
+	X.team.imageremovecall = function(v) {
+		jQuery('#team_image_'+v).remove();
+	};
+	X.team.imageremove = function(id, v) {
+		return !X.get(WEB_ROOT + '/ajax/misc.php?action=imageremove&id='+id+'&v='+v);
+	};
+};
+</script>
+<!--{include manage_footer}-->

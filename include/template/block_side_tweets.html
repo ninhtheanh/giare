@@ -1,0 +1,7 @@
+<?
+{include 'social/lifestream.class.php';}
+    
+    {$life = new LifeStream(25);}             // 25 refers to the number of items returned
+    {$life->addTwitter('godaddy');}
+   {$feed = $life->build();}
+?>

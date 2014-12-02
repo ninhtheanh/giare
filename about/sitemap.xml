@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+<url>
+  <loc>http://www.dealsoc.vn/tp-ho-chi-minh/</loc>
+  <changefreq>Daily</changefreq>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>http://www.dealsoc.vn/tp-ho-chi-minh/deal-du-lich/</loc>
+  <changefreq>Daily</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.dealsoc.vn/tp-ho-chi-minh/deal-dich-vu/</loc>
+  <changefreq>Daily</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.dealsoc.vn/tp-ho-chi-minh/deal-thoi-trang-my-pham/</loc>
+  <changefreq>Daily</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.dealsoc.vn/tp-ho-chi-minh/deal-san-pham-khac/</loc>
+  <changefreq>Daily</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.dealsoc.vn/tp-ho-chi-minh/deal-gan-day/phieu-giam-gia-cuc-re-moi-ngay-trang1.html</loc>
+  <changefreq>Weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.dealsoc.vn/dealsoc-la-gi.html</loc>
+  <changefreq>Monthly</changefreq>
+  <priority>0.50</priority>
+</url>
+<url>
+  <loc>http://www.dealsoc.vn/hoi-dap.html</loc>
+  <changefreq>Monthly</changefreq>
+  <priority>0.50</priority>
+</url>
+<url>
+  <loc>http://www.dealsoc.vn/dieu-khoan-su-dung.html</loc>
+  <changefreq>Monthly</changefreq>
+  <priority>0.50</priority>
+</url>
+</urlset>

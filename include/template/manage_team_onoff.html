@@ -1,0 +1,77 @@
+﻿<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_team('OnOff')}</ul>
+        
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="box-top"></div>
+            <div class="box-content">
+               <div class="head">
+                    <h2>On/Off deal</h2>
+                    <table width="100%" border="0">
+  <tr>
+    <td><ul class="filter" style="padding:0px; margin:0px;">
+						<li><form method="get">ID<input type="text"name="id" id="team_id" class="f-input" value="" style="height:14px;" />&nbsp;Sale<select name="sale" id="sale" style="width:160px;" datatype="require" require="require" onchange="this.form.submit()"><option value="0">---Chọn---</option>${option_business_staff($team['sale'])}</select></form>
+                        <script type="text/javascript" language="javascript">$("#team_id").val("{$team_id}");$("#sale").val("{$sale}");</script></li>
+					</ul></td>
+    <td><ul><li style="padding-left:20px;">- On/Off deal được sử dụng cho những deal chưa có voucher, đã hết hạn giao hàng, ....</li><li style="padding-left:20px;">- Deal đã Off sẻ không có ĐH trong danh sách đã xác nhận</li></ul></td>
+  </tr>
+</table>
+
+                    
+					
+				</div>
+                <div class="sect">
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+					<tr><th width="40">ID</th>
+					<th width="400">Deal name</th>
+					<th width="80" nowrap>Category</th>
+					<th width="100">Date</th>
+					<th width="50">Deal tipped</th>
+					<th width="60" nowrap>Price (<span class="money">{$currency}</span>)</th>
+					<th width="100">Operation</th></tr>
+					<!--{loop $teams $index $one}-->
+					<!--${$oldstate = $one['state']}-->
+					<!--${$one['state'] = team_state($one)}-->
+					<tr ${$index%2?'':'class="alt"'} id="team-list-id-{$one['id']}">
+						<td>{$one['id']}</a></td>
+						<td>
+							${$one['team_type']=='normal' ? '[Deal]' : ''}
+							${$one['team_type']=='seconds' ? '[Deal]' : ''}
+							${$one['team_type']=='goods' ? '[Goods]' : ''}
+							<a class="deal-title" href="/team.php?id={$one['id']}" target="_blank">{$one['short_title']}</a>
+						</td>
+						<td nowrap><strong><!--{if $cities[$one['city_id']]['name']}-->{$cities[$one['city_id']]['name']}<!--{else}-->Toàn Quốc<!--{/if}--></strong><br/>{$groups[$one['group_id']]['name']}</td>
+						<td nowrap>${date('Y-m-d',$one['begin_time'])}<br/>${date('Y-m-d',$one['end_time'])}</td>
+						<td nowrap>
+                        <!--${
+                        	$total_qty = DB::GetQueryResult("SELECT sum(quantity) as totalQty FROM `order` WHERE team_id=".$one['id']);
+                            $total_qty_confirm = DB::GetQueryResult("SELECT sum(quantity) as totalQty_confirm FROM `order` WHERE team_id=".$one['id']." AND state IN ('confirmed', 'pending')");
+                            $total_qty_pay = DB::GetQueryResult("SELECT sum(quantity_successful) as totalQty_pay FROM `order` WHERE team_id=".$one['id']." AND state='pay'");
+                            $total_qty_delivered = DB::GetQueryResult("SELECT sum(quantity) as totalQty_delivered FROM `order` WHERE team_id=".$one['id']." AND state='delivered'");
+                            
+                            $total_qty_cancel = DB::GetQueryResult("SELECT sum(quantity) as totalQty_cancel FROM `order` WHERE team_id=".$one['id']." AND state IN ('canceled', 'dealsoc_cancel')");
+                            $total_qty_unpay = DB::GetQueryResult("SELECT sum(quantity) as totalQty_unpay FROM `order` WHERE team_id=".$one['id']." AND state='unpay'");
+                        }-->
+                        {$one['now_number']}/{$one['min_number']}<br /><strong>{$total_qty['totalqty']}/${intval($total_qty_pay['totalqty_pay'])}/${intval($total_qty_confirm['totalqty_confirm'])}/${intval($total_qty_delivered['totalqty_delivered'])}/${intval($total_qty_cancel['totalqty_cancel'])}/${intval($total_qty_unpay['totalqty_unpay'])}</strong></td>
+					  <td nowrap align="right">${print_price(moneyit($one['team_price']))}<br/>${print_price(moneyit($one['market_price']))}</td>
+						<td class="op" align="center"><!--{if $one['status']=='Y'}--><a href="/ajax/manage.php?action=teamoff&id={$one['id']}" class="ajaxlink"><img src="/static/css/images/off.gif" alt="OFF" title="OFF" border="0" /></a><!--{else}--><a href="/ajax/manage.php?action=teamon&id={$one['id']}" class="ajaxlink"><img src="/static/css/images/on.gif" alt="ON" title="ON" border="0" /></a><!--{/if}--></td>
+					</tr>
+					<!--{/loop}-->
+					<tr><td colspan="7">{$pagestring}</tr>
+                    </table>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

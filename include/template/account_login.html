@@ -1,0 +1,99 @@
+<!--{include header}-->
+
+<div id="bdw" class="bdw">
+  <div id="bd" class="cf">
+    <div id="login">
+    	<div id="signup">
+    	<div class="dashboard" id="dashboard">
+        <ul>
+          ${current_frontend()}
+        </ul>
+      </div></div>
+	</div>
+      <div id="contentfontend" class="login-box">
+        <div class="box clear">
+          <div class="subbox-content">
+            <div class="sect" style="background-color:#FFFFFF">
+              <div align="left" style="padding:20px; padding-top:10px;"><div style="font-size:17px;padding-bottom:10px">
+              <h2>Đăng nhập bằng tài khoản {$INI['system']['abbreviation']}<span>&nbsp;hoặc <a href="/account/signup.php">Đăng ký</a></span></h2>
+            </div>
+                <form id="login-user-form" method="post" action="/account/login.php" class="validator">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td align="left" valign="top" width="50%" style="padding-right:20px"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tbody>
+                            <tr>
+                              <td width="24"><img src="/static/css/images/faqbox_topleft.gif" width="24" height="20"></td>
+                              <td style="background: url(&quot;/static/css/images/faqbox_topbg.gif&quot;) repeat-x scroll 0% 0% transparent;"></td>
+                              <td width="23"><img src="/static/css/images/faqbox_topright.gif" width="23" height="20"></td>
+                            </tr>
+                            <tr>
+                              <td style="background: url(&quot;/static/css/images/faqbox_leftbg.gif&quot;) repeat-y scroll right center transparent;">&nbsp;</td>
+                              <td bgcolor="#f1f1f1"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                  <tbody>
+                                    <tr>
+                                      <td align="left" height="35"><div class="field email" style="width:550px;">
+                                          <label for="login-email-address">Email</label>
+                                          <input type="text" size="30" name="email" id="login-email-address" class="f-input" value="" require="true" datatype="require|limit" min="2" />
+                                        </div></td>
+                                    </tr>
+                                    <tr align="left">
+                                      <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                                    </tr>
+                                    <tr>
+                                      <td align="left" height="35"><div class="field password" style="width:600px">
+                                          <label for="login-password">Mật khẩu</label>
+                                          <input type="password" size="30" name="password" id="login-password" class="f-input" require="true" datatype="require" />
+                                          <span class="lostpassword" style="margin-left:10px; margin-top:15px;"><a href="/account/repass.php">Quên mật khẩu?</a></span> </div></td>
+                                    </tr>
+                                    <tr align="left">
+                                      <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                                    </tr>
+                                    <tr>
+                                      <td align="left" height="35" style="padding-left:80px;"><div class="field autologin" style="width:145px; white-space:nowrap"><table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><input style="margin-left:45px" type="checkbox" value="1" name="auto-login" id="autologin" class="f-check" checked /></td>
+    <td><label for="autologin">Tự động đăng nhập</label></td>
+  </tr>
+</table></div></td>
+                                    </tr>
+                                    <tr align="right">
+                                      <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                                    </tr>
+                                    <tr>
+                                      <td align="left" height="35"><div class="act">
+                                          <input style="margin-left:130px" type="submit" value="Đăng nhập" name="commit" id="login-submit" class="formbutton"/>
+                                        </div></td>
+                                    </tr>
+                                  </tbody>
+                                </table></td>
+                              <td style="background: url(&quot;/static/css/images/faqbox_rightbg.gif&quot;) repeat-y scroll right center transparent;">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td><img src="/static/css/images/faqbox_bottomleft.gif" alt="" width="24" border="0" height="21"></td>
+                              <td style="background: url(&quot;/static/css/images/faqbox_bottombg.gif&quot;) repeat-x scroll 0% 0% transparent;"></td>
+                              <td><img src="/static/css/images/faqbox_bottomright.gif" alt="" width="23" border="0" height="21"></td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                      <td><img src="/static/css/images/separator.jpg" width="22" height="407" /></td>
+                      <td width="40%" style="padding-left:30px; padding-top:50px;" valign="top"><div class="side-tip">
+                          <h2>Chưa có tài khoản trên {$INI['system']['abbreviation']}?</h2>
+                          <p style="background:url(/static/css/images/btn.gif) no-repeat; height:57px; padding-top:17px;padding-left:50px"><a href="/account/signup.php" style="font-size:16px; color:#FFFFFF"><strong>Đăng ký ngay</strong></a></p>
+                        </div></td>
+                    </tr>
+                  </table>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="box-bottom"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- bd end -->
+</div>
+<!-- bdw end -->
+<div align="center">
+<!--{include footer}--></div>

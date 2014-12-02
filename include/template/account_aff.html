@@ -1,0 +1,71 @@
+<!--{include header}-->
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="referrals">
+	<div class="dashboard" id="dashboard">
+		<ul>${current_account('/account/aff.php')}</ul>
+	</div>
+    <div id="content" class="invites refers">
+        <div class="box clear">
+            <div class="box-top"></div>
+            <div class="box-content">
+                <div class="head">
+					<!--{if 'index'==$s}-->
+                    <h2>Affiliate: tất cả (Tổng cộng : &nbsp;${print_price($summary)} <span class="currency">{$currency}</span>)</h2>
+					<!--{elseif 'pending'==$s}-->
+                 	<h2>Affiliate: chờ duyệt (Tổng cộng : &nbsp;${print_price($summary)} <span class="currency">{$currency}</span>)</h2>
+					<!--{elseif 'record'==$s}-->
+                    <h2>Affiliate: đã duyệt (Tổng cộng : &nbsp;${print_price($summary)} <span class="currency">{$currency}</span>)</h2>
+                 	<!--{elseif 'cancel'==$s}-->
+                    <h2>Affiliate: Hủy (Tổng cộng : &nbsp;${print_price($summary)} <span class="currency">{$currency}</span>)</h2>
+					<!--{else}-->
+                    <h2>Affiliate: chưa hoàn tất (Tổng cộng : &nbsp;${print_price($summary)} <span class="currency">{$currency}</span>)</h2>
+			  		<!--{/if}-->
+             		<div style="height:20px;">&nbsp;</div>
+					<ul class="filter" style="margin-top:20px;">${mcurrent_misc_aff_front($s)}</ul>
+				</div>
+                <div class="sect">
+                    <div class="sect" style="background:#FFFFCC;padding:5px;">
+					<form method="get">
+						<input type="hidden" name="s" value="{$s}" />
+						<p style="margin:5px 0;">
+                        &nbsp;Deal ID&nbsp;<input type="text" name="pid" value="${htmlspecialchars($pid)}" class="h-input" style="width:60px" />
+                        &nbsp;Người mua&nbsp;<input type="text" name="puser" value="${htmlspecialchars($puser)}" class="h-input" style="width:120px" />
+                        &nbsp;Thời điểm mua&nbsp;<input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="pday" value="{$pday}" />
+                        &nbsp;<input type="submit" value="Lọc dữ liệu" class="formbutton"  style="padding:1px 6px;"/></p>
+					<form>
+					</div>
+					<div class="clear"></div>
+                     <div class="sect">
+                    <table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table" width="100%">
+					<tr><th width="300">DealID/Deal</th><th>Người mua</th><th width="430">Từ IP/tên miền<br />thời điểm click/mua</th></tr>
+					<!--{loop $affs $index $one}-->
+					<tr valign="top" ${$index%2?'':'class="alt"'} id="order-list-id-{$one['id']}">
+						<td style="text-align:left">
+                        {$one['team_id']} <br />                   
+                        <a class="deal-title" href="/team.php?id={$one['team_id']}" target="_blank">
+                        {$teams[$one['team_id']]['title']}</a>
+                        </td>
+						<td style="text-align:left">{$users[$one['buy_uid']]['email']}<br/>
+                        ID : {$one['buy_uid']}<br/>{$users[$one['buy_uid']]['username']}<br/>{$one['buy_ip']}<!--{if Utility::IsMobile($users[$one['user_id']]['mobile'])}--><br/><a href="/ajax/misc.php?action=sms&v={$users[$one['buy_uid']]['mobile']}" class="ajaxlink">{$users[$one['buy_uid']]['mobile']}</a><!--{/if}-->
+                         <br/>
+                        Tiền thưởng : <strong>${print_price($one['credit'])}</strong> {$currency}
+                        </td>
+						<td style="text-align:left">{$one['click_ip']}<br/>${cut_string($one['click_domain'],40,'...')}<br/>{$one['click_time']}<br/>{$one['buy_time']} </td>
+					</tr>
+					<!--{/loop}-->
+					<tr><td colspan="3">{$pagestring}</tr>
+                    </table>
+                    </div>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+    <div id="sidebar">
+		<!--{*include block_side_affnotice*}-->
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+<!--{include footer}-->

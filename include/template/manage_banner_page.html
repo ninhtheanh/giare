@@ -1,0 +1,42 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="partner">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_system('page')}</ul>
+	</div>
+	<div id="content" class="clear mainwide">
+        <div class="clear box">
+            <div class="subbox-top"><div class="subhead"><h2>Pape editing</h2></div></div>
+            <div class="box-content">
+                <div class="sect">
+                    <form method="post">
+						<div class="field">
+							<label>Page</label>
+							<select name="id" id="manage_system_page_id" class="f-input" onchange="X.manage.loadpage(this.options[this.selectedIndex].value);">${Utility::Option($pages, $id, '-')}</select>
+						</div>
+					<!--{if $content||$id}-->
+						<div class="field">
+							<label>Page content</label>
+							<div style="float:left;"><textarea style="width:750px;height:500px;" class="editor" name="value">${htmlspecialchars_decode($value)}</textarea></div>
+						</div>
+					<!--{/if}-->
+                        <div class="act">
+                            <input type="submit" value="Save" name="commit" class="formbutton"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+	</div>
+
+<div id="sidebar">
+</div>
+
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

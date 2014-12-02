@@ -1,0 +1,6 @@
+Xin chào {$user['username']}, <br />
+<br />
+<!--Thank you for registering on {$INI['system']['sitename']}，please click the following link to verify your Email-->Cảm ơn bạn đã đăng ký vào ngày {{$INI['system']['sitename']}, hãy nhấp vào liên kết sau đây để xác minh Email của bạn:<br />
+<br />
+<a href="{$INI['system']['wwwprefix']}/account/verify.php?code={$user['secret']}">{$INI['system']['wwwprefix']}/account/verify.php?code={$user['secret']}</a><br />
+<br />--<br />{$INI['system']['sitename']} - Collective Buying Everyday

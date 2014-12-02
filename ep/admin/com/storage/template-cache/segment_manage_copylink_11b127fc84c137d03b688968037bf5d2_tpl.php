@@ -1,0 +1,1 @@
+<?php $IEM = $tpl->Get('IEM'); ?>&nbsp;&nbsp;<a id="hrefSegmentManageCopy_<?php if(isset($GLOBALS['SegmentID'])) print $GLOBALS['SegmentID']; ?>" class="SegmentManageCopyLink" href="index.php?Page=Segment&Action=Copy&id=<?php if(isset($GLOBALS['SegmentID'])) print $GLOBALS['SegmentID']; ?>"><?php print GetLang('Copy'); ?></a>

@@ -1,0 +1,569 @@
+<!--{include header}-->
+
+<div id="bdw" class="bdw cf">
+  <div id="bd" class="cf"> 
+    <!--{if $order && $order['service']!='cashdelivery' && $order['service']!='cashoffice' }-->
+    <div id="sysmsg-tip" style="padding-top:5px;">
+      <div class="sysmsg-tip-top"></div>
+      <div class="sysmsg-tip-content"><img align="absmiddle" src="/static/css/images/alert.gif" width="24" height="24" />Bạn đã đặt hàng, nhưng chưa thanh toán. <a href="/order/check.php?id={$order['id']}">Kiểm tra đơn hàng và thanh toán </a><span id="sysmsg-tip-close" class="sysmsg-tip-close">Đóng </span></div>
+      <div class="sysmsg-tip-bottom"></div>
+    </div>
+    <!--{/if}-->
+    <div id="deal-default">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td align="left" valign="top"><table>
+              <tr>
+                <td align="left" valign="top"><div class="dashboard" id="dashboard">
+                    <ul>
+                      ${current_frontend()}
+                    </ul>
+                  </div></td>
+                
+              </tr>
+            </table>
+            <div id="content">
+              <div class="box-top"></div>
+              <div id="deal-intro" class="cf">
+                <div class="banner-bg" style="padding:10px;">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td align="left" valign="top"><div class="side">
+                          <div class="deal-buy-cover-img" id="team_images"> 
+                            <!--{if $team['image1']||$team['image2']}-->
+                            <div class="mid">
+                              <ul>
+                                <li class="first"><img src="${team_image($team['image'])}"/></li>
+                                <!--{if $team['image1']}-->
+                                <li><img src="${team_image($team['image1'])}"/></li>
+                                <!--{/if}--> 
+                                <!--{if $team['image2']}-->
+                                <li><img src="${team_image($team['image2'])}"/></li>
+                                <!--{/if}--> 
+                                <!--{if $team['image3']}-->
+                                <li><img src="${team_image($team['image3'])}"/></li>
+                                <!--{/if}--> 
+                                <!--{if $team['image4']}-->
+                                <li><img src="${team_image($team['image4'])}"/></li>
+                                <!--{/if}--> 
+                                <!--{if $team['image5']}-->
+                                <li><img src="${team_image($team['image5'])}"/></li>
+                                <!--{/if}-->
+                              </ul>
+                              <div id="img_list"> <a ref="1" class="active">1</a> 
+                                <!--${$imageindex=1;}--> 
+                                <!--{if $team['image1']}--> 
+                                <a ref="${++$imageindex}" >{$imageindex}</a> 
+                                <!--{/if}--> 
+                                <!--{if $team['image2']}--> 
+                                <a ref="${++$imageindex}" >{$imageindex}</a> 
+                                <!--{/if}--> 
+                                <!--{if $team['image3']}--> 
+                                <a ref="${++$imageindex}" >{$imageindex}</a> 
+                                <!--{/if}--> 
+                                <!--{if $team['image4']}--> 
+                                <a ref="${++$imageindex}" >{$imageindex}</a> 
+                                <!--{/if}--> 
+                                <!--{if $team['image5']}--> 
+                                <a ref="${++$imageindex}" >{$imageindex}</a> 
+                                <!--{/if}--> 
+                              </div>
+                            </div>
+                            <!--{else}--> 
+                            <img src="${team_image($team['image'])}" /> 
+                            <!--{/if}--> 
+                          </div>
+                        </div></td>
+                      <td align="left" valign="top" style="padding-left:15px; padding-right:5px;"><div align="left">
+                          <h1 style="text-align:justify;font-size:130%; font-weight:bold; color:#686868"><!--{if $team['delivery_properties']==1 || ($city['id']==556 && $team['group_id']!=23)}--><img src="/static/img/icon_product.gif" width="135" height="30" align="absmiddle" alt="Giao sản phẩm" /><!--{else}--><img src="/static/img/icon_voucher.gif" width="135" height="30" align="absmiddle" alt="Giao phiếu" /><!--{/if}--><br />{$team['title']}</h1>
+                        </div>
+                        <div align="left" style="padding-left:3px;">
+                          <table width="100%" border="0">
+                            <tr>
+                              <td align="center" valign="top"><!--{if ($team['state']=='soldout')}-->
+                                
+                                <div class="deal-team-price"><span>${print_price(moneyit($team['team_price']))}<sup style="font-size:60%; text-transform:none">{$currency}</sup></span></div>
+                                
+                                <!--{elseif $team['close_time']}-->
+                                
+                                <div class="deal-team-price"><span>${print_price(moneyit($team['team_price']))}<sup style="font-size:60%; text-transform:none">{$currency}</sup></span></div>
+                                
+                                <!--{else}-->
+                                
+                                <div class="deal-team-price"><span>${print_price(moneyit($team['team_price']))}<sup style="font-size:60%; text-transform:none">{$currency}</sup></span></div>
+                                
+                                <!--{/if}--></td>
+                              <td align="left" valign="top"><div class="deal-price"> 
+                                  <!--{if ($team['state']=='soldout')}--> 
+                                  <span class="deal-price-soldout"></span> 
+                                  <!--{elseif $team['close_time']}--> 
+                                  <span class="deal-price-expire"></span> 
+                                  <!--{else}--><span><a ${$team['begin_time']<time()?'href="/team/buy.php?id='.$team['id'].'"':''}><img src="/static/css/images/but_buynow.gif" width="134" height="41" alt="Deal ngay" /></a></span><!--{/if}--></div></td>
+                            </tr>
+                            <tr>
+                              <td align="left" valign="top" colspan="2" style="padding-bottom:5px; padding-top:5px;"><table width="100%" border="0">
+                                  <tr>
+                                    <td align="center" valign="top" width="33%" style="border-right:#CCC 1px solid"><div class="deal-market-price">Giá thị trường<br />
+                                        <span>${print_price(moneyit($team['market_price']))}</span><sup style="font-size:60%; text-transform:none">{$currency}</sup></div></td>
+                                    <td align="center" valign="top" width="33%" style="border-right:#CCC 1px solid"><div class="deal-save-price" style="white-space:nowrap">Tiết kiệm<br />
+                                        <span>${print_price($discount_price)}</span><sup style="font-size:60%; text-transform:none">{$currency}</sup></div></td>
+                                    <td align="center" valign="top" width="33%"><div class="deal-off-percent">Giảm<br />
+                                        <span>${ceil(moneyit((100*($team['market_price'] - $team['team_price'])/$team['market_price'])))}%</span></div></td>
+                                  </tr>
+                                </table></td>
+                            </tr>
+                          </table>
+                        </div></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="deal-share">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td align="right" valign="top" width="12"><img src="/static/css/images/purchase_bg_01.png" width="12" height="70" /></td>
+                    <td align="left" valign="top" width="170" style="background:url(/static/css/images/purchase_bg_02.png) repeat-x left top"><div align="left" style="padding-top:10px; white-space:nowrap"><strong style="font-size:80%">Rủ nhau cùng mua với bạn bè:</strong></div>
+                      <div align="left" style="padding-top:5px;padding-left:5px; overflow:hidden; width:170px;">
+                        <table border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td align="left" valign="top" nowrap="nowrap"><a href="${share_facebook($team)}"><img src="/static/css/images/facebook.gif" width="27" height="27" border="0" /></a>&nbsp;&nbsp;<a href="${share_twitter($team)}"><img src="/static/css/images/twitter.gif" width="27" height="27" border="0" /></a>&nbsp;&nbsp;<a href="${share_mail($team)}"><img src="/static/css/images/mail.gif" width="27" height="27" border="0" /></a></td>
+                            <td align="right" valign="top" style="padding-top:5px; padding-left:5px;" width="46"><div id="fb-root"></div>
+                              <fb:like href="http://www.dealsoc.vn/{$city['slug']}/${seo_url($team['short_title'],$team['id'],$url_suffix)}" send="false" layout="button_count" width="46" show_faces="true" action="like" font="arial"></fb:like></td>
+                          </tr>
+                        </table>
+                      </div></td>
+                    <td align="left" valign="top" width="12"><img src="/static/css/images/purchase_bg_03.png" width="12" height="70" /></td>
+                    <td align="left" valign="top" width="10">&nbsp;</td>
+                    <td align="right" valign="top" width="12"><img src="/static/css/images/purchase_bg_01.png" width="12" height="70" /></td>
+                    <td align="left" valign="top" style="background:url(/static/css/images/purchase_bg_02.png) repeat-x left top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td width="75%" align="left" valign="top"><!--{if $team['close_time']}-->
+                            
+                            <div class="deal-box deal-timeleft deal-off" id="deal-timeleft" curtime="{$now}000" diff="{$diff_time}000">
+                              <h3><strong>Deal đã đóng lúc</strong></h3>
+                              <div class="limitdate">
+                                <p class="deal-buy-ended"><!--{if $team['close_time']>0}-->lúc ${date('H:i:s', $team['close_time'])} ngày ${date('d-m-Y', $team['close_time'])}<!--{else}-->lúc ${date('H:i:s', $team['end_time'])} ngày ${date('d-m-Y', $team['end_time'])}<!--{/if}--></p>
+                              </div>
+                            </div>
+                            
+                            <!--{else}-->
+                            
+                            <div class="deal-box deal-timeleft deal-on" id="deal-timeleft" curtime="{$now}000" diff="{$diff_time}000">
+                              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td width="22%" align="left" valign="middle" nowrap="nowrap"><h3 style="margin-top:3px;">Thời gian <br />
+                                      voucher giảm giá</h3></td>
+                                  <td width="78%" align="left" valign="top" style="padding-left:5px;"><div class="limitdate">
+                                      <ul id="counter">
+                                        <li><span>${$left_hour+(24*$left_day)}:{$left_minute}:{$left_time}</span></li>
+                                      </ul>
+                                    </div></td>
+                                </tr>
+                              </table>
+                            </div>
+                            
+                            <!--{/if}--></td>
+                          <td width="25%" align="left" valign="top"><!--{if $team['close_time']==0}--> 
+                            <!--{if $team['state']=='none'}-->
+                            
+                            <div class="deal-box deal-status" id="deal-status">
+                              <div class="deal-buy-tip-top" style="white-space:nowrap">Nhóm <strong>{$team['now_number']}</strong> người đã mua</div>
+                              <!--<div class="progress-pointer" style="padding-left:{$bar_size-$bar_offset}px;"><span></span></div>
+                            <div style="clear:both"></div>-->
+                              <div class="progress-bar">
+                                <div class="min">&nbsp;</div>
+                                <div class="progress-left" style="width:{$bar_size-$bar_offset}px;"></div>
+                                <div class="progress-right"></div>
+                                <div class="max" style="color:#ff6600;">{$team['min_number']}</div>
+                              </div>
+                              <div style="clear:both"></div>
+                              <div class="deal-buy-tip-btm">Cần nhóm <strong>{$team['min_number']-$team['now_number']} </strong>mua giá tốt.</div>
+                            </div>
+                            
+                            <!--{else}-->
+                            
+                            <div class="deal-box deal-status deal-status-open" id="deal-status"> 
+                              <!--{if $id_promotion>0 && $team['id']==$id_promotion}-->
+                              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                
+                                  <td align="left" valign="middle" rowspan="2" style="padding-right:3px; padding-top:3px"><img src="/static/css/images/deal-buy-succ.gif" align="absmiddle" width="27" height="28" /></td>
+                                  <td align="left" valign="top"><div class="deal-buy-tip-top" style="font-size:88%; white-space:nowrap">Nhóm <strong>{$team['now_number']}</strong> người đã mua</div>
+                                    <div style="font-size:85%; white-space:nowrap">Có <span style="font-size:18px; font-weight:bold; font-family:Arial">${$total_maso = countPrizeCodes($id_promotion)}</span> mã số dự thưởng</div></td>
+                                </tr><tr>
+                                  <td align="left" valign="top"><!--{if $team['max_number'] && $team['max_number']>$team['now_number']}-->
+                                    
+                                    <div class="deal-buy-tip-btm" style="white-space:nowrap">Chỉ còn lại <strong>{$team['max_number']-$team['now_number']}</strong> cơ hội nhóm mua!</div>
+                                    <!--{/if}--></td>
+                                </tr>
+                              </table>
+                              <!--{else}-->
+                              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                
+                                  <td align="left" valign="middle" rowspan="2" style="padding-right:3px; padding-top:3px"><img src="/static/css/images/deal-buy-succ.gif" align="absmiddle" width="27" height="28" /></td>
+                                  <td align="left" valign="top"><div class="deal-buy-tip-top" style="font-size:88%; white-space:nowrap">Nhóm <strong>{$team['now_number']}</strong> người đã mua</div>
+                                    <div class="deal-buy-on" style="font-size:85%;"> 
+                                      <!--{if $team['max_number']>$team['now_number']||$team['max_number']==0}--> 
+                                      Vẫn còn nhóm mua được 
+                                      <!--{/if}--> 
+                                    </div></td>
+                                </tr><tr>
+                                  <td align="left" valign="top"><!--{if $team['max_number']&&$team['max_number']>$team['now_number']}-->
+                                    
+                                    <div class="deal-buy-tip-btm" style="white-space:nowrap">Chỉ còn lại <strong>{$team['max_number']-$team['now_number']}</strong> cơ hội nhóm mua!</div>
+                                    <!--{/if}--> 
+                                    <!--{if $team['reach_time']}--> 
+                                    <!--<p class="deal-buy-tip-btm">Mức tối thiểu <strong>{$team['min_number']}</strong> người đã đạt lúc: ${date("H:i:s",$team['reach_time'])} ngày ${date("d/m/Y",$team['reach_time'])}</p>--> 
+                                    <!--{/if}--></td>
+                                </tr>
+                              </table>
+                              <!--{/if}--> 
+                            </div>
+                            
+                            <!--{/if}--> 
+                            <!--{else}-->
+                            
+                            <div class="deal-box deal-status deal-status-{$team['state']}" id="deal-status">
+                              <div class="deal-buy-{$team['state']}">
+                                <div class="deal-buy-tip-total" style="white-space:nowrap; color:#3399cc"><strong>{$team['now_number']} </strong> người đã nhóm mua</div>
+                              </div>
+                            </div>
+                            
+                            <!--{/if}--></td>
+                        </tr>
+                      </table></td>
+                    <td align="left" valign="top" width="12"><img src="/static/css/images/purchase_bg_03.png" width="12" height="70" /></td>
+                  </tr>
+                </table>
+                </div>
+              </div>
+              <div align="left"><img src="/static/css/images/cont_bottomcurve.gif" width="739" height="10" /></div>
+            </div>
+            <div align="left"><img src="/static/css/images/dk_nb.gif" width="741" height="36" /></div>
+            <div align="left" style="background: url(/static/css/images/dk_nb_c.gif) repeat-y left top; padding-left:5px; padding-right:10px;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="left" valign="top" width="50%" style="padding:10px;padding-right:15px;text-align:justify;"><!--{if strip_tags($team['summary'])!=$team['summary']}-->
+                    
+                    <div align="justify" style="padding-top:10px;">{$team['summary']}</div>
+                    
+                    <!--{else}-->
+                    
+                    <div class="digest" align="justify">${strip_tags($team['summary'])} </div>
+                    
+                    <!--{/if}--></td>
+                  <td align="left" valign="top" width="50%" style="padding:10px;text-align:justify;"><!--{if trim(strip_tags($team['notice']))}-->
+                    
+                    <div class="blk cf" style="padding-top:10px;">{$team['notice']}</div>
+                    
+                    <!--{/if}--></td>
+                </tr>
+              </table>
+            </div>
+            <div align="left"><img src="/static/css/images/dk_nb_b.gif" width="741" height="18" /></div>
+            <div style="background:url(/static/css/images/information.gif) no-repeat left top; height:78px;">
+              <div style="padding-top:24px; padding-left:20px" align="left">
+                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                  <tbody>
+                    <tr>
+                      <td width="138" align="left"><a href="/{$city['slug']}/${seo_url($team['short_title'],$team['id'],$url_suffix)}#div_dealdesc"><img src="/static/css/images/tab-description-disable.gif" alt="Description on this dealsoc" width="136" height="36"></a></td>
+                      <td width="10">&nbsp;</td>
+                      <td width="138" align="left"><a href="#div_dealcomment" name="div_dealcomment"></a><img src="/static/css/images/tab-forum.gif" alt="Comment on this dealsoc" width="138" height="38"></a></td>
+                      <td width="432">&nbsp;</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div align="left" style="background: url(/static/css/images/information_c.gif) repeat-y left top; padding-left:7px; padding-right:7px; overflow:hidden">
+              <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                <!--{loop $asks $one}-->
+                <tr>
+                  <td align="left" valign="top" style="padding-right:10px;"><div class="topic-content"> <span style="color:#249BC6; font-weight:bold; font-size:14px;">Mời các bạn cùng thảo luận Deal: </span>${nl2br(htmlspecialchars($team['title']))} </div></td>
+                </tr>
+                <!--{/loop}-->
+                <tr>
+                  <td align="right" valign="top" style="margin-top:10px;padding-right:10px"><!--${
+                        $now_time = date("Y-m-d",time());
+                        $d = date("D",time());
+                        if($d=='Sun'){
+                            $time = ' 23:00:00';
+                        }else{
+                            $time = ' 23:59:59';	
+                        }
+                        $time_off = strtotime($now_time.$time);
+                       
+                      }--> 
+                    <!--{if $time_off>time()}-->
+                    
+                    <div style="padding:10px;"> 
+                      <!--{if is_login() && !in_array($team['state'],array('soldout','expired')) && $team['end_time']>time()}-->
+                      <form id="forum-topic-form" method="post" action="/{$city['slug']}/${seo_url($team['short_title'],$team['id'],$url_suffix)}?comment=display" class="validator">
+                        <input type="hidden" name="parent_id" value="{$topic['id']}" />
+                        <input type="hidden" name="city_id" value="{$city['id']}" />
+                        <input type="hidden" name="team_id" value="{$topic['team_id']}" />
+                        <input type="hidden" name="public_id" value="{$topic['public_id']}" />
+                        <input type="hidden" name="id" value="{$topic['id']}" />
+                        <textarea style="width:680px;height:100px; border:#32ccfe 1px solid" name="topic_content" id="forum-new-topic-content" class="f-textarea" require="true" datatype="require"></textarea>
+                        <div align="right" style="padding-top:10px;">
+                          <div id="error" style="width:300px; float:left"></div>
+                          <img id="imgloading" align="absmiddle" src="/static/css/images/ajax-loader.gif" alt="processing..." />&nbsp;
+                          <button type="submit" name="commit" id="leader-submit" class="formbutton">Gửi</button>
+                        </div>
+                      </form>
+                      <!--{elseif !is_login()}--> 
+                      Vui lòng <a href="/account/login.php?r={$currefer}">Đăng nhập</a> hoặc <a href="/account/signup.php">Đăng ký</a> để gởi bài. 
+                      <!--{/if}-->
+                      <div class="clear"></div>
+                    </div>
+                    
+                    <!--{/if}--></td>
+                </tr>
+                <tr>
+                  <td align="left" valign="top" style="padding-right:10px" id="forum"><div style="border-top:dotted 1px #ccc"></div>
+                    <div class="sect" id="topic_content" style="padding-top:10px">
+                      <table id="replies-list" width="100%" cellspacing="0" cellpadding="0" border="0">
+                        <!--{loop $replies $index $one}--> 
+                        
+                        <!--${
+                              $topics = DB::GetQueryResult("SELECT count(*) as count FROM topic WHERE user_id='".$one['user_id']."'"); 
+                              $comments = DB::GetQueryResult("SELECT count(*) as count FROM topic_reply WHERE user_id_reply='".$one['user_id']."'");
+                              $buys = DB::GetQueryResult("SELECT sum(quantity) as count FROM `order` WHERE user_id='".$one['user_id']."'");  
+                              $buys['count'] = ($buys['count']) ? $buys['count'] : 0;                           
+                        }--> 
+                        
+                        <!--{if $one['status']=='N'}--> 
+                        <!--{if ($one['user_id']==$login_user_id) OR ($login_user['manager']=='Y')}-->
+                        <tr bgcolor="${($index%2) ? '#f1f3f5' : '#f1f3f5';}">
+                          <td width="100" valign="top" style="font-size:80%;"><a name="entry-{$one['id']}"></a>
+                            <div style="font-weight:bold; color:#666666; text-transform:capitalize"> 
+                              <!--{if ($login_user['manager']=='Y')}--> 
+                              <a href="/ajax/manage.php?action=userviewhistory&id={$one['user_id']}" class="ajaxlink">{$users[$one['user_id']]['realname']}</a> 
+                              <!--{else}--> 
+                              {$users[$one['user_id']]['realname']} 
+                              <!--{/if}--> 
+                            </div>
+                            <div class="avatar"><img src="${user_image($users[$one['user_id']]['avatar'])}" width="60" height="60" /></div>
+                            <div style="margin-top:10px;">Regs: ${date('d-m-Y',$users[$one['user_id']]['create_time'])}</div>
+                            <div>Topics: {$topics['count']}</div>
+                            <div>Comments: {$comments['count']}</div>
+                            <div>Mua : {$buys['count']}</div></td>
+                          <td align="left" valign="top"><div style="font-style:italic; font-size:80%"> <span style="float:right;">${Utility::HumanTime($one['create_time'])} 
+                              <!--{if is_manager()}--> 
+                              &nbsp;---&nbsp;<a href="/ajax/topic.php?action=topicshow&id={$one['id']}" class="ajaxlink" ask="sure to show the reply?"><strong>Hiển Thị</strong></a> | <a href="/ajax/topic.php?action=topicremove&id={$one['id']}" class="ajaxlink" ask="sure to delete the reply?"><strong>Xóa</strong></a> 
+                              <!--{/if}--> 
+                              </span>
+                              <div class="clear"></div>
+                            </div>
+                            <div align="justify" style="padding-left:5px;padding-top:5px;">${nl2br(htmlspecialchars($one['content']))} </div></td>
+                        </tr>
+                        <tr>
+                          <td align="left" colspan="2"><div style="border-bottom:dotted 1px #ccc">&nbsp;</div>
+                            <br /></td>
+                        </tr>
+                        <!--{/if}--> 
+                        <!--{else}-->
+                        
+                        <tr>
+                          <td width="100" valign="top" style="font-size:80%;"><a name="entry-{$one['id']}"></a>
+                            <div style="font-weight:bold; color:#666666; text-transform:capitalize"> 
+                              <!--{if ($login_user['manager']=='Y')}--> 
+                              <a href="/ajax/manage.php?action=userviewhistory&id={$one['user_id']}" class="ajaxlink">{$users[$one['user_id']]['realname']}</a> 
+                              <!--{else}--> 
+                              {$users[$one['user_id']]['realname']} 
+                              <!--{/if}--> 
+                            </div>
+                            <div class="avatar"><img src="${user_image($users[$one['user_id']]['avatar'])}" width="60" height="60" /></div>
+                            <div style="margin-top:10px;">Regs: ${date('d-m-Y',$users[$one['user_id']]['create_time'])}</div>
+                            <div>Topics : {$topics['count']}</div>
+                            <div>Comments : {$comments['count']}</div>
+                            <div>Mua : {$buys['count']}</div></td>
+                          <td align="left" valign="top"><div style="font-style:italic"><span style="float:right; font-size:80%">${Utility::HumanTime($one['create_time'])} 
+                              <!--{if is_manager()}--> 
+                              &nbsp;---&nbsp;<a href="/ajax/topic.php?action=topichidden&id={$one['id']}" class="ajaxlink" ask="sure to hidden the reply?"><strong>Ẩn</strong></a> | <a href="/ajax/topic.php?action=topicremove&id={$one['id']}" class="ajaxlink" ask="sure to delete the reply?"><strong>Xóa</strong></a> 
+                              <!--{/if}--> 
+                              </span>
+                              <div class="clear"></div>
+                            </div>
+                            <div align="justify" style="padding-left:5px;padding-top:5px;"> 
+                              <!--${
+				$filter =  array('nhommua', 'Nhommua', 'NhomMua', 'nhom_mua', 'nhom-mua', 'nhom mua','Nhom Mua','Nhom mua', 'cungmua', 'cung_mua', 'cung-mua', 'cung mua', 'muachung', 'mua_chung', 'mua-chung', 'mua chung', 'vndoan', 'vn_doan', 'vn-doan', 'vn doan', 'hotdeal', 'hot deal', 'hot-deal', 'hotdeal.vn', 'phagia', 'pha gia', 'cuc re', 'cucre', 'dealvip', 'deal vip');
+				foreach($filter as $v){
+					if(strpos($one['content'], $v) !== false) {
+							$one['content'] = str_ireplace($v,"*****",$one['content']);
+					}
+				}
+            }--> 
+                              ${nl2br(htmlspecialchars($one['content']))} </div>
+                            <div align="right" style="padding-top:10px;"> 
+                              <script type="text/javascript">
+								function ShowReplyTopic(id){
+									if(document.getElementById("showreplyform_"+id).style.display=="none"){									
+										$('#showreplyform_'+id).show();
+										$('#noneclick'+id).hide();
+										$('#clicked'+id).show();								
+										return;
+									}else{
+										$('#showreplyform_'+id).hide();
+										$('#noneclick'+id).show();
+										$('#clicked'+id).hide();							
+										
+									}
+								}
+								function ShowNeedLogin(id){
+									if(document.getElementById("needlogin_"+id).style.display=="none"){	
+										document.getElementById("needlogin_"+id).style.display="block";
+										return;
+									}else{
+										document.getElementById("needlogin_"+id).style.display="none";
+									}
+								}
+							</script> 
+                              <!--${
+              $total_count = DB::GetQueryResult("SELECT count(id) as total FROM topic_reply WHERE user_id='".$one['user_id']."' AND status NOT IN ('D') AND topic_id='".$one['id']."'"); 
+              $topic_reply = DB::GetQueryResult("SELECT * FROM topic_reply WHERE user_id='".$one['user_id']."' AND status NOT IN ('D') AND topic_id='".$one['id']."'", false);              
+        }--> 
+                              <!--{if is_login()}--> 
+                              <a href="javascript:void(0)" class="AnsView2" onclick="ShowReplyTopic('{$one['user_id']}_{$one['id']}')" id="noneclick{$one['user_id']}_{$one['id']}" style="text-decoration:none"><span>${(int)($total_count['total'])} thảo luận</span></a><a href="javascript:void(0)" class="AnsView1" onclick="ShowReplyTopic('{$one['user_id']}_{$one['id']}')" id="clicked{$one['user_id']}_{$one['id']}" style="text-decoration:none;display:none;"><span>${(int)($total_count['total'])} thảo luận</span></a> 
+                              <!--{elseif $my}--> 
+                              <a href="javascript:void(0)" class="AnsView2" onclick="ShowNeedLogin('{$one['user_id']}_{$one['id']}')" id="noneclick" style="text-decoration:none"><span>${(int)($total_count['total'])} đã thảo luận</span></a><a href="javascript:void(0)" class="AnsView1" onclick="ShowNeedLogin('{$one['user_id']}_{$one['id']}')" id="clicked" style="text-decoration:none;display:none;"><span>${(int)($total_count['total'])} thảo luận</span></a> 
+                              <!--{/if}--> 
+                            </div>
+                            <div style="clear:both"></div>
+                            <div style="padding-left:10px;padding-bottom:10px;display:none; padding-right:10px; padding-top:10px;" id="showreplyform_{$one['user_id']}_{$one['id']}"> 
+                              <!--{if (!empty($topic_reply))}--> 
+                              <!--{loop $topic_reply $indexs $ones}--> 
+                              
+                              <!--${
+                              $ctopics = DB::GetQueryResult("SELECT count(*) as count FROM topic WHERE user_id='".$ones['user_id_reply']."'"); 
+                              $ccomments = DB::GetQueryResult("SELECT count(*) as count FROM topic_reply WHERE user_id_reply='".$ones['user_id_reply']."'");
+                              $cbuys = DB::GetQueryResult("SELECT sum(quantity) as count FROM `order` WHERE user_id='".$ones['user_id_reply']."'");   
+                              $cbuys['count'] = ($cbuys['count']) ? $cbuys['count'] : 0;                                 
+                        	}-->
+                              
+                              <div style="border-bottom: #cccccc 1px dotted">&nbsp;</div>
+                              <!--${ $user_realname = DB::GetQueryResult("SELECT avatar, realname FROM `user` WHERE id='".$ones['user_id_reply']."'"); }-->
+                              <div style="padding-bottom:7px;"> 
+                                <!--{if $ones['status']=='N'}--> 
+                                <!--{if (($ones['user_id']==$login_user_id) OR ($login_user['manager']=='Y'))}-->
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                  <tr>
+                                    <td width="100" valign="top" style="font-size:80%"><a name="entry-{$one['id']}"></a>
+                                      <div class="avatar"><img src="${user_image($user_realname['avatar'])}" width="60" height="60" /></div>
+                                      <div style="margin-top:10px;">Regs: ${date('d-m-Y',$users[$one['user_id']]['create_time'])}</div>
+                                      <div>Topics : {$ctopics['count']}</div>
+                                      <div>Comments : {$ccomments['count']}</div>
+                                      <div>Mua : {$cbuys['count']}</div></td>
+                                    <td align="left" valign="top"><div style="font-style:italic; font-size:80%;margin-top:10px"> <span style="float:right;">${Utility::HumanTime($ones['create_time'])} 
+                                        <!--{if ($login_user['manager']=='Y')}--> 
+                                        &nbsp;---&nbsp; <a href="/ajax/topic.php?action=topicreplyshow&reply_id={$ones['id']}&id={$ones['topic_id']}" class="ajaxlink" ask="sure to show the reply?"><strong>Hiển thị</strong></a> | <a href="/ajax/topic.php?action=topicreplyremove&reply_id={$ones['id']}&id={$ones['topic_id']}" class="ajaxlink" ask="sure to delete the reply?"><strong>Xóa</strong></a> 
+                                        <!--{/if}--> 
+                                        </span><b> 
+                                        <!--{if ($login_user['manager']=='Y')}--> 
+                                        <a href="/ajax/manage.php?action=userviewhistory&id={$ones['user_id_reply']}" class="ajaxlink">{$user_realname['realname']}</a> 
+                                        <!--{else}--> 
+                                        {$user_realname['realname']} 
+                                        <!--{/if}--> 
+                                        </b>
+                                        <div class="clear"></div>
+                                      </div>
+                                      <div class="topic-content" style="padding-top:5px;"> 
+                                        <!--${
+                                            $filter =  array('nhommua', 'Nhommua', 'NhomMua', 'nhom_mua', 'nhom-mua', 'nhom mua','Nhom Mua','Nhom mua', 'cungmua', 'cung_mua', 'cung-mua', 'cung mua', 'muachung', 'mua_chung', 'mua-chung', 'mua chung', 'vndoan', 'vn_doan', 'vn-doan', 'vn doan', 'hotdeal', 'hot deal', 'hot-deal', 'hotdeal.vn', 'phagia', 'pha gia', 'cuc re', 'cucre', 'dealvip', 'deal vip');
+                                            foreach($filter as $v){
+                                                if(strpos($ones['content'], $v) !== false) {
+                                                        $ones['content'] = str_ireplace($v,"*****",$ones['content']);
+                                                }
+                                            }
+                                        }--> 
+                                        ${nl2br(htmlspecialchars($ones['content']))} </div></td>
+                                  </tr>
+                                </table>
+                                <!--{/if}--> 
+                                <!--{else}-->
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                  <tr>
+                                    <td width="100" valign="top" style="font-size:80%"><a name="entry-{$one['id']}"></a>
+                                      <div class="avatar"><img src="${user_image($user_realname['avatar'])}" width="60" height="60" /></div>
+                                      <div style="margin-top:10px;">Regs: ${date('d-m-Y',$users[$one['user_id']]['create_time'])}</div>
+                                      <div>Topics : {$ctopics['count']}</div>
+                                      <div>Comments : {$ccomments['count']}</div>
+                                      <div>Mua : {$cbuys['count']}</div></td>
+                                    <td align="left" valign="top"><div style="font-style:italic; margin-top:10px; font-size:80%"> <span style="float:right;">${Utility::HumanTime($ones['create_time'])} 
+                                        <!--{if ($login_user['manager']=='Y')}--> 
+                                        &nbsp;---&nbsp; 
+                                        <!--{if ($ones['status']=='Y')}--> 
+                                        <a href="/ajax/topic.php?action=topicreplyhidden&reply_id={$ones['id']}&id={$ones['topic_id']}" class="ajaxlink" ask="sure to hidden the reply？"><strong>Ẩn</strong></a> 
+                                        <!--{else}--> 
+                                        <a href="/ajax/topic.php?action=topicreplyshow&reply_id={$ones['id']}&id={$ones['topic_id']}" class="ajaxlink" ask="sure to show the reply？"><strong>Hiển thị</strong></a> 
+                                        <!--{/if}--> 
+                                        | <a href="/ajax/topic.php?action=topicreplyremove&reply_id={$ones['id']}&id={$ones['topic_id']}" class="ajaxlink" ask="sure to delete the reply？"><strong>Xóa</strong></a> 
+                                        <!--{/if}--> 
+                                        </span><b> 
+                                        <!--{if ($login_user['manager']=='Y')}--> 
+                                        <a href="/ajax/manage.php?action=userviewhistory&id={$ones['user_id_reply']}" class="ajaxlink">{$user_realname['realname']}</a> 
+                                        <!--{else}--> 
+                                        {$user_realname['realname']} 
+                                        <!--{/if}--> 
+                                        </b>
+                                        <div class="clear"></div>
+                                      </div>
+                                      <div class="topic-content" style="padding-top:5px;"> 
+                                        <!--${
+                                       $filter =  array('nhommua', 'Nhommua', 'NhomMua', 'nhom_mua', 'nhom-mua', 'nhom mua','Nhom Mua','Nhom mua', 'cungmua', 'cung_mua', 'cung-mua', 'cung mua', 'muachung', 'mua_chung', 'mua-chung', 'mua chung', 'vndoan', 'vn_doan', 'vn-doan', 'vn doan', 'hotdeal', 'hot deal', 'hot-deal', 'hotdeal.vn', 'phagia', 'pha gia', 'cuc re', 'cucre', 'dealvip', 'deal vip');
+                                        foreach($filter as $v){
+                                            if(strpos($ones['content'], $v) !== false) {
+                                                    $ones['content'] = str_ireplace($v,"*****",$ones['content']);
+                                            }
+                                        }
+                                    }--> 
+                                        ${nl2br(htmlspecialchars($ones['content']))} </div></td>
+                                  </tr>
+                                </table>
+                                <!--{/if}--> 
+                              </div>
+                              <!--{/loop}--> 
+                              <!--{/if}--> 
+                              <!--{if is_login() && !in_array($team['state'],array('soldout','expired')) && $team['end_time']>time()}-->
+                              <div align="center" style="padding-top:5px;">
+                                <form id="forum-reply-form_{$one['user_id']}_{$one['id']}" method="post" action="" class="validator">
+                                  <input type="hidden" name="user_id" value="{$one['user_id']}" />
+                                  <input type="hidden" name="topic_id" value="{$one['id']}" />
+                                  <textarea style="width:99%;height:50px; border:#32ccfe 1px solid" name="content-reply" id="forum-new-content" class="f-textarea" require="true" datatype="require"></textarea>
+                                  <div align="right" style="padding-top:10px;">&nbsp;
+                                    <button type="submit" name="replytopicuser" id="leader-submit" class="formbutton">Trả lời</button>
+                                  </div>
+                                </form>
+                              </div>
+                              <!--{elseif !is_login()}-->
+                              <div align="left" id="needlogin_{$one['user_id']}_{$one['id']}" style="padding-bottom:10px">Vui lòng <a href="/account/login.php?r={$currefer}">Đăng nhập</a> hoặc <a href="/account/signup.php">Đăng ký</a> để thảo luận.</div>
+                              <!--{/if}--> 
+                            </div></td>
+                        </tr>
+                        <tr>
+                          <td align="left" colspan="2"><div style="border-bottom:dotted 1px #ccc">&nbsp;</div>
+                            <br /></td>
+                        </tr>
+                        <!--{/if}--> 
+                        <!--{/loop}--> 
+                        <!--{if $count>10}-->
+                        <tr>
+                          <td colspan="2">{$pagestring}</td>
+                        </tr>
+                        <!--{/if}-->
+                      </table>
+                    </div></td>
+                </tr>
+              </table>
+            </div>
+            <div align="left"><img src="/static/css/images/information_b.gif" width="741" height="17" /></div></td>
+          <td align="left" valign="top"><div id="sidebar"> <!--{include block_side_support}--></div>
+            
+            <!--{include block_side_others}--> 
+            <!--{include block_side_ads}--></td>
+        </tr>
+      </table>
+    </div>
+    <!-- bd end --> 
+  </div>
+</div>
+<!-- bdw end --> 
+<!--{include footer}-->

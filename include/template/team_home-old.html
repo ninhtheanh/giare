@@ -1,0 +1,241 @@
+<!--{include header}-->
+<div id="bdw" class="bdw">
+  <div id="bd" class="cf">
+    <!--{if $order && $order['service']!='cashdelivery' && $order['service']!='cashoffice' }-->
+    <div id="sysmsg-tip" >
+      <div class="sysmsg-tip-top"></div>
+      <div class="sysmsg-tip-content">Bạn đã đặt mua deal này rồi. Vui lòng <a href="/order/check.php?id={$order['id']}">Kiểm tra đơn hàng và thanh toán<span id="sysmsg-tip-close" class="sysmsg-tip-close">Đóng</span></div>
+      <div class="sysmsg-tip-bottom"></div>
+    </div>
+    <!--{/if}-->
+    <div id="deal-default">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td align="left" valign="top"><table><tr><td align="left" valign="top">
+              <div class="dashboard" id="dashboard">
+                <ul>
+                  ${current_frontend()}
+                </ul>
+              </div></td><td valign="top"><div style="padding-top:7px;width:80px; overflow:hidden"><g:plusone></g:plusone></div></td><td style="padding-top:10px;" valign="top"><div id="fb-root"></div><fb:like href="http://www.dealsoc.vn" send="true" layout="button_count" width="150" show_faces="true" action="like" font="arial"></fb:like></td></tr></table>
+          <!--{if $homes}-->
+            <!--${$index=0}-->
+            <!--{loop $homes $team}-->
+            <!--{if $team['close_time']==0}-->
+            <div id="content">
+            <div class="box-top"></div>
+              <!--${
+                        $discount_price = $team['market_price'] - $team['team_price'];
+                        $discount_rate = team_discount($team);
+                        
+                        $left = array();
+                        $now = time();
+                        if($team['end_time']<$team['begin_time']){$team['end_time']=$team['begin_time'];}
+                        
+                       $diff_time = $left_time = $team['end_time']-$now;
+                        if ( $team['team_type'] == 'seconds' && $team['begin_time'] >= $now ) {
+                            $diff_time = $left_time = $team['begin_time']-$now;
+                        }
+                        
+                        $left_day = floor($diff_time/86400);
+                        $left_time = $left_time % 86400;
+                        $left_hour = floor($left_time/3600);
+                        $left_time = $left_time % 3600;
+                        $left_minute = floor($left_time/60);
+                        $left_time = $left_time % 60;
+                        /* progress bar size */
+                        $bar_size = ceil(150*($team['now_number']/$team['min_number']));
+                        $bar_offset = ceil(5*($team['now_number']/$team['min_number']));
+                        $partner = Table::Fetch('partner', $team['partner_id']);
+                        $team['state'] = team_state($team);
+                        
+                        if ($login_user_id && 0==$team['close_time']) {
+                            $order = DB::LimitQuery('order', array(
+                            'condition' => array(
+                                'team_id' => $id,
+                                'user_id' => $login_user_id,
+                                'state' => 'unpay',
+                                ),
+                            'one' => true,
+                            ));
+                        }
+                 }-->
+          <div id="deal-intro" class="cf">
+          <div class="banner-bg" style="padding:10px;z-index:99;position:relative">
+         
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="left" valign="top"><div class="side">
+                  <div class="deal-buy-cover-img" id="team_images_{$team['id']}">
+                    <a href="/{$city['slug']}/${seo_url($team['short_title'],$team['id'],$url_suffix)}"><img src="${team_image($team['image'])}" width="320" height="240" alt="{$INI['system']['abbreviation']}: phiếu giảm giá {$team['short_title']}" /></a>
+                   
+                  </div>
+                </div></td>
+              <td align="left" valign="top" style="padding-left:15px; padding-right:5px;"><div style="height:240px; overflow:hidden;"><!--{if $team['delivery_properties']==1 || ($city['id']==556 && $team['group_id']!=23)}--><img src="/static/img/icon_product.gif" align="absmiddle" /><!--{else}--><img src="/static/img/icon_voucher.gif" align="absmiddle" /><!--{/if}-->
+                <h1 style="margin-top:2px;"><a class="deal-today-link" href="/{$city['slug']}/${seo_url($team['short_title'],$team['id'],$url_suffix)}">{$team['title']}</a></h1> 
+                <div align="left"><a href="/{$city['slug']}/${seo_url($team['short_title'],$team['id'],$url_suffix)}" style="color:#1c95c0">               
+                <strong>Chi tiết Deal</strong></a>&nbsp;<a href="/{$city['slug']}/${seo_url($team['short_title'],$team['id'],$url_suffix)}?comment=display#div_dealcomment" style="color:#1c95c0"><img src="/static/css/images/comment.jpg" width="16" height="13" />&nbsp;<strong>Thảo luận Deal</strong></a>
+                </div></div>
+                </td>
+              <td width="147" align="left" valign="top">
+				<!--{if ($team['state']=='soldout')}-->
+                    <div class="deal-team-price"><div align="right">Deal bán: ${print_price(moneyit($team['team_price']))}}</div></div>
+                    <!--{elseif $team['close_time']}-->
+                    <div class="deal-team-price"><div align="right">Deal bán: ${print_price(moneyit($team['team_price']))}</div></div>
+                    <!--{else}-->
+                    <div class="deal-team-price"><div align="right">Deal bán: ${print_price(moneyit($team['team_price']))}</div></div>
+                    <!--{/if}-->
+                    <div class="deal-market-price"><div align="right">Deal gốc:&nbsp;${print_price(moneyit($team['market_price']))}</div></div>
+                    <div class="deal-save-price"><div align="right">Tiết kiệm: ${print_price($discount_price)}</div></div>
+                    
+                    <div class="deal-off-percent"><div align="right">Deal giảm: ${ceil(moneyit((100*($team['market_price'] - $team['team_price'])/$team['market_price'])))}%</div></div>
+                    
+                     <div style="text-align:center"><strong style="font-style:italic">Deal cực Hot!</strong></div>
+                    <div class="deal-price" style="margin-top:-15px;"><!--{if ($team['state']=='soldout')}--><span class="deal-price-soldout"></span><!--{elseif $team['close_time']}--><span class="deal-price-expire"></span><!--{else}--><span><a ${$team['begin_time']<time()?'href="/team/buy.php?id='.$team['id'].'"':''}><img src="/static/css/images/but_buynow.gif" width="134" height="41" alt="Deal ngay" /></a></span>
+              <!--{/if}-->
+            </div>
+            </td>
+            </tr>
+          </table>
+        </div>
+        <div class="deal-share">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="left" valign="top" width="12"><img src="/static/css/images/purchase_bg_01.png" width="12" height="70" /></td>
+              <td align="left" valign="top" width="25%" style="background:url(/static/css/images/purchase_bg_02.png) repeat-x left top">
+              <div align="left" style="padding-top:10px; white-space:nowrap"><strong style="font-size:90%">Rủ nhau cùng mua với bạn bè:</strong></div><div align="left" style="padding-top:5px;padding-left:15px"><table border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td align="left" valign="top" nowrap="nowrap"><a href="${share_facebook($team)}"><img src="/static/css/images/facebook.gif" border="0" width="27" height="27" /></a>&nbsp;&nbsp;<a href="${share_twitter($team)}"><img src="/static/css/images/twitter.gif" width="27" height="27" border="0" /></a>&nbsp;&nbsp;<a href="${share_mail($team)}"><img src="/static/css/images/mail.gif" border="0" width="27" height="27" /></a></td>
+                  </tr>
+                </table>
+				</div>
+              </td>
+              <td align="left" valign="top" width="12"><img src="/static/css/images/purchase_bg_03.png" width="12" height="70" /></td>
+              <td align="left" valign="top" width="10">&nbsp;</td>
+              <td align="left" valign="top" width="12"><img src="/static/css/images/purchase_bg_01.png" width="12" height="70" /></td>
+              <td align="left" valign="top" style="background:url(/static/css/images/purchase_bg_02.png) repeat-x left top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="75%" align="left" valign="top"><!--{if $team['close_time']}-->
+                      <div class="deal-box deal-timeleft deal-off" id="deal-timeleft-{$team['id']}" curtime="{$now}" diff="{$diff_time}">
+                        <h3><strong>Deal đã đóng lúc</strong></h3>
+                        <div class="limitdate">
+                          <p class="deal-buy-ended">lúc ${date('H:i:s', $team['close_time'])} ngày ${date('d-m-Y', $team['close_time'])}</p>
+                        </div>
+                      </div>
+                      <!--{else}-->
+                      <div class="deal-box deal-timeleft deal-on" id="deal-timeleft-{$team['id']}" curtime="{$now}" diff="{$diff_time}">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="22%" align="left" valign="middle" nowrap="nowrap"><h3 style="margin-top:3px;">Thời gian <br />voucher giảm giá</h3></td>
+                            <td width="78%" align="left" valign="top" style="padding-left:5px;"><div class="limitdate">
+                          <ul id="counter-{$team['id']}">
+                            <li><span>${$left_hour+(24*$left_day)}:{$left_minute}:{$left_time}</span></li>
+                          </ul>
+                        </div></td>
+                          </tr>
+                        </table>
+
+                      </div>
+                      <!--{/if}--></td>
+                    <td width="25%" align="left" valign="top"><!--{if $team['close_time']==0}-->
+                      <!--{if $team['state']=='none'}-->
+                      <div class="deal-box deal-status" id="deal-status">
+                        <div class="deal-buy-tip-top">Nhóm <strong>{$team['now_number']}</strong> người đã mua</div>
+                        <!--<div class="progress-pointer" style="padding-left:{$bar_size-$bar_offset}px;"><span></span></div>
+                        <div style="clear:both"></div>-->
+                        <div class="progress-bar">
+                          <div class="min">&nbsp;</div>
+                          <div class="progress-left" style="width:{$bar_size-$bar_offset}px;"></div>
+                          <div class="progress-right"></div>
+                          <div class="max" style="color:#ff6600">{$team['min_number']}</div>
+                        </div>
+                        <div class="deal-buy-tip-btm" style="clear:both">Cần nhóm <strong>{$team['min_number']-$team['now_number']} </strong>mua giá tốt.</div>
+                      </div>
+                      <!--{else}-->                      
+                      
+                      <div class="deal-box deal-status deal-status-open" id="deal-status" style="font-size:90%;">
+                      	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                             <td align="left" valign="middle" rowspan="2"><img src="/static/css/images/deal-buy-succ.gif" align="absmiddle" width="27" height="28" /></td>
+<td align="left" valign="top" style="padding-left:5px;"><div class="deal-buy-tip-top" style="white-space:nowrap;font-size:11px">Nhóm <strong>{$team['now_number']}</strong> người đã mua</div>
+                            <div class="deal-buy-on" style="font-size:90%;">
+                            <!--{if $team['max_number']>$team['now_number']||$team['max_number']==0}-->
+                                Vẫn còn nhóm mua được
+                            <!--{/if}-->
+                        </div></td></tr><tr>
+                            <td align="left" valign="top" style="padding-left:5px;"><!--{if $team['max_number']&&$team['max_number']>$team['now_number']}-->
+                        <div class="deal-buy-tip-btm">Chỉ còn lại <strong>{$team['max_number']-$team['now_number']}</strong> cơ hội nhóm mua!</div><!--{/if}-->
+                         <!--{if $id_promotion>0 && $team['id']==$id_promotion}-->
+                                        	<div style="font-size:11px;font-family:Arial; white-space:nowrap">Có <span style="font-size:17px; font-weight:bold; font-family:Arial">${countPrizeCodes($id_promotion)}</span> mã số dự thưởng</div><!--{else}--> 
+                        <!--{if $team['reach_time']}-->
+                        <!--<p class="deal-buy-tip-btm">Mức tối thiểu <strong>{$team['min_number']}</strong> người đã đạt lúc: ${date("H:i:s",$team['reach_time'])} ngày ${date("d/m/Y",$team['reach_time'])}</p>-->
+                        <!--{/if}--></td>
+                          </tr>
+                        </table>
+                      </div>
+                      <!--{/if}-->
+                      <!--{else}-->
+                      <div class="deal-box deal-status deal-status-{$team['state']}" id="deal-status">
+                        <div class="deal-buy-{$team['state']}"></div>
+                        <p class="deal-buy-tip-total">Tổng số <strong>{$team['now_number']} </strong> đã mua giá tốt</p>
+                      </div>
+                      <!--{/if}--></td>
+                  </tr>
+                </table></td>
+              <td align="left" valign="top" width="12"><img src="/static/css/images/purchase_bg_03.png" width="12" height="70" /></td>
+            </tr>
+          </table>
+        </div>
+      </div><div align="left" style="padding-bottom:20px;"><img src="/static/css/images/cont_bottomcurve.gif" width="739" height="10" /></div></div>
+     <!--{/if}-->
+            <!--{/loop}-->
+            <!--{/if}-->
+    
+          </td>
+          <td align="left" valign="top"><div id="sidebar">
+              <!--{include block_side_others_seconds}-->
+              <!--{include block_side_support}-->
+              <!--{include block_side_bestseller}-->
+			  <!--{include block_side_ads}-->
+              <!--{*include block_side_facebook_plugin*}-->
+            </div></td>
+        </tr>
+      </table>
+      
+    </div>
+  </div>
+  <!-- bd end -->
+</div>
+<!-- bdw end -->
+<script language="javascript">
+	  var sec = {};
+	  function getInitTime(){
+		  $('div.deal-timeleft').each(function(){
+			 var jobj = $(this);
+			 var SysSecond = parseInt(jobj.attr('diff'));
+			 var theid = parseInt((jobj.attr('id')).replace(/deal-timeleft-/,''));
+			 sec[theid]= SysSecond;
+		  });
+	  }
+	  getInitTime();
+	  function SetRemainTime() {
+			for(var i in sec){
+				setRemainTimeSite(i,sec[i]);
+			}
+	   }
+	  function setRemainTimeSite(theid,SysSecond){
+		  if (SysSecond > 0) {
+			   SysSecond = SysSecond - 1;
+			   var second = Math.floor(SysSecond % 60).toString();
+			   var minite = Math.floor((SysSecond / 60) % 60).toString();
+			  /* var hour = Math.floor((SysSecond / 3600) % 24).toString();*/
+			  var hour = Math.floor(SysSecond / 3600).toString();
+			   var day = Math.floor((SysSecond / 3600) / 24).toString();
+			   $("#counter-"+theid).html("<li><span>"+hour+":"+minite+":"+second+"</span></li>");
+			   sec[theid]--;
+		  }else{
+			return;
+		  }
+		}
+	  window.setInterval(SetRemainTime,1000);
+	 	  
+</script>
+<!--{include footer}-->

@@ -1,0 +1,4 @@
+<Files ~ "\.(inc|html)$">
+  order allow,deny
+  deny from all
+</Files>

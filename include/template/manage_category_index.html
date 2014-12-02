@@ -1,0 +1,45 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_category($zone)}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="subbox-top"><div class="subhead">
+                    <h2>List {$cates[$zone]}</h2>
+					<ul class="filter" style="padding-top:3px;">
+						<li><a href="/ajax/manage.php?action=categoryedit&zone={$zone}" class="ajaxlink">Add {$cates[$zone]}</a></li>
+					</ul>
+				</div></div>
+            <div class="box-content">
+                
+                <div class="sect">
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+					<tr><th width="50">ID</th><th width="250">English name</th><th width="250">English name Repeat</th><th width="60">Initial letter</th><th width="150">group</th><th width="40" nowrap>navigation</th><th width="40" nowrap>sort</th><th width="100">operation</th></tr>
+					<!--{loop $categories $index $one}-->
+					<tr ${$index%2?'':'class="alt"'}>
+						<td>{$one['id']}</td>
+						<td>{$one['name']}</td>
+						<td>{$one['ename']}</td>
+						<td>${strtoupper($one['letter'])}</td>
+						<td>{$one['czone']}</td>
+						<td>{$one['display']}</td>
+						<td>${intval($one['sort_order'])}</td>
+						<td class="op"><a href="/ajax/manage.php?action=categoryedit&id={$one['id']}" class="ajaxlink">edit</a>｜<a href="/ajax/manage.php?action=categoryremove&id={$one['id']}" class="ajaxlink" ask="sure to delete this category？">delete</a></td>
+					</tr>
+					<!--{/loop}-->
+					<tr><td colspan="8">{$pagestring}</td></tr>
+                    </table>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

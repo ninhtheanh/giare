@@ -1,0 +1,139 @@
+<!--{include manage_header}-->
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_order('search')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="subbox-top"><div class="subhead">
+                    <h2>Tất cả đơn hàng</h2></div></div>
+            <div class="box-content">
+					<form method="get">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="filter-table">
+                          <tr>
+                            <td align="right" nowrap="nowrap"><p>Số HĐ <input type="text" name="id" value="{$id}" class="h-input"/></p>
+                            <p style="padding-top:3px;">Số Deal <input type="text" name="team_id" class="h-input number" value="{$team_id}" /></p>                           </td>
+                            <td align="right" nowrap="nowrap" style="padding-left:3px;">
+                             <p style="padding-top:3px;">User <input type="text" name="uemail" class="h-input" value="${htmlspecialchars($uemail)}" /></p>
+                            <p style="padding-top:3px;">ĐTDĐ <input type="text" class="h-input" name="mobile" value="{$mobile}" /></p>                            </td>
+                            <td align="right" nowrap="nowrap" style="padding-left:3px; padding-top:3px;">
+                            <p><p style="margin:5px 0;">Shipper:<select name="shipper_id" onchange="this.form.submit();" id="shipper_id" class="h-input" require="true"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray($allshipper,'id','shipper_name'),$shipper_id)}</select></p>
+                            <p style="margin:5px 0;"><strong>Mã bàn giao </strong><input type="text" class="h-input" name="delivery_code" value="{$delivery_code}" /></p>
+                            </td>
+                            <td align="right" style="padding-left:3px;">
+<p style="padding-top:3px;">
+
+
+
+<script src="/static/js/jchain.js" type="text/javascript"></script><script type="text/javascript">				               
+							jQuery(document).ready(function() {	
+								$("#dist_id").chained("#city_id"); 
+							});						
+						</script>
+                       <p><label id="enter-address-city-label" for="signup-city">Thành phố</label>
+						<select name="city_id" id="city_id" class="f-city"><option value="">---Chọn---</option>${Utility::Option(Utility::OptionArray($allcities,'id','name'), $city_id)}</select></p>
+                        <p style="padding:3px;">
+                       <label  id="enter-address-dist-label" for="signup-dist">Quận/Huyện</label>
+							<select name="dist_id" id="dist_id" class="f-city" require="true" datatype="require"><option value="">---Chọn---</option>${optiondistrict($dist_id)}</select>
+                            </p>                                               </td>
+                  </tr>
+                  <tr><td colspan="4" align="left" style="padding-left:10px;"><strong>Payment </strong>
+                            <select name="payment_id" id="payment_id" class="h-input" require="true">
+                            <option value='0'>--Chon--</option>
+                            ${LoadPaymentMethod()}
+                            </select> 
+                            <script type="text/javascript">document.getElementById('payment_id').value = '{$payment_id}'</script>&nbsp;<input type="submit" value="Lọc dữ liệu" class="formbutton"  style="padding:5px 6px;"/></td>
+                  </tr>
+                        </table>
+                        
+					<form>
+				
+                
+                <style>
+				.coupons-table tr,.coupons-table td{
+					background:none
+				}
+				</style>
+                
+                <div class="sect">
+  <table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+    <tr>
+      <th width="100">ID</th>
+      <th width="350">Thông tin thanh toán</th>
+      <th width="350">Thông tin vận chuyển</th>
+      <th width="60" nowrap>Thành tiền</th>
+      <th width="40" nowrap>&nbsp;</th>
+    </tr>
+    <!--{loop $orders $index $one}-->
+    <tr  style="background-color:#${getStatusColor($one['state'])}" id="order-list-id-{$one['id']}">
+      <td>Deal: <strong>{$one['team_id']}&nbsp;(<a class="deal-title" href="/{$city['slug']}/${seo_url($teams[$one['team_id']]['short_title'],$one['team_id'],$url_suffix)}" target="_blank">{$teams[$one['team_id']]['short_title']})</a></strong><br />Số đ.hàng: <a href="<!--{if $one['state']!='transported'}-->/backend/order/orderedit.php?id={$one['id']}&redirect={$_SERVER['REQUEST_URI']}<!--{else}-->#<!--{/if}-->" title="Sửa thông tin đơn hàng"><strong>{$one['id']}</strong></a><br /><!--{if $one['payment_id']==5 && (int)$one['transaction_id_nl']>0}-->
+      Mã GD NL: <span style="color:#c40000"><strong>{$one['transaction_id_nl']}</strong></span><br />
+     <!--{/if}-->
+        <span style="white-space:nowrap">Ngày đặt: ${date('Y-m-d H:i:s',$one['create_time']);}</span><br /><span style="white-space:nowrap">Trạng thái: <span style="color:#0000FF">${getStatusName($one['state'])}</span></span></td>
+      <td>Họ tên: <a href="/ajax/manage.php?action=userview&id={$one['user_id']}" class="ajaxlink"><strong>{$one['realname']}</strong></a><br />
+      
+		<!--${
+        	$note_address = "";$note_baddress="";
+            if($one['note_address']!=''){
+                $note_address = htmlspecialchars($one['note_address']).", ";
+            }
+            $one['billing_address'] = $note_address.htmlspecialchars($one['address']);
+            if(ward_name($one['dist_id'],$one['ward_id'])){
+                $wardname = ward_name($one['dist_id'],$one['ward_id']);
+                $one['billing_address'] .=", ".strip_input($wardname['ward_name']);
+            }
+            if(ename_dist($one['dist_id'])){
+                $dists = ename_dist($one['dist_id']);
+                $one['billing_address'] .=", ".strip_input($dists['dist_name']);		
+            }
+            if(id_city($one['city_id'])){
+                $citys = id_city($one['city_id']);
+                $one['billing_address'] .=", ".strip_input($citys['name']);		
+            }
+            
+            
+            if($one['bnote_address']!=''){
+                $note_address = htmlspecialchars($one['bnote_address']).", ";
+            }
+            $one['shipping_address'] = $note_address.htmlspecialchars($one['baddress']);
+            if(ward_name($one['bdist_id'],$one['bward_id'])){
+                $bwardname = ward_name($one['bdist_id'],$one['bward_id']);
+                $one['shipping_address'] .=", ".strip_input($bwardname['ward_name']);
+            }
+            if(ename_dist($one['bdist_id'])){
+                $bdists = ename_dist($one['bdist_id']);
+                $one['shipping_address'] .=", ".strip_input($bdists['dist_name']);		
+            }
+            if(id_city($one['bcity_id'])){
+                $bcitys = id_city($one['bcity_id']);
+                $one['shipping_address'] .=", ".strip_input($bcitys['name']);		
+            }
+        
+      }-->      
+      
+        Địa chỉ: {$one['billing_address']}<br />ĐT: {$one['mobile']}<br /><span style="color:#c40000"><strong>${GetPaymentName($one['payment_id'])}</strong></span></td>
+      <td>Họ tên: <a href="/ajax/manage.php?action=userview&id={$one['user_id']}" class="ajaxlink"><strong>{$one['brealname']}</strong></a><br />
+        Địa chỉ: {$one['shipping_address']}<br />Điện thoại: {$one['bmobile']}<br /><span style="color:#c40000"><strong>${GetShippingName($one['shipping_id'])}</strong></span></td>
+      <td align="right" style="color:#FF0000"><strong>${print_price(moneyit(TotalOrder($one['id'])))}</strong></td>
+      <td align="center"><a href="/ajax/manage.php?action=orderview&id={$one['id']}" class="ajaxlink"><strong>Detail</strong></a><!--{if ($one['state']!='transported') && ($one['state']!='pay') && ($one['state']!='refund') && (in_array($login_user_id ,$restrictarray) == 0) }--><br /><a href="/ajax/manage.php?action=orderconfirm&id={$one['id']}" class="ajaxlink"><strong>Confirm</strong></a><br /><a href="/ajax/manage.php?action=ordercancel&id={$one['id']}" class="ajaxlink" ask="sure to cancel it?"><strong>Cancel</strong></a><!--{/if}--></td>
+    </tr>
+    <!--{/loop}-->
+    <tr>
+      <td colspan="9" align="right"><strong>{$total_voucher} voucher</strong></td>
+    </tr>
+    <tr>
+      <td colspan="9">{$pagestring}
+    </tr>
+  </table>
+</div></div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

@@ -1,0 +1,100 @@
+<!--{include manage_header}-->
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="partner">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_shipper('null')}<li class="current"><a href="/backend/logistics/streets.php">QL Tên Đường</a><span></span></li></ul>
+	</div>
+	<div id="content" class="clear mainwide">
+        <div class="clear box">
+             <div class="subbox-top"> <div class="subhead"><h2>Add new street</h2></div></div>
+            <div class="box-content">
+              <div class="sect" style="padding-top:3px;">
+                	<link rel="stylesheet" type="text/css" href="/static/css/jquery.autocomplete.css" />
+					<script type='text/javascript' src="/static/js/jquery.autocomplete.js"></script>
+                    <script src="/static/js/jchain.js" type="text/javascript"></script>
+                    <script type='text/javascript'>						                
+						var dist_id; var ward_id;
+						function getDistId(){
+							return $("#dist_id").val();
+						}
+						function getWardId(){
+							return $("#ward_id").val();
+						}
+						jQuery(document).ready(function() {	
+							$("#dist_id").chained("#city_id"); 
+							$("#ward_id").chained("#dist_id");
+						});		
+						function searchSuggest(){
+							$("#street-create-title").autocomplete('search_streets.php', {
+								width: 310,
+							});	
+						}
+                    </script>
+                    <form method="post" action="{$action}" enctype="multipart/form-data" class="validator" id="target">
+                        <div class="field">
+                            <label>TP</label>
+                            <select name="city_id" id="city_id" class="h-input" require="true"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray($allcities,'id','name'),$city_id)}</select>
+                        </div>
+                        <div class="field">
+                            <label>Quận/Huyện</label>
+                            <select name="dist_id" id="dist_id"  class="f-input" datatype="require" require="true" onchange="getDistId();">${optiondistrict($dist_id,$city_id)}</select>
+						</div>
+                        <div class="field">
+                            <label>Phường/Xã</label>
+                            <select name="ward_id" id="ward_id"  class="f-input" datatype="require" require="true" onchange="getWardId()"><option value="">---Chọn---</option>${optionward($ward_id)}</select>
+                        </div>
+                        <div class="field">
+                            <label>Tên đường</label>
+                            <input type="text" size="30" name="name" id="street-create-title" class="f-input" value="{$street['name']}" require="true" datatype="require" autocomplete="off" onfocus="searchSuggest()" />
+                        </div>
+                        <div class="field">
+                            <label>Status</label>
+                            <select size="1" name="status" class="h-input" style="width:50">
+                                <option value="A">Active</option>
+                                <option value="D">Deactive</option>
+                        	</select>
+						</div>
+                        
+                        <div class="act">
+                            <!--{if !isset($_GET['street_id'])}--><input type="submit" value="add" name="Addcommit" id="partner-submit" class="formbutton"/><!--{else}--><input type="submit" value="Edit" name="Editcommit" id="partner-submit" class="formbutton"/><input type="hidden" name="street_id" value="{$street_id}" /><!--{/if}-->
+                        </div>
+                    </form>
+                    <div align="center" style="padding-top:10px; font-size:16px;">Danh sách tên đường ở <strong>{$city['name']}</strong></div>
+                    <div align="center" style="padding-top:10px"><form method="get">
+                    	<table width="900" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
+                          <tr bgcolor="#cccccc">
+                            <td style="padding:5px;" width="2%" align="center"><strong>STT</strong></td>
+                            <td style="padding:5px;" align="left"><strong>TP</strong><select name="city_id" class="h-input" require="true" onchange="this.form.submit();"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray($allcities,'id','name'),$city_id)}</select></td>
+                            <td style="padding:5px;" align="left"><strong>Quận</strong><!--{if $city_id}--><select name="dist_id" onchange="this.form.submit();" class="h-input" require="true"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray(option_district('VN', $city_id, false, true),'dist_id','dist_name'),$dist_id)}</select><!--{/if}--></td>
+                            <td style="padding:5px;" align="left"><strong>Phường</strong><!--{if $dist_id}--><select name="ward_id" onchange="this.form.submit();" class="h-input" require="true"><option value='0'>--Chon--</option>${option_ward_1($dist_id, $ward_id)}</select><!--{/if}--></td>
+                            <td style="padding:5px;" align="left"><strong>Đường</strong></td>
+                            <td style="padding:5px;" align="left"><strong>Task</strong></td>
+                          </tr>
+                          <!--{loop $str $index $one}-->
+                  			<tr ${$index%2?'':'class="alt"'} >
+                            <td style="padding:5px;" width="2%" align="center">${$index+1}</td>
+                            <td style="padding:5px;" align="left">{$one['city_name']}</td>
+                            <td style="padding:5px;" align="left">{$one['dist_name']}</td>
+                            <td style="padding:5px;" align="left">{$one['ward_name']}</td>
+                            <td style="padding:5px;" align="left">{$one['street_name']}</td>
+                            <td style="padding:5px;" align="center"><a href="/backend/logistics/streets.php?city_id={$one['city_id']}&dist_id={$one['dist_id']}&ward_id={$one['ward_id']}&street_id={$one['street_id']}" title="Sửa"><img src="/static/img/edit.gif" border="0" /></a><!--{if in_array($login_user_id,$accept_id)}-->&nbsp;&nbsp;&nbsp;<a href="/backend/logistics/streets.php?city_id={$one['city_id']}&dist_id={$one['dist_id']}&ward_id={$one['ward_id']}&street_id={$one['street_id']}&del=true" title="Xóa"><img src="/static/img/delete.gif" border="0" /></a><!--{/if}--></td>
+                          </tr>
+                         <!--{/loop}-->
+                        </table></form>
+						<p align="center">{$pagestring}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+	</div>
+
+<div id="sidebar">
+</div>
+
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

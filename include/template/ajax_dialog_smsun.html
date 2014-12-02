@@ -1,0 +1,35 @@
+<div id="order-pay-dialog" class="order-pay-dialog-c" style="width:380px;">
+<h3><span id="order-pay-dialog-close" class="close" onclick="return X.boxClose();">close</span>Unsubscribe SMS</h3>
+	<p class="info" id="smssub-dialog-display-id">Please type your mobile number and verification code<br/> and get a verification code to cancel subscription</p>
+	<p class="notice">Mobile number：<input id="smssub-dialog-input-mobile" type="text" name="mobile" class="f-input" style="text-transform:uppercase;" maxLength="12" value="{$_GET['mobile']}" /></p>
+	<p class="notice">Verification code：<input id="smssub-dialog-input-verifycode" type="text" name="captchacode" style="text-transform:uppercase;" class="f-input" maxLength="6" /></p>
+	<p class="notice" style="margin-left:4em;"><img id="img-captcha-id" src="/captcha.php?${microtime(true)}" style="margin-bottom:-4px;" /><a href="javascript:;" style="margin:5px; font-size:12px;" onclick="jQuery('#img-captcha-id').attr('src',WEB_ROOT+'/captcha.php?'+Math.random());" >Not clear? Have another one.</a></p>
+	<p class="notice" style="margin:10px 4em;" ><input id="smssub-dialog-query" class="formbutton" value="Send Code" name="query" type="submit" onclick="smssub_submit();"/></p>
+</div>
+
+<script type="text/javascript">
+function smssub_submit() {
+	var mobile = trim(jQuery('#smssub-dialog-input-mobile').val());
+	var verifycode = trim(jQuery('#smssub-dialog-input-verifycode').val());
+	if(mobile == '') {
+		alert('mobile number must be typed');
+		jQuery('#smssub-dialog-input-mobile').focus();
+	} else if(verifycode == '') {
+		alert('verification code must be typed');
+		jQuery('#smssub-dialog-input-verifycode').focus();
+	} else {
+		X.get(WEB_ROOT + "/ajax/sms.php?action=unsubscribecheck&mobile="+mobile+"&verifycode="+verifycode+"&r="+ Math.random());
+	}
+}
+
+function captcha_again() {
+	alert('incorrect verification code, please type it again！');
+	jQuery('#smssub-dialog-input-verifycode').val('');
+	jQuery('#smssub-dialog-input-verifycode').focus();
+	jQuery('#img-captcha-id').attr('src',WEB_ROOT+'/captcha.php?'+Math.random());
+}
+
+function trim(str) {
+	return str.replace(/^\s*(.*?)[\s\n]*$/g, '$1');
+}
+</script>

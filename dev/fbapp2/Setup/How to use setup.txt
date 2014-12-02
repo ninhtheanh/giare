@@ -1,0 +1,29 @@
+How to use?
+1. Extract Script.rar
+2. Extract any one and upload on to your host! ( yourhost.com/Marriage or yourhost.com/apps/Marriage )
+3. Follow the instructions in the docx file.
+4. Don't edit index.php and main.php as written in the Setup.docx file edit config.php instead.
+5. Done!
+
+
+it seems I found why this app constantly redirects to "index.php"
+the problem is in this code:
+Code:
+<script>top.location="index.php"</script>
+It endlessly opens "index.php" but it should do this only one time to break the fb iframe.
+try this code instead:
+Code:
+<script type="text/javascript">
+  if (top.location.href != self.location.href)
+     top.location.href = self.location.href;
+</script>
+it breaks from the fb iframe, I hope this will work
+
+________________________________________________________________________________________________
+
+another solution: if you want it to redirect to "main.php" if the page is liked change this:
+Code:
+<script>top.location="index.php"</script>
+to this:
+Code:
+<script>top.location="main.php"</script>

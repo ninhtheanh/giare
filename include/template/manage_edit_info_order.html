@@ -1,0 +1,97 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_order('')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="box-top"></div>
+            <div class="box-content">
+                <div class="head">
+                    <h2>SỬA THÔNG TIN GIAO HÀNG CỦA ĐƠN HÀNG</h2>
+				</div>
+				<div class="sect" style="padding:0 10px;background:#FFFFCC">
+                    	<form method="get"><table width="100%" border="0" cellspacing="0" cellpadding="0" style="background:#FFFFCC">
+                          <tr>
+                            <td width="25%" align="right">
+						<p style="margin:5px 0;">Quận/Huyện:<select name="dist_id" onchange="this.form.submit();" class="h-input" require="true"><option value='0'>--Chon--</option>${optiondistrict($dist_id,$city['id'])}</select><!--{/if}--></p></td><td width="25%" rowspan="3" style="padding-left:10px;"><p style="margin:5px 0;"><input type="submit" name="order" value="select" class="formbutton"  style="padding:1px 6px;"/></p></td></table>
+					</form>
+                </div>
+                <div class="sect">
+                <link rel="stylesheet" type="text/css" href="/static/css/jquery.autocomplete.css" />
+				<script type='text/javascript' src="/static/js/jquery.autocomplete.js"></script>
+                <script src="/static/js/jchain.js" type="text/javascript"></script>
+                <script type='text/javascript'>						                
+					var dist_id; var ward_id;
+					function getDistId(id){
+						return $("#dist_id_"+id).val();
+					}
+					function getWardId(id){
+						return $("#ward_id_"+id).val();
+					}
+					function searchSuggest(id){
+						dist_id = getDistId(id);
+						ward_id = getWardId(id);
+						$("#address_"+id).autocomplete('/team/search_address_list.php?dist_id='+dist_id+'&ward_id='+ward_id, {
+							width: 308,
+						});	
+					}
+					function check_submit(){	
+						ischecked = false;
+						for(i=1;i<document.f_paid.orderid.length;i++){
+							obj=document.getElementById(document.f_paid.orderid[i].value);
+							if(obj.checked==true){
+								ischecked=true;
+								break;
+							}
+						}		
+						if(!ischecked){
+							alert("Select one or more items...");
+							return false;
+						}
+						if(!confirm('Are you sure??')){			
+							return false;
+						}
+						return true;
+					}
+					jQuery(document).ready(function(){
+						{$sc}
+					});
+                </script>
+                <form method="post" action="{$_SERVER['REQUEST_URI']}" name="f_paid" onSubmit="return check_submit();">
+                    <input type="hidden" name="dist_id" value="{$dist_id}" >
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table" width="100%">
+					<tr><th width="20">ID<br /><input type="checkbox" name="checkall" id="checkall" onclick="jqCheckAll( this.id, 'myinput' )" /></th>
+					<th width="80">Quận/Huyện</th>
+					<th width="80">Phường/Xã</th><th width="300" nowrap>Số nhà - tên đường:<br/>Phòng-lầu-tòa nhà:</th><th width="100" nowrap>Ghi chú</th></tr>
+					<!--{loop $orders $index $one}-->
+                                        <tr><td></td><td colspan="3"><b style="color:#FA6D18"><!--${if ($one['note_address']!=''){$note_address = $one['note_address'].", ";}else{$note_address="";}}-->{$note_address}{$one['address']}, <!--{if wardname($one['dist_id'],$one['ward_id'])}--><!--${$wardname = wardname($one['dist_id'],$one['ward_id'])}-->{$wardname['ward_name']},<!--{/if}--> <!--{if ename_dist($one['dist_id'])}--><!--${$dists = ename_dist($one['dist_id'])}-->{$dists['dist_name']}<!--{/if}--></b>&nbsp;
+                        	<!--${
+                            	$list = check_address_list($one['dist_id'], $one['ward_id'], $one['address']);
+                                if($list['id']>0){
+                                	$img="<img src=\"/static/css/images/tick.png\" alt=\"Địa chỉ đã được duyệt\" align=\"absmiddle\" />";
+                                 }else{$img="<img src=\"/static/css/images/no.png\" alt=\"Địa chỉ chưa duyệt\" />";}}-->{$img}<br /></td><td width="100" nowrap></td></tr>
+					<tr ${$index%2?'':'class="alt"'} id="order-list-id-{$one['id']}">
+						<td align="center"><input type="hidden" name="orderid[]" id="{$one['id']}" value="{$one['id']}"><input name="myinput[]" id="{$one['id']}" value="{$one['id']}" type="checkbox">{$one['id']}</td>
+						<td><select name="dist_id_{$one['id']}" id="dist_id_{$one['id']}"  class="f-input" require="true" onchange="getDistId({$one['id']})">${optiondistrict($one['dist_id'],$one['city_id'])}</select></td>
+						<td><select name="ward_id_{$one['id']}" id="ward_id_{$one['id']}"  class="f-input" require="true" onchange="getWardId({$one['id']})"><option value="">---Chọn---</option>${optionward($one['ward_id'])}</select></td>
+						<td><input type="text" name="address_{$one['id']}" onfocus="searchSuggest({$one['id']})" id="address_{$one['id']}" value="{$one['address']}" require="true" datatype="require" class="f-input" style="width:300px" /><br /><br /><input type="text" name="note_address_{$one['id']}" value="{$one['note_address']}" require="true" datatype="require" class="f-input" style="width:300px" /></td>
+						<td class="op"><textarea style="width:200px" name="notes_{$one['id']}" class="f-textarea">{$order['notes']}</textarea></td>
+					</tr>
+					<!--{/loop}-->
+                    <tr><td colspan="9" align="right"><input type="submit" name="update" value="Update" class="formbutton" /></td></tr>
+					<tr><td colspan="9">{$pagestring}</tr>
+                    </table></form>
+				</div>
+            </div>
+        </div>            <div class="box-bottom"></div>
+
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

@@ -1,0 +1,42 @@
+<!--{include header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="feedback">
+    <div id="content" class="help">
+        <div class="box">
+            <div class="box-top"></div>
+            <div class="box-content">
+                <div class="head">
+                  <h2>G&oacute;p &yacute;</h2>
+                </div>
+                <div class="sect">
+                                    <p class="notice">Vui l&ograve;ng nh&#7853;p g&oacute;p &yacute; c&#7911;a b&#7841;n v&agrave;o &#273;&acirc;y, ch&uacute;ng t&ocirc;i ch&acirc;n th&agrave;nh c&aacute;m &#417;n &yacute; ki&#7871;n &#273;&oacute;ng g&oacute;p c&#7911;a b&#7841;n.<form id="feedback-user-form" method="post" action="/feedback/suggest.php" class="validator">
+                        <div class="field fullname">
+                            <label for="feedback-fullname">T&ecirc;n b&#7841;n</label>
+                            <input type="text" size="30" name="title" id="feedback-fullname" class="f-input" value="{$login_user['username']}" require="true" datatype="require" />
+                        </div> 
+                        <div class="field email">
+                            <label for="feedback-email-address">Email</label>
+                            <input type="text" size="30" name="contact" id="feedback-email-address" class="f-input" value="{$login_user['email']}" require="true" datatype="require" />
+                            <span class="hint">Vui l&ograve;ng nh&#7853;p email c&#7911;a b&#7841;n nh&#7901; &#273;&oacute; ch&uacute;ng t&ocirc;i c&oacute; th&#7875; ph&#7843;n h&#7891;i.</span>
+                        </div>
+                        <div class="field suggest">
+                            <label for="feedback-suggest">Th&ocirc;ng &#273;i&#7879;p</label>
+                            <textarea cols="30" rows="5" name="content" id="feedback-suggest" class="f-textarea" require="true" datatype="require"></textarea>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="act">
+                            <input type="submit" value="OK" name="commit" id="feedback-submit" class="formbutton"/>
+                        </div>
+                    </form>
+                                </div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include footer}-->

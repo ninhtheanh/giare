@@ -1,0 +1,140 @@
+#AuthName "restricted"
+#AuthType Basic
+#AuthUserFile /home/www/dealsoc.vn/httpdocs/.htpasswd
+#require valid-user
+
+#Error_reporting
+php_flag display_errors off
+php_value error_reporting 0
+
+#Fix bug - Call-time pass-by-reference
+php_value allow_call_time_pass_reference 1
+
+#Deny from all
+#Allow from 123.20.144.32 
+# You may need to un-comment the following line
+# Options +FollowSymlinks
+
+# REMEBER YOU ONLY NEED TO STARD MOD REWRITE ONCE
+RewriteEngine On
+
+# REWRITE BASE
+RewriteBase /
+
+# Restrict file browsing
+
+#Prevent robot scan on https protocol---------------
+Options +FollowSymlinks
+
+#RewriteCond %{SERVER_PORT} ^443$
+#RewriteRule ^robots.txt$ robots_ssl.txt
+
+#=========================================================================================================================
+#Rediect to www domain-------------------------------
+#RewriteCond %{HTTP_HOST} ^(dealsoc\.vn)$
+#RewriteRule ^(.*)$ http://www.dealsoc.vn/$1 [L]
+
+#Invalid url to home---------------------------------
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule . /index.php [L]
+
+#=========================================================================================================================
+# Category
+
+RewriteRule ^ha-noi/?$ /index.php?ct_id=12 [L]
+RewriteRule ^tp-ho-chi-minh/?$ /index.php?ct_id=11 [L]
+RewriteRule ^da-nang/?$ /index.php?ct_id=15 [L]
+RewriteRule ^tp-ho-chi-minh/deal-du-lich/?$ /team/resort.php [L]
+RewriteRule ^ha-noi/deal-du-lich/?$ /team/resort.php [L]
+RewriteRule ^da-nang/deal-du-lich/?$ /team/resort.php [L]
+RewriteRule ^tp-ho-chi-minh/deal-gan-day/?$ /team/index.php [L]
+
+RewriteRule ^ha-noi/deal-gan-day/?$ /team/index.php [L]
+
+RewriteRule ^da-nang/deal-gan-day/?$ /team/index.php [L]
+
+
+
+RewriteRule ^thao-luan/?$ /forum/index.php [L]
+
+RewriteRule ^hoi-dap.html/?$ /help/faqs.php [L]
+
+
+
+# DETAIL PAGES
+
+RewriteRule -([0-9]+)\.html$ /team.php?id=$1 [L]
+
+#RewriteRule ^ha-noi/(.+)$ /team.php?id=$1 [L]
+
+#RewriteRule ^tp-ho-chi-minh/(.+)$ /team.php?id=$1 [L]
+
+#RewriteRule ^da-nang/(.+)$ /team.php?id=$1 [L]
+
+
+
+#RewriteRule ^tp-ho-chi-minh/(.+)$ /team.php?id=$1 [L]
+
+#RewriteRule ^ha-noi/(.+)$ /team.php?id=$1 [L]
+
+#RewriteRule ^da-nang/(.+)$ /team.php?id=$1 [L]
+
+
+
+#RewriteRule ^tp-ho-chi-minh/(.+)$ /team.php?id=$1 [L]
+
+#RewriteRule ^ha-noi/(.+)$ /team.php?id=$1 [L]
+
+#RewriteRule ^da-nang/(.+)$ /team.php?id=$1 [L]
+
+
+
+#RewriteRule ^tp-ho-chi-minh/(.+)$ /team.php?id=$1 [L]
+
+#RewriteRule ^ha-noi/(.+)$ /team.php?id=$1 [L]
+
+#RewriteRule ^da-nang/(.+)$ /team.php?id=$1 [L]
+
+
+
+#STATICS PAGES
+
+RewriteRule ^dealsoc-la-gi.html$ /help/dealsoc.php [L]
+
+RewriteRule ^huong-dan-mua-hang.html$ /help/tour.php [L]
+
+RewriteRule ^hop-tac-kinh-doanh.html$ /help/cooperation.php [L]
+
+RewriteRule ^lien-he-hop-tac.html$ /feedback/seller.php [L]
+
+RewriteRule ^ve-chung-toi.html$ /about/us.php [L]
+
+RewriteRule ^lien-he.html$ /about/contact.php [L] 
+
+RewriteRule ^dieu-khoan-su-dung.html$ /about/terms.php [L] 
+
+RewriteRule ^tuyen-dung.html$ /about/job.php [L] 
+
+#TOPIC
+
+#RewriteRule ^thao-luan/?$ /help/faqs.php [L]
+
+#====================================================================================================================
+
+#######################    ERRORS Setup ###########################
+
+#ErrorDocument 400 http://www.dealsoc.nv/
+
+#ErrorDocument 401 http://www.dealsoc.vn/
+
+#ErrorDocument 403 http://www.dealsoc.vn/
+
+#ErrorDocument 404 http://www.dealsoc.vn/
+
+#ErrorDocument 500 http://www.dealsoc.vn/
+
+
+
+
+

@@ -1,0 +1,54 @@
+<form id="fstep3" action="http://thietkeachau.com/cheapdeal/ajax/checkout.php" method="post" class="validator">
+  <table width="100%" border="0" cellspacing="4" cellpadding="0">
+    <tbody><tr>
+      <td align="left" valign="top" style="font-size:14px; padding-top:10px; font-family:Arial, Helvetica, sans-serif; color:#C40000; text-transform:uppercase"><h4>Phương thức thanh toán</h4></td>
+      <td width="4%"></td>
+      <td align="left" valign="top" style="font-size:14px; padding-top:10px; font-family:Arial, Helvetica, sans-serif; color:#C40000; text-transform:uppercase"><h4>Phương thức vận chuyển</h4></td>
+    </tr>
+    <tr>
+      <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+      <td width="4%"></td>
+      <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" style="padding-left:10px; padding-top:7px;" width="49%"><table cellspacing="5" cellpadding="5">
+          <tbody><tr><td align="right" valign="top"><input type="radio" name="methods[payment]" id="payment" value="3" checked="checked"></td><td align="left" valign="top" class="text_bold" style="padding-left:3px">Chuyển khoản qua Ngân Hàng - ATM</td></tr><tr><td></td><td align="left" valign="top" style="color:#666; padding-left:5px;padding-bottom:10px;font-size:80%">Quý khách vui lòng chuyển khoản bằng ATM cho Dealvip theo thông tin sau:<br>
+Ngân hàng : Đông Á - Tên Tài Khoản : Đinh Công Quốc - Số tài khoản : 0108 9645 20 - Chi nhánh : TP.HCM<br>
+Ngân hàng : Ngân hàng Nông Nghiệp Và Phát Triển Nông Thôn - Tên Tài Khoản : Đinh Công Quốc - Số tài khoản : 1600 2058 5237 3 - Chi nhánh : Sài Gòn</td></tr><tr><td align="right" valign="top"><input type="radio" name="methods[payment]" id="payment" value="5"></td><td align="left" valign="top" class="text_bold" style="padding-left:3px">Thanh toán qua BaoKim và Thẻ ATM</td></tr><tr><td></td><td align="left" valign="top" style="color:#666; padding-left:5px;padding-bottom:10px;font-size:80%">Thanh toán trực tuyến an toàn dùng tài khoản Bảo Kim hoặc Thẻ Tín Dụng, Thẻ ATM<img src="http://thietkeachau.com/cheapdeal/images/card_logo.jpg" alt="Bảo Kim" style="width:300px"></td></tr>        </tbody></table></td>
+      <td width="4%"></td>
+      <td align="left" valign="top" style="padding-left:10px; padding-top:7px;" width="49%"><table cellspacing="5" cellpadding="5">
+          <tbody><tr><td align="right" valign="top"><input type="radio" name="methods[shipping]" id="shipping" value="5" checked="checked"></td><td align="left" valign="top" class="text_bold" style="padding-left:3px">Chuyển phát nhanh trong nước</td></tr><tr><td></td><td align="left" valign="top" style="color:#666; padding-left:5px;padding-bottom:10px;font-size:80%">Từ 3 - 9 ngày làm việc tùy khu vực<br>Cước vận chuyển 25.000đ</td></tr>        </tbody></table></td>
+    </tr>
+  </tbody></table>
+    <div class="check-act">
+  
+    <input id="btn_paymentnextstep3" type="button" value="Lưu và tiếp tục" class="formbutton">   
+    <input type="button" value="Hủy" id="c3c" class="formbutton" style="display:none"> 
+     
+  </div>
+   <input type="hidden" name="atact" value="paymenttransfer" />
+</form>
+<script type="text/javascript">
+
+jQuery('#btn_paymentnextstep3').bind('click', function () {
+	jQuery('#fstep3').ajaxSubmit({
+		'dataType':'json',
+		'success': function (ret) {
+			if(ret['error']==0){
+				jQuery('#responserst3content').html(ret['html']);
+				jQuery('.order_step3').removeClass('content_active').removeClass('content_hide');
+				jQuery('.order_step4').addClass('content_active').removeClass('content_hide');
+				
+				$.get('http://thietkeachau.com/cheapdeal/ajax/checkout.php?getdatastep=finish', function(data) { 		
+					$('#responser_content_step4').html(data);
+					jQuery('.order_step4').addClass('content_active').removeClass('content_hide');
+					
+				});	
+
+
+			}
+		}
+	});			
+	return false;
+	});
+</script>

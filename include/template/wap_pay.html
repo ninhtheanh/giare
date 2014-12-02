@@ -1,0 +1,17 @@
+<!--{include wap_header}-->
+
+<h2>total payment：<strong>${moneyit($order['origin'])}</strong>{$currency}</h2>
+
+<!--{if $login_user['money'] > $order['origin']}-->
+<form id="order-pay-credit-form" method="post">
+	<input type="hidden" name="order_id" value="{$order_id}" />
+	<input type="hidden" name="service" value="credit" />
+	<input type="submit" class="formbutton gotopay" value="pay with the account ballance" />
+</form>
+<!--{else}-->
+
+<p>Your account balance is not enough，click<a href="index.php">here</a>to return</p>
+
+<!--{/if}-->
+
+<!--{include wap_footer}-->

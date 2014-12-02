@@ -1,0 +1,21 @@
+<div id="order-pay-dialog" class="order-pay-dialog-c" style="width:700px;">
+  <h3>Export Yahoo 4 Thumbnail Template<span id="order-pay-dialog-close" class="close" onclick="return X.boxClose();"><strong>Close</strong></span></h3>
+  <div style="padding-right:10px; padding-left:10px;">
+<form method="post" action="/backend/team/export4thumbnail.php" name="fexport" style="padding:0px; margin:0px;">
+	<table cellspacing="0" cellpadding="0" border="0" width="100%">
+      <tr bgcolor="#FFFFCC">
+        <td align="center" width="1%" style="border-right:#ffffff 1px solid;border-bottom:#ffffff 1px solid"><strong>ID</strong></td>
+        <td style="padding:5px;border-bottom:#ffffff 1px solid"><strong>Short title</strong></td>
+      </tr>
+      <!--{loop $homes $index $team}-->
+      <tr ${$index%2?'':'bgcolor="#f1f3f5"'}>
+        <td nowrap="nowrap" style="padding:5px;border-right:#ffffff 1px solid;border-bottom:#ffffff 1px solid"><input type="checkbox" name="id[]" value="{$team['id']}" /><strong>{$team['id']}</strong></td>
+        <td colspan="5" style="padding:5px;border-bottom:#ffffff 1px solid">{$team['short_title']}</td>
+      </tr>
+      <!--{/loop}-->
+      <tr><td></td><td style="padding:10px;">
+    	<input type="submit" value=" Export " />
+    </td></tr>
+	</table></form>
+  </div>
+</div>

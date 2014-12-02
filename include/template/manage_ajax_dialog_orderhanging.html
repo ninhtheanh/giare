@@ -1,0 +1,90 @@
+<div id="order-pay-dialog" class="order-pay-dialog-c" style="width:700px;"><h3>Chi tiết đơn hàng {$order['id']}<!--{if $order['delivery_code']>0}--> - Mã số BG: {$order['delivery_code']}<!--{/if}--> <span id="order-pay-dialog-close" class="close" onclick="return X.boxClose();">close</span></h3>
+    <div align="left" style="padding-left:10px; color:#F00"><!--${
+            $notes = DB::GetQueryResult("SELECT notes FROM `credit_gift` WHERE user_id='".$order['user_id']."' AND deal_id='".$order['team_id']."'")}-->{$notes['notes']}</div>
+	<div style="overflow-x:hidden;padding:5px;" id="dialog-order-id" oid="{$order['id']}">
+    <table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table" width="98%" style="background:#FFFFCC">                   
+					<th width="70">Trạng thái</th>
+					<th width="120">Người xử lý</th>                    
+					<th width="120" nowrap>Ngày xử lý</th>
+                    <th width="120" nowrap>Ngày hết hạn</th>	
+                    <th width="120" nowrap>Người tiếp nhận</th>                   					
+					</tr> 
+					<!--{loop $his $index $one}-->  
+                    <!--{if $one['head']==1}--><tr><td colspan="7"><h3>{$one['order_id']}</h3></td></tr><!--{/if}-->
+                  
+					<tr style="background-color:#${getStatusColor($one['status_code'])}">	
+                    				
+						<td>{$one['status_code']}</td>
+						<td>{$one['user']}</td>						
+						<td>{$one['date']}</td>
+                       <td>{$one['expires']}</td> 
+                       <td>{$one['assign_to']}</td>                     
+					</tr>
+                    <!--{if $one['note']}-->
+                    <tr><td colspan="5">{$one['note']}</td></tr>
+                    <!--{/if}-->
+					<!--{/loop}-->
+					<tr><td colspan="7">{$pagestring}</td></tr>
+                    </table>
+   
+    <form method="post" action="/backend/order/edit.php" class="validator" onsubmit="return checkSubmit();">
+	<table width="100%" align="center" class="coupons-table">
+		<tr><td width="80" align="right"><b>Khách hàng:</b></td><td>{$user['username']} / {$user['email']}</td></tr>
+		<tr><td align="right"><b>Deal:</b></td><td style="padding-right:3px;">{$team['title']}</td></tr>
+		<tr><td align="right"><b>Số lượng:</b></td><td><font color="red"><strong>{$order['quantity']}</strong></font></td></tr>
+		<!--{if $order['condbuy']}-->
+		<tr><td align="right"><b>Option:</b></td><td>{$order['condbuy']}</td></tr>
+		<!--{/if}-->
+		<tr><td align="right"><b>Trạng thái</b></td><td>{$paystate[$order['state']]}</td></tr>
+		<!--<tr><td><b>Payment No.：</b></td><td>{$order['pay_id']}</td></tr>-->
+		<tr><td align="right"><b>Thanh toán:</b></td><td><!--{if $order['service']=='cashdelivery' && $order['money']==0 && $order['credit']==0}-->Tiền mặt <b>${print_price(moneyit($order['origin']))}</b> {$currency} <!--{/if}-->&nbsp;<!--{if $order['credit']>0}-->Paid <b>${print_price(moneyit($order['credit']))}</b> {$currency} with balance <!--{/if}-->&nbsp;<!--{if $order['service']!='credit' && $order['money']>0}-->{$payservice[$order['service']]}Payment <b>${print_price(moneyit($order['money']))}</b> {$currency}<!--{/if}--><!--{if $order['card_id']}-->&nbsp;Vouchers:<b>${print_price(moneyit($order['card']))}</b> Points<!--{/if}--></td></tr>
+		<tr><td align="right"><b>Thời gian:</b></td><td>${date('Y-m-d H:i', $order['create_time'])} / ${date('Y-m-d H:i', $order['pay_time'])}</td></tr>
+		<!--{if $order['address']}-->
+		<tr><td width="80" align="right"><b>Địa chỉ:</b></td><td><!--{if $order['note_address']!=''}-->${htmlspecialchars($order['note_address'])}, <!--{/if}-->${htmlspecialchars($order['address'])}, <!--{if $order['dist_id']}-->{$alldist[$order['dist_id']]['dist_name']}<!--{else}-->other<!--{/if}-->, <!--{if $order['city_id']}-->{$allcities[$order['city_id']]['name']}<!--{else}-->other<!--{/if}--></td></tr>
+	<!--{/if}-->
+    <!--{if $order['realname']}-->
+    <tr><td width="80" align="right"><b>Người nhận:</b></td><td>{$order['realname']}</td></tr>
+	<!--{if $order['mobile']}-->
+	<tr><td align="right"><b>Mobile:</b></td><td>{$user['mobile']}</td></tr>
+	<!--{/if}-->
+	<!--{if $user['qq']}-->
+		<tr><td><b>QQ：</b></td><td>{$user['qq']}</td></tr>
+	<!--{/if}-->
+	<!--{if $user['msn']}-->
+		<tr><td><b>MSN：</b></td><td>{$user['msn']}</td></tr>
+	<!--{/if}-->
+	<!--{if $order['remark']}-->
+		<tr><td width="80" align="right"><b>Ghi chú:</b></td><td>${htmlspecialchars($order['remark'])}</td></tr>
+	<!--{/if}-->
+    <!--{if $order['notes']}-->
+		<tr><td width="80" align="right" nowrap><b>Order notes:</b></td><td>${htmlspecialchars($order['notes'])}</td></tr>
+	<!--{/if}-->
+    <!--${$date = DB::GetQueryResult("SELECT date_received FROM order_hanging WHERE order_id=".$one['id'])}-->
+    
+    <tr><td width="80" align="right" nowrap><b>Ngày nhận voucher:</b></td><td>
+	<input type="hidden" name="id" value="{$order['id']}" /><input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="date_received" value="{$date['date_received']}" style="width:100px" /></td></tr>
+    <tr><td></td><td>
+    	<input type="submit" value="   Tạm Hoãn   " />
+    </td></tr>
+    
+	<!--{if $team['delivery']=='express'}-->
+		<tr><th colspan="2"><hr/></th></td>
+		<tr>
+		  <td width="80"><b>Receiver:</b></td><td>{$order['realname']}</td></tr>
+		<tr>
+		  <td><b>Mobile number:</b></td><td>{$order['mobile']}</td></tr>
+		<tr>
+		  <td><b>Address:</b></td><td>{$order['address']}</td></tr>
+		<tr><th colspan="2"><hr/></th></td>
+		<tr>
+		  <td><b>Express info:</b></td><td><select name="express_id" id="order-dialog-select-id">${Utility::Option($option_express, $order['express_id'], 'please select express')}</select>&nbsp;<input type="text" name="in" id="order-dialog-input-id" value="{$order['express_no']}" style="width:150px;" maxLength="32" />&nbsp;&nbsp;<input type="submit" value="Submit" onclick="return X.manage.orderexpress();"/></td></tr>
+	<!--{/if}-->
+
+	<!--{if $order['state']=='pay'}-->
+		<!--<tr><th colspan="2"><hr/></th></td>
+		<tr><td><b>refund policy：</b></td><td><select name="refund" id="order-dialog-refund-id">${Utility::Option($option_refund, '', 'please select a way of refunding')}</select>&nbsp;<input type="submit" value="yes" onclick="return X.manage.orderrefund();"/></td></tr>-->
+	<!--{/if}-->
+
+	</table></form>
+	</div>
+</div>

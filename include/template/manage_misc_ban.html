@@ -1,0 +1,74 @@
+<!--{include manage_header}-->
+<div id='container'>
+<table width='100%' cellspacing='0' cellpadding='0'>
+	<tr>
+		<td width='70%' valign='top'>
+<table width='100%' cellspacing='0' cellpadding='0'>
+	<tr>
+		<td class='tablehead'>ID</td>
+		<td class='tablehead'>IP</td>
+		<td class='tablehead'>Duration</td>
+		<td class='tablehead' style='width:190px;'>Expires</td>
+		<td class='tablehead' style='width:120px;'>Actions</td>
+	</tr>
+<?php
+if($forms){
+$i=1;
+foreach($forms as $tag=>$val){
+	$z=explode('|',$val);
+		list($ip,$timestamp,$type)=$z;
+		?>
+		<form action='' method='POST'>
+			<tr bgcolor='white' onmouseover="this.bgColor='#faffea'" onmouseout="this.bgColor='#ffffff'">
+				<td style='padding-left:4px;'><?php echo $i;?></td>
+				<td class='td1'><a href="<?php echo $whois.$ip;?>&keepThis=true&TB_iframe=true&height=450&width=480" title="Viw IP info <b><?php echo $ip;?></b>" class="thickbox"><?php echo $ip;?></a></td>
+				<td class='td3'><?php time2type($type);?></td>
+				<td class='td2'><?php if($timestamp!='permanent') echo countdown($timestamp); else echo '-';?></td>
+				<td class='td4' align='right'><div class='buttons'><button type="submit" class="negative" name="delete"> <img src="ban/images/cross.png" alt=""/> Remove</button> <input type='hidden' name='formid' value='<?php $tag;?>'></div></td>
+			</tr>
+		</form>	
+		<?php
+$i++;}
+}else echo "<tr><td colspan='5' align='center'>No IP's banned Yet!</td></tr>";
+?>
+</table><br><br>
+</td>
+<td style='border-left:1px solid #3b3b3b; padding:5px;' valign='top'>
+<?php
+//=$err
+?>
+	<span class='title'>Ban IP</span>
+		<form action='' method='POST'>	
+	<table width='100%'>
+		<tr>
+			<td>IP</td>
+			<td><input type='text' class='text' name='ip'></td>
+		</tr>		
+		<tr>
+			<td>Duration</td>
+			<td>
+				<select name='duration' class='select'>
+					<option value=''>Select</option>
+					<option value='12'>12 Hours</option>
+					<option value='24'>One Day</option>
+					<option value='48'>Two Days</option>
+					<option value='72'>Three Days</option>
+					<option value='168'>One Week</option>
+					<option value='336'>Two Weeks</option>
+					<option value='744'>A Month</option>
+					<option value='8760'>A Year</option>
+					<option value='permanent'>Permanent</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td colspan='2'>
+				<div class='buttons'><button type="submit" class="positive" name="addfield"> <img src="ban/images/apply.png" alt=""/> Ban IP</button></div></td>
+		</tr>
+			</form>	
+	</table>
+</td>
+</tr>
+</table>
+</div>
+<!--{include manage_footer}-->

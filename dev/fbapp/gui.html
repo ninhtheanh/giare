@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+ 
+<style>
+#name { width: 100px; height: 40px; background: white; text-align: center; }
+#birthdate { width: 100px; height: 40px; background: red; text-align: center; }
+#death { width: 100px; height: 40px; background: yellow; text-align: center; }
+#reason { width: 350px; height: 50px; background: green; text-align: center; }
+#content { width: 500px; height: 500px; background: url(bg.jpg) no-repeat; float: top left;position: absolute; }
+#desc {width: 500px; position:absolute; border: thin solid black; height: 500px; float: left; margin-left: 600px; }
+body { margin: 0; padding: 0; }
+
+.name { border: dashed 2px black; padding: 4px 4px 4px 4px; width: 450px; margin: 0 auto; }
+.birthdate { border: dashed 2px black; padding: 4px 4px 4px 4px; width: 450px; margin: 0 auto; }
+.death { border: dashed 2px black; padding: 4px 4px 4px 4px; width: 450px; margin: 0 auto; }
+.reason { border: dashed 2px black; padding: 4px 4px 4px 4px; width: 450px; margin: 0 auto; }
+</style>
+ 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+ 
+<script type="text/javascript">
+ 
+$( init );
+
+function init() {
+  $('#name').draggable( {
+    cursor: 'move',
+    containment: '#content',
+    snap: '#content',
+    stop: handleDragStop,
+  } );
+  
+    $('#birthdate').draggable( {
+    cursor: 'move',
+    containment: '#content',
+    snap: '#content',
+    stop: handleDragStop2,
+  } );
+  
+    $('#death').draggable( {
+    cursor: 'move',
+    containment: '#content',
+    snap: '#content',
+    stop: handleDragStop3,
+  } );
+  
+    $('#reason').draggable( {
+    cursor: 'move',
+    containment: '#content',
+    snap: '#content',
+    stop: handleDragStop4,
+  } );
+}
+ 
+function handleDragStop( event, ui ) {
+  var offsetXPos = parseInt( ui.offset.left );
+  var offsetYPos = parseInt( ui.offset.top );
+  document.getElementById("name").innerHTML = "Name:<br>" + offsetXPos + ", " + offsetYPos + ""	;
+  document.getElementById("n1").innerHTML = "imagettftext( $canvas, 21, -1, " + offsetXPos + ", " + offsetYPos + ", $black, $font, $name );";
+}
+function handleDragStop2( event, ui ) {
+  var offsetXPos = parseInt( ui.offset.left );
+  var offsetYPos = parseInt( ui.offset.top );
+  document.getElementById("birthdate").innerHTML = "Birthdate:<br>" + offsetXPos + ", " + offsetYPos + ""	;
+  document.getElementById("b1").innerHTML = "imagettftext( $canvas, 21, -1, " + offsetXPos + ", " + offsetYPos + ", $black, $font, $birthday );";
+}
+function handleDragStop3( event, ui ) {
+  var offsetXPos = parseInt( ui.offset.left );
+  var offsetYPos = parseInt( ui.offset.top );
+  document.getElementById("death").innerHTML = "Death:<br>" + offsetXPos + ", " + offsetYPos + ""	;
+  document.getElementById("d1").innerHTML = "imagettftext( $canvas, 21, -1, " + offsetXPos + ", " + offsetYPos + ", $black, $font, $death );";
+}
+function handleDragStop4( event, ui ) {
+  var offsetXPos = parseInt( ui.offset.left );
+  var offsetYPos = parseInt( ui.offset.top );
+  document.getElementById("reason").innerHTML = "Reason:<br>" + offsetXPos + ", " + offsetYPos + ""	;
+  document.getElementById("r1").innerHTML = "imagettftext( $canvas, 21, -1, " + offsetXPos + ", " + offsetYPos + ", $black, $font, $reason );";
+}
+ 
+</script>
+ 
+</head>
+<body>
+ 
+<div id="content">
+  <div id="name">Name:<br></div>
+  <div id="birthdate">Friend:<br></div>
+</div>
+<div id="desc">
+<p align="center">as you move the Blocks around you get numbers inside, these are offsets.<br>
+  they are basically co-ordinates for top left corner of the &quot;element&quot;<br>
+  copy the offsets into your main.php like below (do the same for each element)</p>
+<p align="center"><strong>Name:</strong></p>
+<p align="center" class="name" id="n1">imagettftext( $canvas, 21, -1, 0, 0, $black, $font, $name );</p>
+<p align="center"><strong>Birthdate:</strong></p>
+<p align="center" class="birthdate" id="b1">imagettftext( $canvas, 21, -1, 0, 0, $black, $font, $friend );</p>
+
+</div>
+
+
+</div>
+ 
+</body>
+</html>
+
+	

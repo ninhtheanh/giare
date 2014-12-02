@@ -1,0 +1,14 @@
+<!--{if $team}-->
+<div class="sbox side-Business">
+	<div class="sbox-top"></div>
+	<div class="sbox-content">
+		<div class="tip today-deal">
+			<h2>Deal hôm nay</h2>
+			<h4><a href="/team.php?id={$team['id']}" title="${htmlspecialchars($team['title'])}" target="_blank">${mb_strimwidth($team['title'],0,60,'...')}</a></h4>
+			<div class="info"><div class="deal-pic"><a href="/team.php?id={$team['id']}" title="${htmlspecialchars($team['title'])}" target="_blank"><img width="200" height="120" src="${team_image($team['image'], true)}" /></a></div><p class="total"><strong class="count">{$team['now_number']}</strong> người đã mua</p><p class="price"> Giá gốc：<strong class="old">${print_price(moneyit($team['market_price']))} <span class="money">{$currency}</span></strong><br />Giá bán：<strong>${print_price(moneyit($team['team_price']))} <span class="money">{$currency}</span></strong><br />Giảm：<strong class="discount">${team_discount($team)} %</strong><br />Tiết kiệm：<strong>${print_price($team['market_price']-$team['team_price'])} <span class="money">{$currency}</span></strong></p></div>
+			<p class="buy"><a href="/team.php?id={$team['id']}"><img width="144" height="67" src="{$INI['system']['imgprefix']}/static/css/images/button-deal-buy.png" /></a></p>
+		</div>
+	</div>
+	<div class="sbox-bottom"></div>
+</div>
+<!--{/team}-->

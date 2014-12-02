@@ -1,0 +1,91 @@
+<!--{include manage_header}-->
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_shipping('ship_in_history')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="subbox-top"> <div class="subhead">
+                    <h2>Lịch sử nộp tiền</h2>
+				</div></div>
+            <div class="box-content">
+				<div class="sect" style="padding:5px; background:#AADFF1">
+					<form method="get">
+                        Mã nộp tiền <input type="text" name="in_id" value="{$in_id}" class="h-input"/>&nbsp;&nbsp;Người xử lý <select name="user" id="user" class="h-input" require="true"><option value='0'>--Chon--</option>${Utility::Option(Utility::OptionArray($alladmins,'username','username'),$user)}</select>&nbsp;&nbsp;Ngày xử lý <input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="cbday" value="{$cbday}" /> - 
+                       <input type="text" class="h-input" onFocus="WdatePicker({isShowClear:false,readOnly:true})" name="ceday" value="{$ceday}" />&nbsp;&nbsp;<input type="submit" value="Lọc dữ liệu" class="formbutton"  style="padding:1px 6px;"/>
+					<form>
+				</div>
+                <style>
+				.coupons-table tr,.coupons-table td
+				{
+					background:none;
+				}
+				</style>
+                <div class="sect">
+                <form method="post" action="">    
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table" width="100%">
+                   
+					<tr>
+					<th width="100">Mã nộp tiền</th>
+                    <th width="120">Ngày xử lý</th>
+					<th width="120">Người xử lý</th>
+                    <th width="120">Tác vụ</th>					
+                    <th>Ghi chú</th>					
+					</tr> 
+                            
+					<!--{loop $rs $index $one}-->  
+                    
+                    <!--
+                    ${
+                        switch($one['act']){
+                        	case 'BANGI' : $act = 'Bàn giao'; break;
+                            case 'TRABA' : $act = 'Trả bàn giao'; break;
+                            case 'NOPTI' : $act = 'Nộp tiền'; break;  
+                            case 'XACNH' : $act = 'Xác nhận'; break;  
+                            case 'HUYXA' : $act = 'Hủy xác nhận'; break;                        
+                        }
+                    }
+                    -->
+                    <!--
+                    ${                            
+                            $condition['in_id'] = $one['in_id'];
+                            $total_row = Table::Count('ship_log', $condition);
+                            $i = ++$index;
+                            if ($i==25 && $total_row>1){
+                            	$rowspan = $total_row-1;
+                            }else{
+                            	$rowspan = $total_row;
+                            }
+                            if ($one['head']==1){
+                            	$bgcolor = "background-color:#51bce8;color:#ffffff";
+                            }else{
+                            	$bgcolor = "background-color:#fff";
+                            }
+                        }-->                    
+			                         
+                        <tr ${$index%2?'':'class="alt"'} id="order-list-id-{$one['out_id']}" <!--{if $one['head']==1}-->style="border-top:solid 1px #000;"<!--{/if}-->>	                         
+                        <td style="{$bgcolor}"><!--{if $one['head']==1}--><h3>{$one['in_id']}</h3><!--{/if}--></td>
+                        <td>{$one['date']}</td>
+						<td>{$one['user']}</td>
+						<td>{$act}</td>
+                       <td>{$one['note']}</td>
+					</tr>
+					<!--{/loop}-->
+					
+                    </table>
+                    
+                   {$pagestring}
+                    
+                    </form>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

@@ -1,0 +1,23 @@
+                        :: INSTALLATION STEPS ::
+
+1. Upload files to directory.
+
+2. Goto the URL of the script.
+
+3. Ensure your permissions are set properly 
+   (For example: chmod admin/includes/config.php to 777).
+
+4. Run the installer.
+
+5. You are all set.
+
+6. Verify the release is by Bad Syntax!
+Otherwise you could find your data insecure by novice 'script kids'! 
+
+<?=Bad Syntax?>
+ LeetWolf
+ FLIPMODE!
+
+Interspire E-Mail Marketer 6.0.x
+- Null Completed: 1st December 2009
+- Public Release: 4th December 2009

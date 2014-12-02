@@ -1,0 +1,216 @@
+#AuthName "restricted"
+#AuthType Basic
+#AuthUserFile /home/www/dealsoc.vn/httpdocs/.htpasswd
+#require valid-user
+
+RewriteEngine on
+
+#Error_reporting
+#php_flag display_errors off
+#php_value error_reporting 0
+
+#Fix bug - Call-time pass-by-reference
+#php_value allow_call_time_pass_reference 1
+
+#Deny from all
+#Allow from 123.20.144.32 
+# You may need to un-comment the following line
+# Options +FollowSymlinks
+
+#Prevent robot scan on https protocol---------------
+#Options +FollowSymlinks
+
+# REMEBER YOU ONLY NEED TO STARD MOD REWRITE ONCE
+RewriteEngine On
+
+# REWRITE BASE
+RewriteBase /
+
+# Restrict file browsing
+
+
+
+#RewriteCond %{SERVER_PORT} ^443$
+#RewriteRule ^robots.txt$ robots_ssl.txt
+
+#=========================================================================================================================
+#Rediect to www domain-------------------------------
+#RewriteCond %{HTTP_HOST} ^(dealsoc\.vn)$
+#RewriteRule ^(.*)$ http://www.dealsoc.vn/$1 [L]
+
+#Invalid url to home---------------------------------
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule . /index.php [L]
+
+
+
+#=========================================================================================================================
+# Category
+RewriteRule ^tinh-thanh/ index.php?ct_id=0 [L]
+RewriteRule ^ha-noi/?$ index.php?ct_id=12 [L]
+RewriteRule ^tp-ho-chi-minh/?$ index.php?ct_id=11 [L]
+RewriteRule ^da-nang/?$ index.php?ct_id=15 [L]
+#RewriteRule ^tp-ho-chi-minh/deal-du-lich/?$ team/resort.php [L]
+RewriteRule ^ha-noi/deal-du-lich/?$ team/resort.php [L]
+RewriteRule ^da-nang/deal-du-lich/?$ team/resort.php [L]
+RewriteRule ^tp-ho-chi-minh/deal-gan-day/?$ team/index.php [L]
+
+RewriteRule ^ha-noi/deal-gan-day/?$ team/index.php [L]
+
+RewriteRule ^da-nang/deal-gan-day/?$ team/index.php [L]
+
+
+
+RewriteRule ^thao-luan/?$ forum/index.php [L]
+
+
+
+
+#Comment Nov 3 2014 start
+#RewriteRule ^tp-ho-chi-minh/ao-ao-khoac-nu/?$ team/category.php?gid=55 [L]
+#RewriteRule ^tp-ho-chi-minh/hang-cao-cap/?$ team/category.php?gid=56 [L]
+#RewriteRule ^tp-ho-chi-minh/gia-dung-cong-nghe/?$ team/category.php?gid=57 [L]
+#RewriteRule ^tp-ho-chi-minh/suc-khoe-lam-dep/?$ team/category.php?gid=58 [L]
+#RewriteRule ^tp-ho-chi-minh/tui-xach-phu-kien/?$ team/category.php?gid=59 [L]
+#RewriteRule ^tp-ho-chi-minh/me-be/?$ team/category.php?gid=60 [L]
+#RewriteRule ^tp-ho-chi-minh/thoi-trang-nam/?$ team/category.php?gid=61 [L]
+#RewriteRule ^tp-ho-chi-minh/do-the-thao-nam-nu/?$ team/category.php?gid=62 [L]
+#RewriteRule ^tp-ho-chi-minh/vay-dam-nu/?$ team/category.php?gid=63 [L]
+#Comment Nov 3 2014 end
+#Add Nov 3 2014 start
+RewriteRule ^tp-ho-chi-minh/([a-zA-Z0-9_-]+)$ team/category.php?id_name=$1 
+RewriteRule ^tp-ho-chi-minh/([a-zA-Z0-9_-]+)/$ team/category.php?id_name=$1
+#Add Nov 3 2014 end
+
+# DETAIL PAGES
+RewriteCond %{QUERY_STRING} ^comment=([a-z]+)$
+RewriteRule -([0-9]+)\.html$ team.php?id=$1&comment=%1 [L]
+
+RewriteRule -([0-9]+)\.html$ team.php?id=$1 [L]
+
+#News
+RewriteRule ^tin-tuc.html$ news.php [L]
+RewriteRule ^tin-tuc/([a-zA-Z0-9_-]+)_([0-9]+).html$ news_detail.php?id=$2
+#News [end]
+#RewriteRule ^ha-noi/(.+)$ team.php?id=$1 [L]
+
+#RewriteRule ^tp-ho-chi-minh/(.+)$ team.php?id=$1 [L]
+
+#RewriteRule ^da-nang/(.+)$ team.php?id=$1 [L]
+
+
+
+#RewriteRule ^tp-ho-chi-minh/(.+)$ team.php?id=$1 [L]
+
+#RewriteRule ^ha-noi/(.+)$ /team.php?id=$1 [L]
+
+#RewriteRule ^da-nang/(.+)$ /team.php?id=$1 [L]
+
+
+
+#RewriteRule ^tp-ho-chi-minh/(.+)$ /team.php?id=$1 [L]
+
+#RewriteRule ^ha-noi/(.+)$ /team.php?id=$1 [L]
+
+#RewriteRule ^da-nang/(.+)$ /team.php?id=$1 [L]
+
+
+
+#RewriteRule ^tp-ho-chi-minh/(.+)$ /team.php?id=$1 [L]
+
+#RewriteRule ^ha-noi/(.+)$ /team.php?id=$1 [L]
+
+#RewriteRule ^da-nang/(.+)$ /team.php?id=$1 [L]
+
+
+
+#STATICS PAGES
+
+#RewriteRule ^dealsoc-la-gi.html$ help/dealsoc.php [L]
+#RewriteRule ^hoi-dap.html/?$ help/faqs.php [L]
+#RewriteRule ^ve-cheapdeal.html$ help/cheapdeal.php [L]
+#RewriteRule ^ve-cheapdeal.html$ help/content.php?idcontent=ve-cheapdeal [L]
+#RewriteRule ^huong-dan.html$ help/huongdan.php [L]
+#RewriteRule ^nhan-uu-dai.html$ help/nhanuudai.php [L]
+#RewriteRule ^uu-dai-hap-dan.html$ help/uudaihapdan.php [L]
+#RewriteRule ^quy-dinh-doi-voi-nguoi-mua.html$ help/quydinhvoinguoimua.php [L]
+#RewriteRule ^hop-tac-voi-cheap-deal.html$ help/content.php?idcontent=hop-tac-voi-cheap-deal [L]
+#RewriteRule ^co-hoi-nghe-nghiep.html$ help/content.php?idcontent=co-hoi-nghe-nghiep [L]
+#RewriteRule ^khieu-nai.html$ help/content.php?idcontent=khieu-nai [L]
+#RewriteRule ^quy-che-san-giao-dich.html$ help/content.php?idcontent=quy-che-san-giao-dich [L]
+#RewriteRule ^giao-nhan-hang.html$ help/content.php?idcontent=giao-nhan-hang [L]
+#RewriteRule ^tra-hang-hoan-tien.html$ help/content.php?idcontent=tra-hang-hoan-tien [L]
+#RewriteRule ^su-dung-phieu-chiep-deal.html$ help/content.php?idcontent=su-dung-phieu-chiep-deal [L]
+#RewriteRule ^cach-thuc-mua-hang.html$ help/content.php?idcontent=cach-thuc-mua-hang [L]
+#RewriteRule ^hinh-thuc-thanh-toan.html$ help/content.php?idcontent=hinh-thuc-thanh-toan [L]
+#RewriteRule ^tai-khoan-va-don-hang.html$ help/content.php?idcontent=tai-khoan-don-hang [L]
+#RewriteRule ^hoi-dap.html/?$ help/content.php?idcontent=help_faqs [L]
+#RewriteRule ^dieu-khoan-su-dung.html$ help/content.php?idcontent=about_terms [L]
+#RewriteRule  ^huong-dan-mua-hang.html$ help/content.php?idcontent=help_tour [L]
+#RewriteRule  ^tuyen-dung.html$ help/content.php?idcontent=about_job [L]
+#RewriteRule  ^hop-tac-kinh-doanh.html$ help/content.php?idcontent=help_cooperation [L]
+#RewriteRule  ^thong-bao.html$ help/content.php?idcontent=thong-bao [L]
+#RewriteRule ^lien-he.html$ help/content.php?idcontent=lien-he [L] 
+#RewriteRule ^su-dung-phieu-cheapdeal.html$ help/content.php?idcontent=su-dung-phieu-chiep-deal [L]
+#RewriteRule ^huong-dan-mua-hang.html$ help/tour.php [L]
+#RewriteRule ^hop-tac-kinh-doanh.html$ help/cooperation.php [L]
+#RewriteRule ^thao-luan/?$ /help/faqs.php [L]
+
+RewriteRule ^([a-zA-Z0-9_-]+)\.html$ /help/content.php?idcontent=$1 
+RewriteRule ^([a-zA-Z0-9_-]+)/\.html$ /help/content.php?idcontent=$1
+
+RewriteRule  ^lien-he-hop-tac.html$ feedback/seller.php [L]
+
+#RewriteRule ^lien-he-hop-tac.html$ feedback/seller.php [L]
+
+RewriteRule ^ve-chung-toi.html$ about/us.php [L]
+
+#RewriteRule ^lien-he.html$ about/contact.php [L] 
+
+#RewriteRule ^dieu-khoan-su-dung.html$ about/terms.php [L] 
+
+#RewriteRule ^tuyen-dung.html$ about/job.php [L] 
+
+#TOPIC
+
+
+
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE image/x-icon
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE text/javascript
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+AddOutputFilterByType DEFLATE text/x-js
+AddOutputFilterByType DEFLATE text/ecmascript
+AddOutputFilterByType DEFLATE application/ecmascript
+AddOutputFilterByType DEFLATE text/vbscript
+AddOutputFilterByType DEFLATE text/fluffscript
+AddOutputFilterByType DEFLATE image/svg+xml
+AddOutputFilterByType DEFLATE application/x-font-ttf
+AddOutputFilterByType DEFLATE application/x-font
+AddOutputFilterByType DEFLATE font/opentype
+AddOutputFilterByType DEFLATE font/otf
+AddOutputFilterByType DEFLATE font/ttf
+AddOutputFilterByType DEFLATE application/x-font-truetype
+AddOutputFilterByType DEFLATE application/x-font-opentype
+AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+AddOutputFilterByType DEFLATE application/vnd.oasis.opendocument.formula-template
+</IfModule>
+
+#====================================================================================================================
+
+#######################ERRORS Setup ###########################
+
+ErrorDocument 400 http://116.193.73.83/
+
+ErrorDocument 401 http://116.193.73.83/
+
+ErrorDocument 403 http://116.193.73.83/
+
+ErrorDocument 404 http://116.193.73.83/404.html
+
+ErrorDocument 500 http://116.193.73.83/

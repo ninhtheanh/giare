@@ -1,0 +1,38 @@
+<!--{include biz_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="box-top"></div>
+            <div class="box-content">
+                <div class="head">
+                    <h2>List of deals</h2>
+				</div>
+                <div class="sect">
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+					<tr><th width="450">Deal name</th><th width="80">City</th><th width="100">Date</th><th width="50">Deal tipped</th><th width="120">Current price</th><th width="100">Operation</th></tr>
+					<!--{loop $teams $index $one}-->
+					<!--${$one['state'] = team_state($one)}-->
+					<tr ${$index%2?'':'class="alt"'} id="team-list-id-{$one['id']}">
+						<td style="text-align:left;"><a class="deal-title" href="/team.php?id={$one['id']}" target="_blank">{$one['title']}</a></td>
+						<td>{$cities[$one['city_id']]['name']}</td>
+						<td>${date('Y-m-d',$one['begin_time'])}<br/>${date('Y-m-d',$one['end_time'])}</td>
+						<td>{$one['now_number']}/{$one['min_number']}</td>
+						<td align="right">${print_price(moneyit($one['team_price']))} <span class="money">{$currency}</span><br/>${print_price(moneyit($one['market_price']))} <span class="money">{$currency}</span></td>
+						<td class="op" nowrap><a href="/ajax/partner.php?action=teamdetail&id={$one['id']}" class="ajaxlink">detail</a><!--{if $one['now_number']>=$one['min_number']}-->｜<a href="/biz/down.php?id={$one['id']}" target="_blank">download</a><!--{/if}--></td>
+					</tr>
+					<!--{/loop}-->
+					<tr><td colspan="6">{$pagestring}</tr>
+                    </table>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include footer}-->

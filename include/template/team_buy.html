@@ -1,0 +1,365 @@
+<!--{include header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+  <div id="signup">
+    <div class="subdashboard" id="dashboard">
+      <ul>
+        <li class="current"><a href="#">&nbsp;&nbsp;Giỏ hàng 
+          <!--{if $team['farefree']>0}--> 
+          &nbsp;(<span class="currency">{$team['farefree']}</span>free of express fee) 
+          <!--{/if}-->&nbsp;</a><span></span></li>
+      </ul>
+    </div>
+  </div>
+  <div id="contentfontend" class="mainwide clear">
+    <div id="deal-buy" class="box"> 
+      <script type="text/javascript" language="javascript">
+    	function checkform(){
+			if(document.teambuy.is_true.checked == false){
+				alert('Vui lòng chọn vào check box!!');
+				return false;
+			}else{
+				return true;
+			}
+		}
+		$(document).ready(function(){
+		 	$("#deal-buy-quantity-input").focus();
+			$("#deal-buy-quantity-input").removeClass("input-text f-input").addClass("focusField f-input");
+		});
+    </script>
+      <style type="text/css"> 
+.focusField{  
+        border:solid 1px #73A6FF;  
+        background:#F0D722; width:50px; font-size:15px; font-weight:bold; font-family:Arial, Helvetica, sans-serif;color:#333333; text-align:center; padding:5px;
+    }
+</style>
+      <div class="subbox-content" >
+        <div style="background-color:#FFFFFF; min-height:500px; _height:500px">
+          <div align="left" style="padding:10px;">
+            <div align="left" style="font-size:20px; padding-bottom:10px;"> </div>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="left" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tbody>
+                    
+                    <tr>
+                      <td width="24"><img src="/static/css/images/faqbox_topleft.gif" width="24" height="20"></td>
+                      <td style="background: url(&quot;/static/css/images/faqbox_topbg.gif&quot;) repeat-x scroll 0% 0% transparent;"></td>
+                      <td width="23"><img src="/static/css/images/faqbox_topright.gif" width="23" height="20"></td>
+                    </tr>
+                    <tr>
+                      <td style="background: url(&quot;/static/css/images/faqbox_leftbg.gif&quot;) repeat-y scroll right center transparent;">&nbsp;</td>
+                      <td bgcolor="#f1f1f1"><div align="left">
+                          <form action="/team/buy.php?id={$team['id']}" method="post" class="validator" name="teambuy" onSubmit="return checkform()">
+                            <input id="deal-per-number" value="{$team['per_number']}" type="hidden" />
+                            <table class="order-table">
+                              <tr>
+                                <th class="deal-buy-desc">Deal</th>
+                                <th class="deal-buy-quantity">Số lượng</th>
+                                <th class="deal-buy-multi"></th>
+                                <th class="deal-buy-price">Đơn giá (<span class="money">{$currency}</span>)</th>
+                                <th class="deal-buy-equal"></th>
+                                <th class="deal-buy-total">Thành tiền (<span class="money">{$currency}</span>)</th>
+                              </tr>
+                              <tr>
+                                <td class="deal-buy-desc">{$team['title']}</td>
+                                <td class="deal-buy-quantity"><input type="text" class="input-text f-input" maxlength="4" name="quantity" value="{$qty}" ff="${abs(intval($team['farefree']))}" id="deal-buy-quantity-input" ${$team['per_number']==1?'readonly':''} />
+                                  <br />
+                                  <span style="font-size:10px;color:red;">trên tổng số lần mua. Bạn có thể chỉnh số lượng mua</span> 
+                                  <!--<br /><span style="font-size:12px;color:gray;"><!--{if $team['per_number']==0}--> 
+                                  at most 9999 pieces 
+                                  <!--{else}--> 
+                                  at most {$team['per_number']} pieces 
+                                  <!--{/if}--> 
+                                  </span>--></td>
+                                <td class="deal-buy-multi">x</td>
+                                <td class="deal-buy-price"><span id="deal-buy-price">${print_price($team['team_price'])}
+                                  <input id="deal-buy-price-hidden" value="${(int)($team['team_price'])}" type="hidden" />
+                                  </span></td>
+                                <td class="deal-buy-equal">=</td>
+                                <td class="deal-buy-total" style="BORDER-RIGHT: #b1d1e6 1px solid;"><span id="deal-buy-total">${print_price($qty*$team['team_price'])}</span>
+                                  <input id="deal-buy-total-hidden" value="${(int)($qty*$team['team_price'])}" type="hidden" /></td>
+                              </tr>
+                              <!--{if $team['delivery']=='express'}-->
+                              <tr>
+                                <td class="deal-buy-desc">Chuyển phát nhanh</td>
+                                <td class="deal-buy-quantity"></td>
+                                <td class="deal-buy-multi"></td>
+                                <td class="deal-buy-price"><span id="deal-express-price" v="{$team['fare']}">{$team['fare']}</span></td>
+                                <td class="deal-buy-equal">=</td>
+                                <td class="deal-buy-total" style="BORDER-RIGHT: #b1d1e6 1px solid;"><span id="deal-express-total" v="{$team['fare']}">{$team['fare']}</span>
+                                  <input id="deal-express-total-hidden" value="{(int)($team['fare'])}" type="hidden" /></td>
+                              </tr>
+                              <!--{/if}--> 
+                              <!--{if $login_user['money']>0}-->
+                              <tr class="order-total" bgcolor="#FDFA9D">
+                                <td class="deal-buy-desc" style="BORDER-LEFT: #b1d1e6 1px solid;BORDER-BOTTOM: #b1d1e6 1px solid;"></td>
+                                <td class="deal-buy-quantity" style="BORDER-BOTTOM: #b1d1e6 1px solid;"></td>
+                                <td class="deal-buy-price" colspan="3" style="BORDER-BOTTOM: #b1d1e6 1px solid; color:#ff6600">Số dư tài khoản của bạn:</td>
+                                <td class="deal-buy-total" style="BORDER-BOTTOM: #b1d1e6 1px solid;BORDER-RIGHT: #b1d1e6 1px solid; color:#ff6600"><span id="deal-balance-total">${print_price($login_user['money'])} {$currency}
+                                  <input id="deal-balance-total-hidden" value="${(int)($login_user['money'])}" type="hidden" />
+                                  </span></td>
+                              </tr>
+                              <!--{/if}-->
+                              <tr class="order-total" bgcolor="#FDFA9D">
+                                <td class="deal-buy-desc" style="BORDER-LEFT: #b1d1e6 1px solid;BORDER-BOTTOM: #b1d1e6 1px solid;"></td>
+                                <td class="deal-buy-quantity" style="BORDER-BOTTOM: #b1d1e6 1px solid;"></td>
+                                <td class="deal-buy-multi" style="BORDER-BOTTOM: #b1d1e6 1px solid;"></td>
+                                <td class="deal-buy-price" nowrap="nowrap" style="BORDER-BOTTOM: #b1d1e6 1px solid; white-space:nowrap"><strong>Tổng số tiền:</strong></td>
+                                <td class="deal-buy-equal" style="BORDER-BOTTOM: #b1d1e6 1px solid;">=</td>
+                                <td class="deal-buy-total" style="BORDER-BOTTOM: #b1d1e6 1px solid;BORDER-RIGHT: #b1d1e6 1px solid;"><!--${$total = $qty*$team['team_price'];}--> 
+                                  <strong id="deal-buy-total-t">${print_price($total)}</strong>&nbsp;<span class="money">{$currency}</span></td>
+                              </tr>
+                            </table>
+                            <!--{if $order['id']>0}-->
+                            <table width="100%">
+                              <tr>
+                                <td align="left" valign="top" style="padding-top:5px; padding-bottom:5px;"><strong style="color:#ff6600; ">Lưu ý:</strong> Bạn đã mua deal này rồi. Nếu bạn muốn mua thêm/bớt thì vui lòng chỉnh sửa lại số lượng muốn mua trong giỏ hàng.</td>
+                              </tr>
+                            </table>
+                            <!--{/if}--> 
+                            <!--{if $team['image6']!=''}-->
+                            <table width="0%" border="0" cellspacing="0" cellpadding="0">
+                              <tr>
+                                <td align="center" colspan="2" valign="top" style="padding:5px;font-size:14px; font-family:Arial, Helvetica, sans-serif">Bạn sẽ nhận được thẻ do {$INI['system']['sitename']} cung cấp sau khi thanh toán</td>
+                              </tr>
+                              <tr><!--{if $team['image6']!=''}-->
+                                <td align="center" valign="top"><img src="${team_image($team['image6'])}" /></td>
+                                <!--{/if}--><!--{if $team['image7']!=''}-->
+                                <td align="center" valign="top"><img src="${team_image($team['image7'])}" /></td>
+                                <!--{/if}--></tr>
+                              <tr>
+                                <td align="center" colspan="2" valign="top" style="padding:5px; color:#096ea1;font-size:16px; font-family:Arial, Helvetica, sans-serif">Bạn phải đem theo thẻ này đến <strong>{$partner['title']}</strong> để sử dụng dịch vụ!</td>
+                              </tr>
+                              <tr align="left" colspan="2">
+                                <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                            </table>
+                            <!--{/if}-->
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                              <tbody>
+                                <!--{if $team['delivery']=='express'}-->
+                                <tr>
+                                  <td align="left"><div class="expresstip">${nl2br(htmlspecialchars($team['express']))}</div>
+                                    <div class="wholetip clear">
+                                      <h3>Thông tin chuyển phát nhanh</h3>
+                                    </div></td>
+                                </tr>
+                                <tr>
+                                  <td align="left" height="35"><div class="field username">
+                                      <label>Người nhận</label>
+                                      <input type="text" size="30" name="realname" id="settings-realname" class="f-input" value="{$login_user['realname']}" require="true" datatype="require" />
+                                    </div></td>
+                                </tr>
+                                <tr align="left">
+                                  <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                                </tr>
+                                <tr>
+                                  <td align="left" height="35"><div class="field mobile">
+                                      <label>Mobile</label>
+                                      <input type="text" size="30" name="mobile" id="settings-mobile" class="number" value="{$login_user['mobile']}" require="true" datatype="mobile" maxLength="11" />
+                                    </div></td>
+                                </tr>
+                                <tr align="left">
+                                  <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                                </tr>
+                                <tr>
+                                  <td align="left" height="35"><div class="field mobile">
+                                      <label>Địa chỉ</label>
+                                      <input type="text" size="30" name="address" id="settings-address" class="f-input" value="{$login_user['address']}" require="true" datatype="require" />
+                                    </div></td>
+                                </tr>
+                                <!--{elseif !empty($login_user)}-->
+                                <tr>
+                                  <td align="left"><div class="wholetip clear" style="font-size:16px;">
+                                      <h3>Thông tin giao hàng</h3>
+                                    </div></td>
+                                </tr>
+                                <tr>
+                                  <td align="left" style="padding-top:5px; padding-bottom:5px; padding-left:10px;"><strong>Ghi chú : </strong><span style="color:#c40000">Hiện nay Dealsoc đã thực hiện giao hàng trên 64 tỉnh thành thông qua kênh thanh toán trực tuyến nganluong.vn hoặc bằng thẻ ATM</span></td>
+                                </tr>
+                                <tr>
+                                  <td align="left" height="35"><div class="field username">
+                                      <label>Người nhận</label>
+                                      <input type="text" name="realname" id="settings-realname" class="f-input" value="<!--{if $order['realname']!=''}--> {$order['realname']}<!--{else}--> {$login_user['realname']} <!--{/if}-->" require="true" datatype="require" />
+                                    </div></td>
+                                </tr>
+                                <tr align="left">
+                                  <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                                </tr>
+                              <link rel="stylesheet" type="text/css" href="/static/css/jquery.autocomplete.css" />
+                              <script type='text/javascript' src="/static/js/jquery.autocomplete.js"></script> 
+                              <script src="/static/js/jchain.js" type="text/javascript"></script> 
+                              <script type="text/javascript">				               
+				jQuery(document).ready(function() {	
+					var opt = '<option value=0>--Chọn--</option>';
+					/*
+					$('#city_id').change(function() {											
+						$.get('/ajax/city.php?city_id='+$("#city_id").val(), function(ret) {					 		 
+						  $('#dist_id').empty().append(opt+ret);
+						  $('#ward_id').empty();
+						});
+					});
+					*/
+					$('#dist_id').change(function() {
+						$.get('/ajax/city.php?dist_id='+$("#dist_id").val(), function(ret) {					 
+						  $('#ward_id').empty().append(opt+ret);	
+						});
+					});
+				});		
+				function searchSuggest(){
+					$("#settings-street-name").autocomplete('search_address_list.php', {width: 308});	
+				}
+			</script> 
+                              <!--${
+$dist_id = ($order['dist_id']) ? $order['dist_id']: $login_user['dist_id'];  
+$ward_id = ($order['ward_id']) ? $order['ward_id']: $login_user['ward_id'];
+}-->
+                              
+                              <tr>
+                                <td align="left" height="35"><div class="field">
+                                    <label id="enter-address-city-label" for="signup-city">Quận/Huyện</label>
+                                    <select name="dist_id" id="dist_id"  class="f-city" require="true" datatype="require" style="width:180px" onChange="getDistId()">
+                                      <option value="">---Chọn---</option>
+                                      
+                     ${optiondistrict($dist_id,$city['id'])}
+            
+                                    </select>
+                                  </div></td>
+                              </tr>
+                              <tr align="left">
+                                <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35"><div class="field">
+                                    <label>Phường/Xã</label>
+                                    <select name="ward_id" id="ward_id"  class="f-city" require="true" datatype="require" style="width:180px" onChange="getWardId()">
+                                      <option value="">---Chọn---</option>
+                                         
+              ${optionward($ward_id,$dist_id)}                
+            
+                                    </select>
+                                  </div></td>
+                              </tr>
+                              <tr align="left">
+                                <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35"><div class="field">
+                                    <label>Số nhà</label>
+                                    <!--${
+                    if ($order['house_number']!='' || $order['street_name']!=''){
+                        $house_number = $order['house_number'];
+                        $street_name = $order['street_name'];
+                    }else{
+                        $expl = explode(" ",$login_user['address']);
+                        $house_number = $expl[0];
+                        $street_name = trim(str_replace($expl[0],"",$login_user['address']));
+                    }
+                }-->
+                                    <input type="text" name="house_number" autocomplete="off" id="settings-address" class="f-input" value="{$house_number}" require="true" datatype="require" />
+                                  </div></td>
+                              </tr>
+                              <tr align="left">
+                                <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35"><div class="field mobile">
+                                    <label>Tên đường</label>
+                                    <input type="text" name="street_name" class="f-input" autocomplete="off" onFocus="searchSuggest()" id="settings-street-name" require="true" value="{$street_name}" datatype="require" />
+                                  </div></td>
+                              </tr>
+                              <tr align="left">
+                                <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35"><div class="field">
+                                    <label>Phòng-lầu-tòa nhà</label>
+                                    <input type="text" size="30" name="note_address" id="settings-note-address" class="f-input" value="<!--{if $order['note_address']!=''}--> {$order['note_address']}<!--{else}-->{$login_user['note_address']}<!--{/if}-->" />
+                                    <span class="hint" style="white-space:nowrap">Ví dụ: P101, Lầu 10, Cao Ốc Bitexco</span></div></td>
+                              </tr>
+                              <tr align="left">
+                                <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35"><div class="field mobile">
+                                    <label>Di động</label>
+                                    <input type="text" size="30" name="mobile" id="settings-mobile" require="true" class="f-input number" value="<!--{if $order['mobile']!=''}--> {$order['mobile']}<!--{else}--> {$login_user['mobile']} <!--{/if}-->"  datatype="mobile" maxLength="11" style="font-weight:bold; font-size:16px; width:250px;" />
+                                    <span class="hint" style="white-space:nowrap">Số ĐTDĐ dùng để liên lạc khi giao hàng.</span> </div></td>
+                              </tr>
+                              <tr>
+                                <td align="left" style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <tr>
+                                <td align="left"><div class="wholetip clear" style="font-size:16px;">
+                                    <h3>Thông tin thêm</h3>
+                                  </div>
+                                  
+                                  <!--{if $condbuy=nanooption($team['condbuy'])}-->
+                                  
+                                  <div class="field mobile">
+                                    <label>Order options</label>
+                                    <select name="condbuy" class="f-input" style="width:auto;">
+                                      
+                ${Utility::Option(array_combine($condbuy, $condbuy), 'condbuy')}
+            
+                                    </select>
+                                  </div>
+                                  
+                                  <!--{/if}--></td>
+                              </tr>
+                              <tr>
+                                <td align="left" height="35"><div class="field mobile" style="width:600px">
+                                    <label>Ghi chú</label>
+                                    <textarea name="remark" style="width:400px;height:80px;padding:2px; border:#1B94C1 1px solid">${htmlspecialchars($order['remark'])}</textarea>
+                                  </div></td>
+                              </tr>
+                              <tr align="left">
+                                <td style="background: url(&quot;/static/css/images/faqbox_break.gif&quot;) repeat-x scroll 0% 0% transparent;" height="4"></td>
+                              </tr>
+                              <!--{/if}-->
+                              <tr>
+                                <td align="left" height="35"><div class="form-submit">
+                                    <input type="hidden" name="id" value="{$order['id']}" />
+                                    <input type="submit" class="formbutton" name="buy" value="Đồng ý mua" style="padding:7px;"/>
+                                  </div></td>
+                              </tr>
+                                </tbody>
+                              
+                            </table>
+                          </form>
+                        </div>
+                        
+                        </td>
+                      <td style="background: url(&quot;/static/css/images/faqbox_rightbg.gif&quot;) repeat-y scroll right center transparent;"></td>
+                    </tr>
+                    
+                    <tr>
+                      <td><img src="/static/css/images/faqbox_bottomleft.gif" alt="" width="24" border="0" height="21"></td>
+                      <td style="background: url(&quot;/static/css/images/faqbox_bottombg.gif&quot;) repeat-x scroll 0% 0% transparent;"></td>
+                      <td><img src="/static/css/images/faqbox_bottomright.gif" alt="" width="23" border="0" height="21"></td>
+                    </tr>
+                      </tbody>
+                    
+                  </table></td>
+                <td align="left" valign="top" style="padding-left:7px;"><div id="sidebar"> 
+                    <!--{include block_side_support}--> 
+                  </div></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- bd end --> 
+</div>
+<!-- bdw end --> 
+<script>
+window.x_init_hook_dealbuy = function(){
+	X.team.dealbuy_farefree("${abs(intval($qty))}");
+	X.team.dealbuy_totalprice();
+};
+</script> 
+<!--{include footer}--> 

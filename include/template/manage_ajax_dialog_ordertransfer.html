@@ -1,0 +1,75 @@
+<div id="order-pay-dialog" class="order-pay-dialog-c" style="width:700px;">
+	<h3>Chi tiết đơn hàng {$order['id']}<!--{if $order['delivery_code']>0}--> - Mã số: {$order['delivery_code']}<!--{/if}--> <span id="order-pay-dialog-close" class="close" onclick="return X.boxClose();">close</span></h3>
+	<div style="overflow-x:hidden;padding:5px;" id="dialog-order-id" oid="{$order['id']}">
+    <table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table" width="98%" style="background:#FFFFCC">                   
+                   
+					<th width="70">Trạng thái</th>
+					<th width="120">Người xử lý</th>                    
+					<th width="120" nowrap>Ngày xử lý</th>
+                    <th width="120" nowrap>Ngày hết hạn</th>	
+                    <th width="120" nowrap>Người tiếp nhận</th>                   					
+					</tr> 
+                            
+					<!--{loop $his $index $one}-->  
+                    
+                    <!--{if $one['head']==1}--><tr><td colspan="7"><h3>{$one['order_id']}</h3></td></tr><!--{/if}-->
+                  
+					<tr style="background-color:#${getStatusColor($one['status_code'])}">	
+                    				
+						<td>{$one['status_code']}</td>
+						<td>{$one['user']}</td>						
+						<td>{$one['date']}</td>
+                       <td>{$one['expires']}</td> 
+                       <td>{$one['assign_to']}</td>                     
+					</tr>
+                    <!--{if $one['note']}-->
+                    <tr>			
+						<td colspan="5">{$one['note']}</td>						                 
+					</tr>
+                    <!--{/if}-->
+					<!--{/loop}-->
+                   
+                    
+					<tr><td colspan="7">{$pagestring}</td></tr>
+                    </table>
+<form method="post" action="/backend/order/transfer.php" class="validator" onsubmit="return checkSubmit();">
+	<input type="hidden" name="id" value="{$order['id']}" /><input type="hidden" name="transferid" value="{$order['transferID']}" />	<table width="100%" align="center" class="coupons-table">
+		<tr><td width="80"><b>Khách hàng:</b></td>
+		<td>{$user['realname']} / {$user['email']}</td>
+		</tr>
+		<tr><td><b>Deal:</b></td><td>{$team['title']}</td></tr>
+		<tr><td><b>Số lượng:</b></td><td><font color="red">{$order['quantity']}</font></td></tr>
+	<!--{if $order['condbuy']}-->
+		<tr><td><b>Option:</b></td><td>{$order['condbuy']}</td></tr>
+	<!--{/if}-->
+		<tr><td><b>Trạng thái</b></td><td>{$paystate[$order['state']]}</td></tr>
+		<!--<tr><td><b>Payment No.：</b></td><td>{$order['pay_id']}</td></tr>-->
+		<tr><td><b>Thanh toán:</b></td><td><!--{if $order['service']=='cashdelivery' && $order['money']==0 && $order['credit']==0}-->Tiền mặt <b>${print_price(moneyit($order['origin']))}</b> {$currency} <!--{/if}-->&nbsp;<!--{if $order['credit']>0}-->Paid <b>${print_price(moneyit($order['credit']))}</b> {$currency} with balance <!--{/if}-->&nbsp;<!--{if $order['service']!='credit' && $order['money']>0}-->{$payservice[$order['service']]}Payment <b>${print_price(moneyit($order['money']))}</b> {$currency}<!--{/if}--><!--{if $order['card_id']}-->&nbsp;Vouchers:<b>${print_price(moneyit($order['card']))}</b> Points<!--{/if}--></td></tr>
+		<tr><td><b>Thời gian:</b></td><td>${date('Y-m-d H:i', $order['create_time'])}<!--{if $order['pay_time']}-->/ ${date('Y-m-d H:i', $order['pay_time'])}<!--{/if}--></td></tr>
+	<!--{if $order['address']}-->
+		<tr><td width="80"><b>Địa chỉ:</b></td><td><!--{if $order['note_address']!=''}-->${htmlspecialchars($order['note_address'])}, <!--{/if}-->${htmlspecialchars($order['address'])}, <!--{if $order['dist_id']}-->{$alldist[$order['dist_id']]['dist_name']}<!--{else}-->other<!--{/if}-->, <!--{if $order['city_id']}-->{$allcities[$order['city_id']]['name']}<!--{else}-->other<!--{/if}--></td></tr>
+	<!--{/if}-->
+    <!--{if $order['realname']}-->
+    <tr><td width="80"><b>Người nhận:</b></td><td>{$order['realname']}</td></tr>
+	<!--{if $order['mobile']}-->
+		<tr><td><b>Mobile:</b></td><td>{$user['mobile']}</td></tr>
+	<!--{/if}-->
+	<!--{if $user['qq']}-->
+		<tr><td><b>QQ：</b></td><td>{$user['qq']}</td></tr>
+	<!--{/if}-->
+	<!--{if $user['msn']}-->
+		<tr><td><b>MSN：</b></td><td>{$user['msn']}</td></tr>
+	<!--{/if}-->
+	<!--{if $order['remark']}-->
+		<tr><td width="80"><b>Ghi chú:</b></td><td>${htmlspecialchars($order['remark'])}</td></tr>
+	<!--{/if}-->
+    <!--{if $order['notes']}-->
+		<tr><td width="80"><b>order notes：</b></td><td>${htmlspecialchars($order['notes'])}</td></tr>
+	<!--{/if}-->
+    <tr><td width="80" nowrap="nowrap"><b>Transfer notes：</b></td><td><textarea name="note_times_1" style="width:300px; height:100px"></textarea></td></tr>
+    <tr><td></td><td>
+    	<input type="submit" value="   Transfer Order   " />
+    </td></tr>
+	</table></form>
+	</div>
+</div>

@@ -1,0 +1,44 @@
+<!--{include manage_header}-->
+
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+<div id="coupons">
+	<div class="subdashboard" id="dashboard">
+		<ul>${mcurrent_user('index')}</ul>
+	</div>
+    <div id="content" class="coupons-box clear mainwide">
+		<div class="box clear">
+            <div class="subbox-top"><div class="subhead"><h2>Users list</h2></div></div>
+            <div class="box-content">
+                <div class="head">
+                    <ul class="filter">
+						<li><form action="/backend/user/index.php" method="get">username：<input type="text" name="uname" class="h-input" value="${htmlspecialchars($uname)}" >&nbsp;email：<input type="text" name="like" class="h-input" value="${htmlspecialchars($like)}" >&nbsp;<select name="ucity" style="width:120px;">${Utility::Option(option_category('city'), $ucity, 'all cities')}</select>&nbsp;<input type="submit" value="select" class="formbutton"  style="padding:1px 6px;"/><form></li>
+					</ul>
+				</div>
+                <div class="sect">
+					<table id="orders-list" cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+					<tr><th width="20">ID</th><th width="200">Email/username</th><th width="200" nowrap>name/city</th><th width="40">account balance (<span class="currency">{$currency}</span>)</th><!--<th width="40">zipcode</th>--><th width="140">registration IP/registration time</th></th><th width="100">telephone</th><th width="100">operation</th></tr>
+					<!--{loop $users $index $one}-->
+					<tr ${$index%2?'':'class="alt"'} id="team-list-id-{$one['id']}">
+						<td>{$one['id']}</td>
+						<td>${$enc->decrypt('@4!@#$%@', $one['email'])}<br/>${$enc->decrypt('@4!@#$%@', $one['username'])}<!--{if Utility::IsMobile($one['mobile'])}-->&nbsp;&raquo;&nbsp;<a href="/ajax/misc.php?action=sms&v={$one['mobile']}" class="ajaxlink">SMS</a><!--{/if}--></td>
+						<td>${$one['realname']?$one['realname']:'----';}<br/><!--${if ($one['note_address']!=''){$note_address = $one['note_address'].", ";}else{$note_address="";}}-->{$note_address}${$one['address']?$one['address'].', ':'----';}<!--{if wardname($one['dist_id'],$one['ward_id'])}--><!--${$wardname = wardname($one['dist_id'],$one['ward_id'])}-->{$wardname['ward_name']},<!--{/if}--> <!--{if $one['dist_id']}-->{$alldist[$one['dist_id']]['dist_name']}<!--{else}-->other<!--{/if}-->, <!--{if $one['city_id']}-->{$allcities[$one['city_id']]['name']}<!--{else}-->other<!--{/if}--></td>
+						<td>${print_price(moneyit($one['money']))}</td>
+						<!--<td>{$one['zipcode']}</td>-->
+						<td>{$one['ip']}<br/>${date('Y-m-d H:i', $one['create_time'])}</td>
+						<td>{$one['mobile']}</td>
+						<td class="op"><a href="/ajax/manage.php?action=userview&id={$one['id']}" class="ajaxlink">detail</a>｜<a href="/backend/user/edit.php?id={$one['id']}">edit</a></td>
+					</tr>
+					<!--{/loop}-->
+					<tr><td colspan="8">{$pagestring}</tr>
+                    </table>
+				</div>
+            </div>
+            <div class="box-bottom"></div>
+        </div>
+    </div>
+</div>
+</div> <!-- bd end -->
+</div> <!-- bdw end -->
+
+<!--{include manage_footer}-->

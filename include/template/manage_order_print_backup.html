@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>Dealsoc.com - Giá sốc mỗi ngày</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<style>
+#wrap {
+	width:100%;
+	text-align:center;
+}
+.center {
+	width:241mm;	
+	margin:0 auto;
+}
+.bg {
+	width:100%;
+	position:relative;
+	height:150mm;
+	border:solid 1px #eee;	
+}
+.img {
+	width:241mm
+}
+.main {
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+}
+.col1 {
+	float:left;
+	width:106mm;
+	background:none;
+	position:relative;
+}
+.col2 {
+	float:left;
+	width:71mm;
+	background:none;
+	position:relative;
+}
+.col3 {
+	float:right;
+	width:64mm;
+	background:none;
+	position:relative;
+}
+.col1 div, .col2 div, .col3 div {
+	background:none;
+	text-align:left;
+}
+</style>
+</head>
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<!--wrap-->
+<div id="wrap"> 
+<!--{loop $rs $index $one}-->
+<div style="page-break-before:always; display:none"></div>
+  <!--center-->
+  <div class="center"> 
+    <!--background-->
+     
+    <div class="bg"> <img class="img" src="http://dev.dealsoc.vn/tinthanhnew.gif">
+      <!--main-->
+      <div class="main">
+        <div class="col1">
+        
+        <div style="float:right;margin-top:37mm; margin-right:1mm;"><img style="height:14mm;" src="/barcode/?barcode={$one['id']}" border="0" alt="" /> </div>        
+          <div style="margin-top:53.9mm; margin-left:33mm;">{$one['realname']}</div>
+          <div style="margin-top:4mm; margin-left:27mm; height:14mm;">{$one['address']}</div>
+          <div style="margin-top:4mm; margin-left:18mm;">{$dist_name}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {$city_name}</div>
+          <div style="margin-top:4mm; margin-left:33mm;">{$one['mobile']}</div>
+          <div style="margin-top:5mm; margin-left:99mm;">X</div>
+          <div style="margin-top:9mm; margin-left:15mm; height:10mm">{$teams[$one['team_id']]['short_title']}</div>
+          <div style="margin-top:5mm; margin-left:15mm;">Số lượng : {$one['quantity']}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         
+            </div>
+          <div style="margin-top:3mm; margin-left:18mm;">Tiền : {}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            MHĐ : {$one['id']}
+            </div>
+        </div>
+        <div class="col2">
+          <div style="margin-top:58mm; margin-left:20mm;">{$teams[$one['team_id']]['weight']}</div>
+        </div>
+        <div class="col3">
+          <div style="margin-top:10mm; margin-left:39mm;">X</div>
+        </div>
+        <div style="clear:both"></div>
+      </div>
+    </div>   
+  </div>
+  <!--{/loop}-->  
+</div>
+</body>
+</html>

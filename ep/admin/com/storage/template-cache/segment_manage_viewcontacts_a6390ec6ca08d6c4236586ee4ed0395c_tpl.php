@@ -1,0 +1,1 @@
+<?php $IEM = $tpl->Get('IEM'); ?><a id="hrefSegmentManageViewContacts_<?php if(isset($GLOBALS['SegmentID'])) print $GLOBALS['SegmentID']; ?>" class="SegmentManageViewContactsLink" href="index.php?Page=Subscribers&Action=Manage&Segment=<?php if(isset($GLOBALS['SegmentID'])) print $GLOBALS['SegmentID']; ?>"><?php print GetLang('ViewContacts'); ?></a>

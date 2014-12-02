@@ -1,0 +1,1 @@
+<?php $IEM = $tpl->Get('IEM'); ?><a href="index.php?Page=Subscribers&Action=Banned&SubAction=Edit&list=<?php if(isset($GLOBALS['List'])) print $GLOBALS['List']; ?>&id=<?php if(isset($GLOBALS['BanID'])) print $GLOBALS['BanID']; ?>"><?php print GetLang('Edit'); ?></a>
