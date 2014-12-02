@@ -31,7 +31,7 @@
 					<tr <?php echo $index%2?'':'class="alt"'; ?>>						
                         <td><?php echo $one['id']; ?></td>
 						<td>
-                        	<a target="_new" href="../../<?php echo $one['id']; ?>.html"><?php echo $one['title']; ?></a>
+                        	<a target="_new" href="/tin-tuc/<?php echo seo_url($one['title'],$one['id'], $url_suffix, '_'); ?>"><?php echo $one['title']; ?></a>
                         </td>
                         <td>
                         	<img src="<?php echo $one['thumb']; ?>" />

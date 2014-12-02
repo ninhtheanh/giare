@@ -17,7 +17,7 @@
             <li><a href="/ve-cheapdeal.html" style="width:90px">Về Cheapdeal</a></li>
 			 <li><a href="/lien-he.html">Liên hệ</a></li>
             <li><a href="/thong-bao.html">Khách hàng tỉnh</a></li>
-            <li><a href="/tin-tuc.html" style="display:none">Tin tức</a></li>
+            <li><a href="/tin-tuc.html">Tin tức</a></li>
             <li id="athover"><a id="nhanuudai" style="cursor:pointer;">Nhận ưu đãi</a>
                 <div id="form_nhanuudai" style="background: #fff;box-shadow: 1px 1px 2px #6e6e6e;">
             <form id="enter-address-form" action="/subscribe.php" method="post" class="validator">

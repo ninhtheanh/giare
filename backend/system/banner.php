@@ -37,7 +37,7 @@ $count = Table::Count('banner', $condition);
 list($pagesize, $offset, $pagestring) = pagestring($count, 20);
 //DB::$mDebug=true;
 $categories = DB::LimitQuery('banner', array(
-	'order' => 'ORDER BY banner_type, `order`',
+	'order' => 'ORDER BY banner_type DESC, activate DESC, `order` ASC',
 	'size' => $pagesize,
 	'offset' => $offset,
 ));

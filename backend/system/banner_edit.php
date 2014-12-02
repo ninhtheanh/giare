@@ -8,8 +8,9 @@ $id = $_REQUEST['id'];
 $arrRows = Table::Fetch('banner', $id);
 
 if ($_POST) { 
-	DB::$mDebug=true;
+	//DB::$mDebug=true;
 	$img = upload_image('upload_image',$arrRows['image'], 'banner');
+	//echo "img:" . $img;
 	$img = $img != "" ? $img : $_POST['hidden_img'];
 	
 	$activate = isset($_POST['activate']) ? 1 : 0;
@@ -20,7 +21,7 @@ if ($_POST) {
 		$table->url = $_POST['url'];
 		$table->banner_type = $_POST['banner_type'];
 		$table->activate = $activate;
-		$uarray = array( 'id',  'img', 'url', 'banner_type');
+		$uarray = array( 'id',  'img', 'url', 'banner_type', 'activate');
 		
 		$flag = $table->update( $uarray );
 		if ( $flag ) {
