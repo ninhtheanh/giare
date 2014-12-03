@@ -48,7 +48,7 @@ $str_id = "";
                   <th width="100">date</th>
                   <th width="50">deal tipped</th>
                   <th width="60" nowrap>price (<span class="money"><?php echo $currency; ?></span>)</th>
-                  <th width="65">Home page</th>
+                  <th width="65" align="center">Home page <br><input type="checkbox" id="selecctall"/></th>
                   <th width="100">operation</th>
                 </tr>
                 <?php if(is_array($teams))
@@ -108,5 +108,22 @@ $str_id = "";
   <!-- bd end --> 
 </div>
 <!-- bdw end -->
-
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#selecctall').click(function(event) {  //on click
+		var elements = $('[name^=show_homepage_]');
+		var length = elements.length;		
+        if(this.checked) { // check select status            
+			elements.each(function() { //loop through each checkbox
+                this.checked = true;  //select all checkboxes with class "checkbox1"              
+            });
+        }else{
+            elements.each(function() { //loop through each checkbox
+                this.checked = false; //deselect all checkboxes with class "checkbox1"                      
+            });        
+        }
+    });
+   
+});		
+</script>
 <?php include template("manage_footer");?>
