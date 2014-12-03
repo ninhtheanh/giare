@@ -86,19 +86,53 @@ $arrcatid = array(
                 <label style="font-weight: bold;margin-right: 7px;">Màu sắc: </label>
                 <?php  
 				 $cls = (array)Session::Get('colorteam');
-				 foreach($condbuy as $color): 
-				 $clsactive = '';
-				 	//if(isset($cls[$team['id']]) && $cls[$team['id']] == $color)
+				 
+				 $activateColor = $condbuy[0]; 
+				 foreach($condbuy as $color)
+				 {
 					if( isset($_SESSION['color_'.$team['id']]) && $_SESSION['color_'.$team['id']] == $color )
-						$clsactive = 'activecolor';
+						$activateColor = $color;	 
+				 }				 
+				 //echo 'activateColor:' . $activateColor;
+				 
+				 foreach($condbuy as $color): 
+				 	$clsactive = $activateColor == $color ? 'activecolor' : "";
 				 ?>
-                <a id="color_<?php  echo $team['id']; ?>" class="setcolor <?php  echo $clsactive; ?>" onclick="setColorTeam(<?php  echo $team['id']; ?>,'<?php  echo $color ?>');"><span style="cursor:pointer;border:1px solid #999;width:16px; height:16px; display:inline-block;background:<?php  echo $color; ?>"></span></a>
+                	<a id="color_<?php  echo $team['id']; ?>" class="setcolor <?php  echo $clsactive; ?>" onclick="setColorTeam(<?php  echo $team['id']; ?>,'<?php  echo $color ?>');"><span style="cursor:pointer;border:1px solid #999;width:16px; height:16px; display:inline-block;background:<?php  echo $color; ?>"></span></a>
                 <?php  endforeach; ?>
               </div>
               <style>
 			   .setcolor{ display: inline-block;padding: 3px;}
 			   .activecolor{background: #75C70D;}
-			   </style>
+			   </style>              
+              <?php  endif; ?>
+              <?php if($team['size'] != ""){?>
+              <div class="color" style="margin: 10px 0px;">
+                <label style="font-weight: bold;margin-right: 7px;">Size: </label>
+                <?php 
+				//echo 'W:'.'size_'.$team['id'];
+				
+				 	$size = $team['size'];
+					$size = str_replace("}{", ", ", $size);
+					$size = str_replace("{", "", $size);
+					$size = str_replace("}", "", $size);
+				 	//echo $size; 
+					$arrSize = split(",", $size);
+					
+					 $activateSize = $arrSize[0]; 
+					 foreach($arrSize as $size)
+					 {
+						if( isset($_SESSION['size_'.$team['id']]) && $_SESSION['size_'.$team['id']] == $size )
+							$activateSize = $size;	 
+					 }	
+					 
+					foreach($arrSize as $size)
+					{						
+				 ?>
+                 	<input type="radio" name="radio_size" value="<?php echo $size;?>" onchange="setSize(<?php  echo $team['id']; ?>,'<?php  echo $size ?>');" <?php if( $activateSize == $size ) echo 'checked="checked"'?>/> <?php echo $size;?> &nbsp;
+              	<?php }?>   
+              </div>
+              <?php }?>
               <script type="text/javascript">
 			   	$('.setcolor').click(function(){
 					$('.setcolor').removeClass('activecolor');
@@ -114,27 +148,14 @@ $arrcatid = array(
 						
 					});
 				}
+				$(document).ready(function() {
+					<?php if($activateColor != "" || $activateSize != "") {?>
+					$.get('/ajax/checkout.php?getdatastep=set_color_size&team_id=<?php echo $team['id']?>&color=<?php echo $activateColor?>&size=<?php echo $activateSize?>', function(ret) {
+						
+					});
+					<?php }?>
+				});
 			   </script>
-              <?php  endif; ?>
-              <?php if($team['size'] != ""){?>
-              <div class="color" style="margin: 10px 0px;">
-                <label style="font-weight: bold;margin-right: 7px;">Size: </label>
-                <?php 
-				//echo 'W:'.'size_'.$team['id'];
-				
-				 	$size = $team['size'];
-					$size = str_replace("}{", ", ", $size);
-					$size = str_replace("{", "", $size);
-					$size = str_replace("}", "", $size);
-				 	//echo $size; 
-					$arrSize = split(",", $size);
-					foreach($arrSize as $size)
-					{						
-				 ?>
-                 	<input type="radio" name="radio_size" value="<?php echo $size;?>" onchange="setSize(<?php  echo $team['id']; ?>,'<?php  echo $size ?>');" <?php if( isset($_SESSION['size_'.$team['id']]) && $_SESSION['size_'.$team['id']] == $size ) echo 'checked="checked"'?>/> <?php echo $size;?> &nbsp;
-              	<?php }?>   
-              </div>
-              <?php }?>
               <div class="price_btn_order">
                 <div class="box_detail_price">
                   <div class="detail_team_price"><?php echo print_price(moneyit($team[team_price])); ?> <sub>VNĐ</sub></div>

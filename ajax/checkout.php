@@ -480,8 +480,24 @@ switch($atact)
 		$size = $_GET['size'];
 		$arr = array();
 		$arr[$id . '_size'] = $size;
-		Session::Set('sizeteam',$arr);
+		//Session::Set('sizeteam',$arr);
 		Session::Set('size_' . $id,$size);
+		echo 'ok';
+	break;
+	case "set_color_size":
+		$id = $_GET['team_id'];
+		
+		$color = $_GET['color'];
+		$arr = array();
+		$arr[$id] = $color;
+		Session::Set('colorteam', $arr);
+		Session::Set('color_' . $id, $color);
+		
+		$size = $_GET['size'];
+		$arr = array();
+		$arr[$id . '_size'] = $size;
+		//Session::Set('sizeteam', $arr);
+		Session::Set('size_' . $id, $size);
 		echo 'ok';
 	break;
 	case "cartcount":
