@@ -36,8 +36,8 @@ function CheckAuthentication()
 
 // LicenseKey : Paste your license key here. If left blank, CKFinder will be
 // fully functional, in demo mode.
-$config['LicenseName'] = '';
-$config['LicenseKey'] = '';
+$config['LicenseName'] = 'cheapdeal';
+$config['LicenseKey'] = 'F9LST34C2EQHSXMRDWVMSUEPAGKJV61X';
 
 /*
  Uncomment lines below to enable PHP error reporting and displaying PHP errors.
@@ -61,7 +61,8 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseUrl = '/media/';
+//$baseUrl = '/media/'; //Original
+$baseUrl = '/Uploads/';
 
 /*
 $baseDir : the path to the local directory (in the server) which points to the
