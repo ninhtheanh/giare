@@ -179,7 +179,15 @@
 						
                         <br /><br />
                         <?php
-                        	$arrColor = array("yellow", "green", "red", "black", "white", "gray", "blue", "pink", "magenta", "orange", "cyan", "violet", "purple", "brown", "khaki", "bisque");
+                        	//$arrColor = array("yellow", "green", "red", "black", "white", "gray", "blue", "pink", "magenta", "orange", "cyan", "violet", "purple", "brown", "khaki", "bisque");
+							$arrColor = array();
+							$colors = DB::LimitQuery('color', array(
+								'condition' => array("id > 0"),
+							));
+							foreach($colors as $color)
+							{
+								$arrColor[] = $color;
+							}
 						?>
                         <div style="float:left; padding-left:130px" id="checkboxes_color">
                         <table width="60px">
@@ -201,7 +209,17 @@
 										}
 										return "";	
 									}
-									foreach($arrColor as $color){ $i++; ?>
+									$custom_color = "";
+									foreach($arrColor as $color)
+									{ 
+										$i++; 
+										if(strrpos($color, "custom_color:") !== FALSE)
+										{
+											$custom_color = $color;
+											$custom_color = str_replace("custom_color:", "", $custom_color);
+											continue;
+										}
+									?>
                                     <table width="70px" border="0" cellpadding="4" cellspacing="4">
                                         <tr>
                                             <td align="left" width="10">
@@ -219,7 +237,67 @@
 										} 
 									?>
                                 </td>
-                            </tr>                        	
+                            </tr> 
+							<tr>
+								<td>
+									<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+									<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+									<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css"/>        
+									<script src="jquery.colorpicker.js"></script>
+									<link href="jquery.colorpicker.css" rel="stylesheet" type="text/css"/>
+									<script>
+										$(function() {
+											$('.cp-name').colorpicker({
+												parts: 'full',
+												colorFormat:	'NAME',
+												init: function(event, color) {
+															$('.cp-name-output').text(color.formatted);
+														},
+												select: function(event, color) {
+															$('.cp-name-output').text(color.formatted);
+														}
+											});
+										});
+										function changeOptionColor(obj)
+										{									
+											if(obj.value == 0)
+											{
+												$('#div_select_color').show();
+												$('#div_input_color').hide();
+											}
+											else
+											{
+												$('#div_select_color').hide();
+												$('#div_input_color').show();
+											}
+										}
+									</script>
+									<table width="600px" border="0" cellpadding="4" cellspacing="4">
+										<tr>
+											<td align="left" width="80">
+												<input type="radio" name="rOptionColor" value="0" onclick="changeOptionColor(this)" <?=$custom_color == "" ? "checked" : "";?> />
+												Select color
+											</td>						
+											<td>
+												<div id="div_select_color" style="display: block">
+													<input type="text" name="select_color" class="cp-name" value="a92fb4"/>
+													<span class="cp-name-output"></span>													
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<input type="radio" name="rOptionColor" value="1" onclick="changeOptionColor(this)" <?=$custom_color != "" ? "checked" : "";?> /> Input color
+											</td>						
+											<td>
+												<div id="div_input_color" style="display: none">
+													<input type="text" name="input_color" value = "<? echo $custom_color;?>"/>							
+												</div>
+											</td>
+										</tr>
+									</table>	
+								</td>
+							</tr>
                         </table>
                         <script>
 							$(document).ready(function(){

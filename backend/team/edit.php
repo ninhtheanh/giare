@@ -10,6 +10,35 @@ $team = $eteam = Table::Fetch('team', $id);
 
 $show_homepage = isset($_POST['show_homepage']) ? 1 : 0;
 
+$extra_color = ""
+$selectedOptionColor = $_POST['rOptionColor'];
+if($selectedOptionColor == 1) //Add this color to condbuy field by using difference format, ex we add hex "Mau Lam" to current list: {000}{1:Mau Lam}
+{
+	$input_color = $_POST['input_color'];
+	if($input_color != "")
+	{
+		$extra_color = "custom_color:" . $input_color;
+	}
+}
+else //Insert new color into DB so that we can reuse next time and add this color to condbuy field.
+{
+	$select_color = $_POST['select_color'];
+	if($select_color != "")
+	{
+		$extra_color = $select_color;
+		$colors = DB::LimitQuery('color', array('condition' => array("`name` = '$extra_color'"),));
+		if(count($colors) <= 0)
+		{
+			$color_id = DB::Insert('color',array(
+				'id' => "",
+				'name' => $_POST['extra_color']
+			));	
+		}
+	}
+}
+$extra_color = "{" . $extra_color . "}";
+$condbuy = $_POST['condbuy'] . $extra_color;
+
 if ( is_get() && empty($team) ) {	
 	$team = array();
 	$team['id'] = 0;
@@ -33,6 +62,7 @@ if ( is_get() && empty($team) ) {
 	$team['virtual_buy'] = 0;
 	$team['short_title'] = $team['product'];
 	$team['show_homepage'] = $show_homepage;
+	$team['condbuy'] = $condbuy;
 }
 else if ( is_post() ) {
 	$team = $_POST;
@@ -73,6 +103,7 @@ else if ( is_post() ) {
 	$team['image6'] = upload_image('upload_image6',$eteam['image6'],'team');
 	$team['image7'] = upload_image('upload_image7',$eteam['image7'],'team');
 	$team['show_homepage'] = $show_homepage;
+	$team['condbuy'] = $condbuy;
 //	var_dump(upload_image('upload_image1',$eteam['image1'],'team'));
 //	break;
 	//team_type == goods
