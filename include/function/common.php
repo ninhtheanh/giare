@@ -13,8 +13,14 @@ function showColorSize($item)
 {
 	$str = "";
 	if(isset($item['color']) && $item['color'] != "") 
-		$str .= " Màu: " . '<span style="cursor:pointer;border:1px solid #999;width:10px; height:10px; display:inline-block;background:'.$item['color'].'"></span>';
-		
+	{
+		if(strrpos($item['color'], "customize:") !== FALSE)
+		{			
+			$str .= " Màu: " . str_replace("customize:", "", $item['color']);
+		}	
+		else
+			$str .= " Màu: " . '<span style="cursor:pointer;border:1px solid #999;width:10px; height:10px; display:inline-block;background:'.$item['color'].'"></span>';
+	}	
     if(isset($item['size']) && $item['size'] != "") 
 		$str .= " Size: " . $item['size'];
 	return $str;

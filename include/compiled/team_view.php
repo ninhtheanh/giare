@@ -82,7 +82,7 @@ $arrcatid = array(
               <?php  if(isset($team['condbuy']) && $team['condbuy'] !=''): 
                   $condbuy = nanooption($team['condbuy']);
                  ?>
-              <div class="color" style="margin: 10px 0px;">
+              <div class="color" style="margin: 10px 0px;" id="checkboxes_color">
                 <label style="font-weight: bold;margin-right: 7px;">Màu sắc: </label>
                 <?php  
 				 $cls = (array)Session::Get('colorteam');
@@ -97,9 +97,20 @@ $arrcatid = array(
 				 
 				 foreach($condbuy as $color): 
 				 	$clsactive = $activateColor == $color ? 'activecolor' : "";
+					if(strrpos($color, "customize:") !== FALSE)
+					{
+						//$color = str_replace("customize:", "", $color);
+					?>
+						 <input type="radio" name="rd_color_customize" <?php if($clsactive != "") echo "checked";?> value="<?php echo $color;?>" onclick="setColorTeam(<?php  echo $team['id']; ?>,'<?php  echo $color ?>'); $('.setcolor').removeClass('activecolor');" /> <?php echo str_replace("customize:", "", $color);?>
+					<?php 	
+					}
+					else
+					{
 				 ?>
                 	<a id="color_<?php  echo $team['id']; ?>" class="setcolor <?php  echo $clsactive; ?>" onclick="setColorTeam(<?php  echo $team['id']; ?>,'<?php  echo $color ?>');"><span style="cursor:pointer;border:1px solid #999;width:16px; height:16px; display:inline-block;background:<?php  echo $color; ?>"></span></a>
-                <?php  endforeach; ?>
+                <?php  
+					}
+				endforeach; ?>
               </div>
               <style>
 			   .setcolor{ display: inline-block;padding: 3px;}
@@ -136,7 +147,10 @@ $arrcatid = array(
               <script type="text/javascript">
 			   	$('.setcolor').click(function(){
 					$('.setcolor').removeClass('activecolor');
-						$(this).addClass('activecolor');
+					$(this).addClass('activecolor');
+					$('div#checkboxes_color input[type=radio]').each(function() {
+						this.checked = false;
+					});
 				});
 			   	function setColorTeam($id,$str){
 					$.get('/ajax/checkout.php?getdatastep=setcolor&team_id='+$id+'&color='+$str, function(ret) {

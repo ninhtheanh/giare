@@ -20,7 +20,7 @@
             <div class="box-content">
                 
                 <div class="sect">
-				<form id="-user-form" method="post" action="/backend/team/edit.php?id=<?php echo $team['id']; ?>" enctype="multipart/form-data" class="validator">
+				<form id="-user-form" method="post" action="/backend/team/edit_test.php?id=<?php echo $team['id']; ?>" enctype="multipart/form-data" class="validator">
 					<input type="hidden" name="id" value="<?php echo $team['id']; ?>" /><input type="hidden" name="now_number" value="<?php echo $team['now_number']; ?>" />
 					<div class="wholetip clear">
 					  <h3>1. Thông tin cơ bản</h3>
@@ -175,29 +175,27 @@
                     
 					<div class="field">
 						<label>Màu sắc:</label>
-						<input type="text" size="50" name="condbuy" id="team-create-condbuy" class="f-input" style="width:900px; border:0px" value="<?php echo $team['condbuy']; ?>"  readonly="readonly" />
-						
+						<input type="text" size="50" name="condbuy" id="team-create-condbuy" class="f-input" style="width:900px;" value="<?php echo $team['condbuy']; ?>" />
+						<br>
+						<div style="float:left; padding-left:6px">
+						Ex: {blue}{black}{customize:Sọc đen - trắng}{customize:Chấm bi}
+						</div>
                         <br /><br />
-                        <?php
-                        	//$arrColor = array("yellow", "green", "red", "black", "white", "gray", "blue", "pink", "magenta", "orange", "cyan", "violet", "purple", "brown", "khaki", "bisque");
-							$arrColor = array();
-							$colors = DB::LimitQuery('color', array(
-								'condition' => array("id > 0"),
-							));
-							foreach($colors as $color)
-							{
-								$arrColor[] = $color;
-							}
-						?>
                         <div style="float:left; padding-left:130px" id="checkboxes_color">
                         <table width="60px">
                         	<tr>
                             	<td>
                                 	<?php 
-									$i = 0;
+									//$arrColor = array("yellow", "green", "red", "black", "white", "gray", "blue", "pink", "magenta", "orange", "cyan", "violet", "purple", "brown", "khaki", "bisque");
+									$arrColor = array();
+									$colors = DB::LimitQuery('color', array('condition' => array("id > 0"),));
+									foreach($colors as $color)
+										$arrColor[] = $color['name'];
+									
 									$strColor = $team['condbuy'];
 									$strColor = str_replace("{", "", $strColor);
 									$arrColorDB = split("}", $strColor);
+									//print_r($arrColorDB);
 									function isCheckColor($arrColorDB, $color)									
 									{
 										foreach($arrColorDB as $c)
@@ -208,22 +206,18 @@
 											}
 										}
 										return "";	
-									}
-									$custom_color = "";
+									}	
+									$i = 0;									
 									foreach($arrColor as $color)
 									{ 
-										$i++; 
-										if(strrpos($color, "custom_color:") !== FALSE)
-										{
-											$custom_color = $color;
-											$custom_color = str_replace("custom_color:", "", $custom_color);
+										if(strrpos($color, "customize:") !== FALSE)
 											continue;
-										}
+										$i++;										
 									?>
                                     <table width="70px" border="0" cellpadding="4" cellspacing="4">
                                         <tr>
                                             <td align="left" width="10">
-                                                <input type="checkbox" name="ck_color_<?php echo $color;?>" id="ck_color_<?php echo $i;?>" value="<?php echo $color;?>" <?php echo isCheckColor($arrColorDB, $color);?> onclick="select_color(this)" />
+                                                <input type="checkbox" name="ck_color_<?php echo $color;?>" id="ck_color_<?php echo $i;?>" value="<?php echo $color;?>" <?php echo isCheckColor($arrColorDB, $color);?> onclick="select_color()" />
                                             </td>
                                             <td width="20px" height="20px" style="background:<?php echo $color;?>"></td>
                                             <td width="20px"></td>
@@ -239,7 +233,7 @@
                                 </td>
                             </tr> 
 							<tr>
-								<td>
+								<td colspan="100">
 									<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
 									<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
 									<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css"/>        
@@ -254,47 +248,40 @@
 															$('.cp-name-output').text(color.formatted);
 														},
 												select: function(event, color) {
-															$('.cp-name-output').text(color.formatted);
+															//$('.cp-name-output').text(color.formatted);
+															var isExist = false;
+															$('div#checkboxes_color input[type=checkbox]').each(function() {
+																if(this.value == color.formatted)
+																{																	
+																	isExist = true;
+																}
+															});
+															if(!isExist)
+															{
+																$('.cp-name-output').text(color.formatted);
+																select_color();
+															}	
+															else
+															{																
+																$('.cp-name-output').text("This color is exist in the list above");
+																$('#select_color_box').val("");
+															}															
 														}
 											});
 										});
-										function changeOptionColor(obj)
-										{									
-											if(obj.value == 0)
-											{
-												$('#div_select_color').show();
-												$('#div_input_color').hide();
-											}
-											else
-											{
-												$('#div_select_color').hide();
-												$('#div_input_color').show();
-											}
-										}
 									</script>
 									<table width="600px" border="0" cellpadding="4" cellspacing="4">
 										<tr>
-											<td align="left" width="80">
-												<input type="radio" name="rOptionColor" value="0" onclick="changeOptionColor(this)" <?=$custom_color == "" ? "checked" : "";?> />
-												Select color
+											<td align="left" width="100">												
+												Select color:
 											</td>						
 											<td>
 												<div id="div_select_color" style="display: block">
-													<input type="text" name="select_color" class="cp-name" value="a92fb4"/>
+													<input type="text" name="select_color_box" id="select_color_box" class="cp-name" value=""/>
 													<span class="cp-name-output"></span>													
 												</div>
 											</td>
-										</tr>
-										<tr>
-											<td>
-												<input type="radio" name="rOptionColor" value="1" onclick="changeOptionColor(this)" <?=$custom_color != "" ? "checked" : "";?> /> Input color
-											</td>						
-											<td>
-												<div id="div_input_color" style="display: none">
-													<input type="text" name="input_color" value = "<? echo $custom_color;?>"/>							
-												</div>
-											</td>
-										</tr>
+										</tr>										
 									</table>	
 								</td>
 							</tr>
@@ -313,7 +300,7 @@
 																			}
 								}	*/														
 							});
-							function select_color(obj)
+							function select_color()
 							{								
 								var str = "";
 								$('div#checkboxes_color input[type=checkbox]').each(function() {
@@ -322,7 +309,26 @@
 										str += "{" + this.value + "}";
 									}
 								});
-								$('#team-create-condbuy').val(str);								
+								if($('#select_color_box').val() != "")
+								{
+									str += "{" + $('#select_color_box').val() + "}";
+								}
+								//Process customize color
+								//{blue}{black}{customize:Sọc đen - trắng}{customize:Chấm bi}
+								var str_customize = "";
+								var current_str = $('#team-create-condbuy').val();
+								current_str = current_str.replace("{", ""); 
+								var arr = current_str.split('}');
+								for(var i=0;i < arr.length;i++) 
+								{									
+									var color = arr[i].replace("{", "");
+									if(color != "" && color.indexOf("customize:") != -1)
+									{
+										str_customize += "{" + color + "}";
+									}
+								}
+								//Process customize color [end]
+								$('#team-create-condbuy').val(str + str_customize);								
 							}		
 						</script>
                         </div>
@@ -505,8 +511,6 @@ window.x_init_hook_page = function() {
 		return !X.get(WEB_ROOT + '/ajax/misc.php?action=imageremove&id='+id+'&v='+v);
 	};
 };
-
-
 	<!--CKEDITOR.replace( 'myeditor',
 	{
 		filebrowserBrowseUrl : '/ckfinder/ckfinder.html',
@@ -518,7 +522,6 @@ window.x_init_hook_page = function() {
 		   '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&currentFolder=/cars/',
 		filebrowserFlashUploadUrl : '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash'
 	});-->
-
 </script>
 </script>
 <script type="text/javascript">//<![CDATA[

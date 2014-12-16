@@ -75,7 +75,8 @@ if($paymentshiping){
 
 <form id="fstep4" name="fstep4" action="/ajax/checkout.php" method="post" class="">
 <div>
-<textarea name="remark" id="remark" class="f-input" style="width:98%;height:80px;"><?php  echo $cl; ?></textarea></div>
+<textarea name="remark" id="remark" class="f-input" style="width:98%;height:80px;"><?php  echo str_replace("customize:", "", $cl); ?></textarea>
+</div>
 <div style="margin-top:10px;" align="center"><input style="width:110;height:60px;" name="f4submit" id="btn_submit_finish" type="submit" value="Đặt Hàng" class="formbutton"></div>
  <input type="hidden" name="atact" value="endstep4" />
 </form>

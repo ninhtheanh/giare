@@ -132,7 +132,7 @@ switch($atact)
 		
 		foreach($carts as $key=>$cat){
 			if(isset($arr[$key])){
-				$cl .='Sản phẩm: '.$cat['short_title'].' ( Chọn Màu: '.$arr[$key].' ) ;';		
+				$cl .='Sản phẩm: '.$cat['short_title'].' ( Chọn Màu: ' . str_replace("customize:", "", $arr[$key]) . ' ) ;';		
 			}
 		}
 		

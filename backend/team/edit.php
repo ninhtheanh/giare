@@ -1,44 +1,25 @@
 <?php
 require_once(dirname(dirname(dirname(__FILE__))) . '/app.php');
 require_once(dirname(__FILE__) . '/current.php');
-
 need_manager();
 need_auth('team');
-
 $id = abs(intval($_GET['id']));
 $team = $eteam = Table::Fetch('team', $id);
-
 $show_homepage = isset($_POST['show_homepage']) ? 1 : 0;
-
-$extra_color = ""
-$selectedOptionColor = $_POST['rOptionColor'];
-if($selectedOptionColor == 1) //Add this color to condbuy field by using difference format, ex we add hex "Mau Lam" to current list: {000}{1:Mau Lam}
-{
-	$input_color = $_POST['input_color'];
-	if($input_color != "")
+//add one more color
+$select_color_box = $_POST['select_color_box'];
+if($select_color_box != "")
+{	
+	$colors = DB::LimitQuery('color', array('condition' => array("name = '$select_color_box'"),));
+	if(count($colors) <= 0)
 	{
-		$extra_color = "custom_color:" . $input_color;
+		$color_id = DB::Insert('color',array(
+			'id' => "",
+			'name' => $select_color_box
+		));	
 	}
 }
-else //Insert new color into DB so that we can reuse next time and add this color to condbuy field.
-{
-	$select_color = $_POST['select_color'];
-	if($select_color != "")
-	{
-		$extra_color = $select_color;
-		$colors = DB::LimitQuery('color', array('condition' => array("`name` = '$extra_color'"),));
-		if(count($colors) <= 0)
-		{
-			$color_id = DB::Insert('color',array(
-				'id' => "",
-				'name' => $_POST['extra_color']
-			));	
-		}
-	}
-}
-$extra_color = "{" . $extra_color . "}";
-$condbuy = $_POST['condbuy'] . $extra_color;
-
+$condbuy = $_POST['condbuy'];
 if ( is_get() && empty($team) ) {	
 	$team = array();
 	$team['id'] = 0;
@@ -80,7 +61,6 @@ else if ( is_post() ) {
 		'condbuy', 'size', 'aff_rebate', 'weight', 'delivery_properties', 'number_of_contracts', 'sale', 'virtual_buy', 'show_homepage',
 	);
 	
-
 	$team['user_id'] = $login_user_id;
 	$team['state'] = 'none';
 	$team['begin_time'] = strtotime($team['begin_time']);
@@ -93,7 +73,6 @@ else if ( is_post() ) {
 	$team['end_time'] = strtotime($team['end_time']);
 	$team['expire_time'] = strtotime($team['expire_time']);
 	$team['virtual_buy'] = abs(intval($team['virtual_buy']));
-
 	$team['image'] = upload_image('upload_image',$eteam['image'],'team');
 	$team['image1'] = upload_image('upload_image1',$eteam['image1'],'team');
 	$team['image2'] = upload_image('upload_image2',$eteam['image2'],'team');
@@ -111,7 +90,6 @@ else if ( is_post() ) {
 		$team['min_number'] = 1; 
 		$tean['conduser'] = 'N';
 	}
-
 	if ( !$id ) {
 		$team['now_number'] = $team['pre_number'];
 	} else {
@@ -123,20 +101,16 @@ else if ( is_post() ) {
 		if($now_number>$team['now_number']){
 			$team['now_number'] = ($now_number + $team['pre_number']);
 		}
-
 		/* Increased the total number of state is not sold out */
 		if ( $team['max_number'] > $team['now_number'] ) {
 			$team['close_time'] = 0;
 			$insert[] = 'close_time';
 		}
 	}
-
 	$insert = array_unique($insert);
 	$table = new Table('team', $team);
-
 	$table->SetStrip('summary', 'detail', 'systemreview', 'notice');
 	
-
 	if ( $team['id'] && $team['id'] == $id ) {
 		$table->SetPk('id', $id);
 		$table->Update($insert);
@@ -147,14 +121,12 @@ else if ( is_post() ) {
 		Session::Set('error', 'Illegal edition');
 		redirect( WEB_ROOT . "/backend/team/index.php"); 
 	}
-
 	if ( $table->insert($insert) ) {
 		
 		 $atinsert =  array(
 			'user_id', 'title', 'masp', 'parent_id', 'content', 'last_time', 'create_time',
 			'city_id', 'team_id', 'public_id', 'status','topic_ip',
 		);
-
 		Session::Set('notice', 'New Project Success');
 		redirect( WEB_ROOT . "/backend/team/index.php"); 
 	}
@@ -169,11 +141,9 @@ $groups = DB::LimitQuery('category', array(
 			));
 $groups = processCategoryOption($groups);
 $groups = Utility::OptionArray($groups, 'id', 'name');
-
 $partners = DB::LimitQuery('partner', array(
 			'order' => 'ORDER BY id DESC',
 			));
 $partners = Utility::OptionArray($partners, 'id', 'masp', 'title' );
 $selector = $team['id'] ? 'edit' : 'create';
-
-include template('manage_team_edit');
+include template('manage_team_edit_test');
