@@ -146,4 +146,4 @@ $partners = DB::LimitQuery('partner', array(
 			));
 $partners = Utility::OptionArray($partners, 'id', 'masp', 'title' );
 $selector = $team['id'] ? 'edit' : 'create';
-include template('manage_team_edit_test');
+include template('manage_team_edit');
