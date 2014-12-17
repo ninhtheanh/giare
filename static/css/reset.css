@@ -1,0 +1,57 @@
+#grouponAdContainer html, #grouponAdContainer div, #grouponAdContainer span, #grouponAdContainer applet, #grouponAdContainer object, #grouponAdContainer iframe,
+#grouponAdContainer h1, #grouponAdContainer h2, #grouponAdContainer h3, #grouponAdContainer h4, #grouponAdContainer h5, #grouponAdContainer h6, #grouponAdContainer p, #grouponAdContainer blockquote, #grouponAdContainer pre,
+#grouponAdContainer a, #grouponAdContainer abbr, #grouponAdContainer acronym, #grouponAdContainer address, #grouponAdContainer big, #grouponAdContainer cite, #grouponAdContainer code,
+#grouponAdContainer del, #grouponAdContainer dfn, #grouponAdContainer em, #grouponAdContainer font, #grouponAdContainer img, #grouponAdContainer ins, #grouponAdContainer kbd, #grouponAdContainer q, #grouponAdContainer s, #grouponAdContainer samp,
+#grouponAdContainer small, #grouponAdContainer strike, #grouponAdContainer strong, #grouponAdContainer sub, #grouponAdContainer sup, #grouponAdContainer tt, #grouponAdContainer var,
+#grouponAdContainer b, #grouponAdContainer u, #grouponAdContainer i, #grouponAdContainer center,
+#grouponAdContainer dl, #grouponAdContainer dt, #grouponAdContainer dd, #grouponAdContainer ol, #grouponAdContainer ul, #grouponAdContainer li,
+#grouponAdContainer fieldset, #grouponAdContainer form, #grouponAdContainer label, #grouponAdContainer legend,
+#grouponAdContainer table, #grouponAdContainer caption, #grouponAdContainer tbody, #grouponAdContainer tfoot, #grouponAdContainer thead, #grouponAdContainer tr, #grouponAdContainer th, #grouponAdContainer td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	text-align:left;
+	font-size: 13px;
+	font-weight:bold;
+	font-family:Arial, Helvetica, sans-serif;
+	vertical-align: baseline;
+	background: transparent;	
+	line-height: normal;
+}
+#grouponAdContainer h3 {
+	font-size: 130%;
+}
+#grouponAdContainer body, #grouponAdContainer html {
+	line-height: 1;
+}
+#grouponAdContainer ol, #grouponAdContainer ul {
+	list-style: none;
+}
+#grouponAdContainer blockquote, #grouponAdContainer q {
+	quotes: none;
+}
+#grouponAdContainer blockquote:before, #grouponAdContainer blockquote:after,
+#grouponAdContainer q:before, #grouponAdContainer q:after {
+	content: '';
+	content: none;
+}
+
+/* remember to define focus styles! */
+#grouponAdContainer :focus {
+	outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+#grouponAdContainer ins {
+	text-decoration: none;
+}
+#grouponAdContainer del {
+	text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+#grouponAdContainer table{
+	border-collapse: collapse;
+	border-spacing: 0;	
+}

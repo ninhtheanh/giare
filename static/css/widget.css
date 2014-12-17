@@ -1,0 +1,127 @@
+
+.widget ol {
+	margin: 10px 0 0 0;
+	padding: 0;
+	width: 100%;
+}
+.widget ol li {
+	clear: both;
+	float: left;
+	list-style-type: none;
+	margin: 0 0 30px 0;	
+}
+.widget #apiField {
+	margin-right: 5px;
+	width: 200px;
+}
+.widget #idField {
+	width: 433px;
+}
+.widget #idField .inlineField {
+	margin-right: 20px;
+}
+.widget #idField span {
+	float: left;
+}
+.widget #idField #codes {
+	width: 650px;
+}
+.widget #customField {
+	width: 650px;
+}
+.widget #customField .inlineField {
+	margin-right: 40px;
+}
+.widget #customField #color {
+	float: left;
+	margin-right: 6px;
+	width: 80px;
+}
+.widget #customField #colorDefault {
+	float: left;
+}
+.widget #customField #location {
+	display: none;
+}
+.widget #colorField {
+	margin-left: 20px;
+}
+.widget .inlineField {
+	float: left;
+}
+.widget .reqError {
+	color: red;
+}
+.widget .themeField {
+	background-color: #f1f7eb;
+	float: left;
+	padding: 5px;
+}
+.widget .themeField span {
+	clear: both;
+	display: block;
+}
+.widget .themeField label, .widget .themeField input, .widget .themeField select {
+	display: block;
+}
+.widget .themeField label, .widget .themeField select {
+	font-size: 1em;
+}
+.widget #createAd {
+	border: none;
+}
+.widget #snippet {
+	border: 1px solid #86ad52;
+	display: block;
+	height: 145px;
+	margin-top: 10px;
+	width: 640px;
+}
+.widget #widgetPreview {
+	background-color: #f1f7eb;
+	clear: both;
+	line-height: 1;
+	overflow: none;
+	padding: 8px;
+	text-align: center;
+	width: 643px;
+}
+.widget #widgetPreview .previewTxt {
+	font-size: 1.3em;
+}
+.widget #widgetPreview #grouponAdContainer #grouponAdContents {
+	margin: 10px auto 10px;
+	text-align: left;
+	font-style:normal;
+	position: relative;
+}
+h3 {
+	font-weight: bold;
+}
+ol {
+	margin-left: 10px;
+}
+ol li {
+	list-style: decimal;
+	font-size: 1.2em;
+}
+.widget p{
+font-size: 1em;
+}
+.widget label{
+font-size: 0.6em;
+}
+.widget input[type=text] 
+{
+	width: 190px;
+}
+.widget span 
+{
+	font-size: 0.8em;
+	font-style: italic;
+}
+
+.widget 
+{
+	font-size: 0.8em;	
+}

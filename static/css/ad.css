@@ -1,0 +1,109 @@
+#grouponAdContainer * {
+	margin: 0px;
+	padding: 0px;
+}
+#grouponAdContainer {
+	position: relative;
+	font-size: 12px;
+	font-family: arial;
+	color: #000000;
+	width: 300px;
+	height: 250px;
+	background-color: #8bc53f;
+}
+#grouponCity {
+	margin-top: 5px;
+	font-size: 13px;
+	color: #FFFFFF;
+	border-right: 10px solid transparent;
+	border-left: 10px solid transparent;
+}
+#grouponDescription {
+	margin-left: 10px;
+	margin-top: 5px;
+	width: 280px;
+	font-weight: bold;
+	background-color: #FFFFFF;
+	text-decoration: none;
+	color: #000000;
+}
+#grouponDescription p {
+	padding: 5px;
+}
+#grouponMidContainer {
+	width: 300px;
+	height: 120px;
+}
+#grouponMidLeft {
+	float: left;
+	width: 130px;
+}
+#grouponBuyButton {
+	width: 100%;
+	height: 47px;
+	background-image: url('/images/groupon/widget/tag.png');
+	background-repeat: none;
+}
+#grouponValueChart {
+	width: 100%;
+	margin-left: 10px;
+}
+#grouponValueChart table {
+	background: #daf0fa;
+	width: 100%;
+	border: 1px solid #2ca8df;
+	font-size: 10px;
+}
+#grouponValueChart th {
+	text-align: left;
+}
+#grouponCountdown {
+	width: 100%;
+	text-align: center;
+	margin-left: 10px;
+	margin-top: 2px;
+	background: #ddebc3;
+	border: 1px solid #37b34a;
+	overflow: hidden;
+}
+#grouponCountContainer {
+	margin-left: 30px;
+}
+#grouponImage {
+	float: right;
+	margin-right: 10px;
+	width: 160px;
+	height: 113px;
+	overflow: hidden;
+}
+#grouponIMG {
+	width: 160px;
+	height: 113px;
+}
+#grouponFooter {
+	clear: both;
+	width: 280px;
+	height: 30px;
+	margin-top: 3px;
+	margin-left: 10px;
+	margin-right: 10px;
+	background: #FFFFFF;
+}
+#grouponFooter p {
+	padding-top: 8px;
+	float: left;
+}
+#grouponPoweredBy {
+	float: right;
+}
+.grouponColon {
+	float: left;
+	font-weight: bold;
+	height: 26px;
+	padding-top: 20px;
+	color: #FFFFFF;
+}
+.countdownTime {
+	width: 15px;
+	float: left;
+}
