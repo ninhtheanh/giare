@@ -14,9 +14,9 @@
 	<div class="top-container">
         <ul class="nav cf" style="margin-top: 2px;">
             <li><a href="/">Trang chủ</a></li>
-            <li><a href="/ve-cheapdeal.html" style="width:90px">Về Cheapdeal</a></li>
+            <li><a href="/tp-ho-chi-minh/thoi-trang-nu" style="width:90px">Sản phẩm</a></li>
 			 <li><a href="/lien-he.html">Liên hệ</a></li>
-            <li><a href="/thong-bao.html">Khách hàng tỉnh</a></li>
+            <li><a href="/hop-tac-mua-si.html">Hợp tác mua sỉ</a></li>
             <li><a href="/tin-tuc.html">Tin tức</a></li>
             <li id="athover"><a id="nhanuudai" style="cursor:pointer;">Nhận ưu đãi</a>
                 <div id="form_nhanuudai" style="background: #fff;box-shadow: 1px 1px 2px #6e6e6e;">
@@ -45,7 +45,7 @@
 </div>
 
     <div style="padding: 7px; background-image: -moz-linear-gradient(center top , rgb(220, 22, 18), rgb(187, 19, 15)); background-color: rgb(187, 19, 15);background-repeat: repeat-x; color: white;">
-	<span><strong><a  style="color: #FFFFFF;">Than phiền về NV.Giao nhận và Chất lượng sản phẩm liên hệ qua số&nbsp; <b>0909 682311</b></a></strong> 
+	<span><strong><a  style="color: #FFFFFF;">Đặt hàng online liên hệ qua số&nbsp; <b>0909.682311 hoặc 0938.122311 </b> </a></strong> 
 	 </span>
 	</div>
     <!--<div style="padding: 7px; background-image: -moz-linear-gradient(center top , rgb(220, 22, 18), rgb(187, 19, 15)); background-color: rgb(187, 19, 15);background-repeat: repeat-x; color: white;">
@@ -66,7 +66,7 @@ type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
 	
 <div id="hdw">
   <div id="hd">  	
-    <div id="logo" align="left"><a href="/" class="link"><img src="/static/css/images/logo.png" alt="Logo <?php echo $INI['system']['sitename']; ?>" /></a></div>
+    <div id="logo" align="left"><a href="/" class="link"><img src="<?php echo SiteURL;?>/static/css/images/logo.png" alt="Logo <?php echo $INI['system']['sitename']; ?>" /></a></div>
 
 	<div id="atsearchh">
     	<form id="topSearch" method="get" action="/team/search.php">
@@ -190,7 +190,7 @@ padding: 7px 0px 5px 7px;}
         	<?php if($login_user['avatar']!=""){?>
                 <img src="<?php echo user_image($login_user['avatar']); ?>" width="50" height="50"  alt="avatar <?php echo $INI['system']['sitename']; ?>: cùng mua chung theo nhóm mua hot deal khuyen mai" />
                 <?php } else { ?>
-                	<img src="/static/css/images/noavatar.png" width="50" height="50"  alt="user <?php echo $INI['system']['sitename']; ?>: cùng mua chung theo nhóm mua hot deal khuyen mai" />
+                	<img src="<?php echo SiteURL;?>/static/css/images/noavatar.png" width="50" height="50"  alt="user <?php echo $INI['system']['sitename']; ?>: cùng mua chung theo nhóm mua hot deal khuyen mai" />
                 
              <?php }?>
 
@@ -210,7 +210,7 @@ padding: 7px 0px 5px 7px;}
             	<?php if($login_user['avatar']!=""){?>
                 <img src="<?php echo user_image($login_user['avatar']); ?>" width="90" height="90"  alt="avatar <?php echo $INI['system']['sitename']; ?>: cùng mua chung theo nhóm mua hot deal khuyen mai" />
                 <?php } else { ?>
-                	<img src="/static/css/images/noavatar.png" width="90" height="90"  alt="user <?php echo $INI['system']['sitename']; ?>: cùng mua chung theo nhóm mua hot deal khuyen mai" />
+                	<img src="<?php echo SiteURL;?>/static/css/images/noavatar.png" width="90" height="90"  alt="user <?php echo $INI['system']['sitename']; ?>: cùng mua chung theo nhóm mua hot deal khuyen mai" />
                 
              <?php }?>
              	</div>
@@ -266,7 +266,7 @@ padding: 7px 0px 5px 7px;}
       <div class="city" id="city-change" style="cursor:pointer; margin-top:-3px;">
        
        <?php if($city){?> 
-        <h2><?php echo $city['name']; ?>&nbsp;<span id="guides-city-change"><img align="absmiddle" src="/static/css/images/btn_nextnum.gif" alt="Chọn thành phố" width="17" height="17"  alt="thanh pho <?php echo $INI['system']['sitename']; ?>: cùng mua chung theo nhóm mua hot deal khuyen mai" /></span></h2>
+        <h2><?php echo $city['name']; ?>&nbsp;<span id="guides-city-change"><img align="absmiddle" src="<?php echo SiteURL;?>/static/css/images/btn_nextnum.gif" alt="Chọn thành phố" width="17" height="17"  alt="thanh pho <?php echo $INI['system']['sitename']; ?>: cùng mua chung theo nhóm mua hot deal khuyen mai" /></span></h2>
         <?php } else { ?><h2>TP Hồ Chí Minh</h2>
         <?php }?>
         <h4>Giá cả mang bạn đến, chất lượng giữ chân bạn</h4>
@@ -301,10 +301,10 @@ padding: 7px 0px 5px 7px;}
                 <?php } else { ?>
                 <?php if($login_user['fb_userid']){?>
                 <div style="margin-right:10px; border:1px #ccc solid;background:#fff;padding:2px; width:28px;height:28px"><img src="https://graph.facebook.com/<?php echo $login_user['fb_userid']; ?>/picture" width="28" height="28" />
-                  <div style="position:absolute; left:56px; bottom:15px;"><img src="/static/css/images/f16.jpg" width="12" height="12" /></div>
+                  <div style="position:absolute; left:56px; bottom:15px;"><img src="<?php echo SiteURL;?>/static/css/images/f16.jpg" width="12" height="12" /></div>
                 </div>
                 <?php } else { ?>
-                <div style="margin-right:10px; border:1px #ccc solid;background:#fff;padding:2px; width:28px;height:28px"><img src="/static/css/images/noavatar.png" width="28" height="28"  alt="user <?php echo $INI['system']['sitename']; ?>: cùng mua chung theo nhóm mua hot deal khuyen mai" /></div>
+                <div style="margin-right:10px; border:1px #ccc solid;background:#fff;padding:2px; width:28px;height:28px"><img src="<?php echo SiteURL;?>/static/css/images/noavatar.png" width="28" height="28"  alt="user <?php echo $INI['system']['sitename']; ?>: cùng mua chung theo nhóm mua hot deal khuyen mai" /></div>
                 <?php }?>
                 <?php }?></td>
               <td align="left" valign="top" colspan="2" style="padding-bottom:5px;padding-top:7px;font-weight:bold"> Chào, 
@@ -329,8 +329,8 @@ padding: 7px 0px 5px 7px;}
       <?php } else { ?>
       <ul class="links">
         <li class="login">
-          <a href="/account/signup.php">Đăng ký</a>&nbsp;&nbsp;<img src="/static/css/images/menu_spacer.gif" align="absmiddle" />&nbsp;&nbsp;<a href="/account/login.php">Đăng nhập</a>&nbsp;&nbsp;<img src="/static/css/images/menu_spacer.gif" align="absmiddle" />&nbsp;&nbsp;
-          <span  style="font-size:13px; font-family:Arial; font-weight:bold">Đăng nhập bằng</span>&nbsp;<a href="javascript:void(0)" title="Yahoo"><img src="/static/css/images/yahoo_connect.gif" title="Yahoo Login" onclick="yahoo_login();" border="0" align="absmiddle"></a>&nbsp;<a href="javascript:void(0)" title="Gmail"> <img src="/static/css/images/google_connect.gif" onclick="google_login();" title="Gmail" border="0" align="absmiddle"></a>
+          <a href="/account/signup.php">Đăng ký</a>&nbsp;&nbsp;<img src="<?php echo SiteURL;?>/static/css/images/menu_spacer.gif" align="absmiddle" />&nbsp;&nbsp;<a href="/account/login.php">Đăng nhập</a>&nbsp;&nbsp;<img src="<?php echo SiteURL;?>/static/css/images/menu_spacer.gif" align="absmiddle" />&nbsp;&nbsp;
+          <span  style="font-size:13px; font-family:Arial; font-weight:bold">Đăng nhập bằng</span>&nbsp;<a href="javascript:void(0)" title="Yahoo"><img src="<?php echo SiteURL;?>/static/css/images/yahoo_connect.gif" title="Yahoo Login" onclick="yahoo_login();" border="0" align="absmiddle"></a>&nbsp;<a href="javascript:void(0)" title="Gmail"> <img src="<?php echo SiteURL;?>/static/css/images/google_connect.gif" onclick="google_login();" title="Gmail" border="0" align="absmiddle"></a>
         </li>
       </ul>
       <?php }?>
