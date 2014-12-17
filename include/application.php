@@ -24,7 +24,14 @@ define('SYS_MAGICGPC', get_magic_quotes_gpc());
 define('SYS_PHPFILE', DIR_ROOT . '/configure/system.php');
 define('WWW_ROOT', rtrim(dirname(DIR_ROOT),'/'));
 define('IMG_ROOT', dirname(DIR_ROOT) . '/static');
-
+if(in_array($_SERVER['REMOTE_ADDR'], array('localhost', '127.0.0.1'))) 
+{
+	define('SiteURL', "http://localhost:8888/Cheap/Git");
+}
+else
+{
+	define('SiteURL', "http://cheapdeal.vn");
+}
 /* encoding */
 mb_internal_encoding('UTF-8');
 /* end */

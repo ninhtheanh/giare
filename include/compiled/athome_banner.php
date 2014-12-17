@@ -1,5 +1,5 @@
-<link href="/static/css/number_slideshow.css" rel="stylesheet" type="text/css"></link>
-<script type="text/javascript" src="/static/js/number_slideshow.js"></script>
+<link href="<?php echo SiteURL;?>/static/css/number_slideshow.css" rel="stylesheet" type="text/css"></link>
+<script type="text/javascript" src="<?php echo SiteURL;?>/static/js/number_slideshow.js"></script>
 <?php
 $arrBanner = DB::LimitQuery('banner', array(
 	'order' => 'ORDER BY `order`',

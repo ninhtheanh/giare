@@ -3,132 +3,106 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <?php if(!$pagetitle||$request_uri=='index'){?>
-    <title> CheapDeal® | Cùng mua chung theo nhóm, mua hotdeal giá rẻ</title>
+    <title> Deal Soc | Cùng mua chung theo nhóm, mua hotdeal giá rẻ mỗi ngày | Deal shock hôm nay trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?> - <?php echo $city['name']; ?></title>
     <?php } else if($team) { ?>
-    <title><?php $team_cat = Table::Fetch('category', $team['group_id']);; ?><?php echo $team['short_title']; ?> ® - C<?php echo $team['id']; ?> | <?php echo $team_cat['name']; ?></title>    
+    <title><?php $team_cat = Table::Fetch('category', $team['group_id']);; ?><?php echo $team['short_title']; ?> <?php echo ($seo_title) ? ' '.$seo_title : '';; ?> | <?php echo ($_GET['comment']) ? 'thảo luận deal - ' : '';; ?> <?php echo $INI['system']['sitename']; ?> | phiếu giảm giá <?php echo $team_cat['name']; ?></title>    
      <?php } else if(strpos($_SERVER['REQUEST_URI'],'/team/')!==false) { ?>
-		<?php if($pagetitle=='Hàng nhập từ Mỹ' ){?>
-       	<title>CheapDeal | Phiếu giảm giá cực rẻ Deal du lich</title> 
-		<?php } else if($pagetitle=='Thời trang' ) { ?>
-	  	<title>CheapDeal | Phiếu giảm giá cực rẻ Deal dịch vụ ăn uống, làm đẹp<?php echo $INI['system']['sitename']; ?> | <?php echo $city['name']; ?></title> 
+		<?php if($pagetitle=='Deal du lịch' ){?>
+       	<title>Deal SOC | phiếu giảm giá cực rẻ Deal du lich | Cùng mua chung theo nhóm, mua hot deal du lịch, tour, khách sạn khuyến mãi giảm giá cực rẻ mỗi ngày tại <?php echo $INI['system']['sitename']; ?> | <?php echo $city['name']; ?></title> 
+		<?php } else if($pagetitle=='Deal dịch vụ' ) { ?>
+	  	<title>Deal SOC | phiếu giảm giá cực rẻ Deal dịch vụ ăn uống, làm đẹp | Cùng mua chung theo nhóm, mua hot deal ăn uống, làm đẹp, massage, khuyến mãi giảm giá cực rẻ mỗi ngày tại <?php echo $INI['system']['sitename']; ?> | <?php echo $city['name']; ?></title> 
 		<?php } else if($pagetitle=='Deal thời trang mỹ phẩm' ) { ?>
-		<title>CheapDeal | Phiếu giảm giá cực rẻ Deal deal thời trang, mỹ phẩm<?php echo $INI['system']['sitename']; ?> | <?php echo $city['name']; ?></title>
+		<title>Deal SOC | phiếu giảm giá cực rẻ Deal deal thời trang, mỹ phẩm | Cùng mua chung theo nhóm, mua hot deal thời trang mỹ phẩm, khuyến mãi giảm giá cực rẻ mỗi ngày tại  <?php echo $INI['system']['sitename']; ?> | <?php echo $city['name']; ?></title>
 		<?php } else if($pagetitle=='Deal sản phẩm' ) { ?>
-   		<title>CheapDeal | Phiếu giảm giá cực rẻ Deal sản phẩm<?php echo $INI['system']['sitename']; ?> | <?php echo $city['name']; ?></title>
+   		<title>Deal SOC | phiếu giảm giá cực rẻ Deal sản phẩm | Cùng mua chung theo nhóm, mua hot deal Sản phẩm giảm giá cực rẻ mỗi ngày tới 90% tại <?php echo $INI['system']['sitename']; ?> | <?php echo $city['name']; ?></title>
 		<?php } else if($pagetitle=='Deal gần đây' ) { ?>
-  		<title>CheapDeal | Cùng mua chung theo nhóm, mua hot deal sản phẩm, dịch vụ, du lịch, phiếu giảm giá cực rẻ mỗi ngày tại <?php echo $INI['system']['sitename']; ?> | <?php echo $city['name']; ?></title>
+  		<title>Deal SOC | Cùng mua chung theo nhóm, mua hot deal sản phẩm, dịch vụ, du lịch, phiếu giảm giá cực rẻ mỗi ngày tại <?php echo $INI['system']['sitename']; ?> | <?php echo $city['name']; ?></title>
 		<?php } else { ?>
-		<title><?php echo $pagetitle; ?><?php echo $INI['system']['sitename']; ?> | <?php echo $city['name']; ?></title> 
+		<title><?php echo $pagetitle; ?> | Dealsoc.vn Cùng mua chung theo nhóm, mua hot deal cực rẻ mỗi ngày tại <?php echo $INI['system']['sitename']; ?> | <?php echo $city['name']; ?></title> 
 		<?php }?>
-		<?php } else { ?>
-        <title><?php echo $category['name']; ?><?php echo $page['name']; ?> CheapDeal® | Cung mua chung theo nhom, mua hotdeal voi gia cuc re</title> 
-		<?php }?>
-		<meta name="robots" content="noodp, noydir,index,follow">
-		<meta name='revisit-after' content='1 days' />
-		<meta property="og:type" content="website" />
-		<meta property="og:title" content="<?php echo $team['short_title']; ?>®" />
-		<link id="canon" rel="canonical" href="/<?php echo seo_url($team['short_title'],$team['id'],$url_suffix); ?>" />
-		<link id="headIMG" rel="image_src" href="<?php echo $INI['system']['wwwprefix']; ?>/static/<?php echo $team['image']; ?>" />
+  	<?php } else { ?>
+        <title>Deal SOC | Dealsoc.vn Cùng mua chung theo nhóm, mua hot deal cực rẻ mỗi ngày tại <?php echo $INI['system']['sitename']; ?> | <?php echo $city['name']; ?></title> 
+  	<?php }?>
     <?php if(!$pagetitle||$request_uri=='index'){?>
-    	 <meta name="description" content="CheapDeal cam kết mang lại sự chăm sóc đặc biệt cho khách hàng ghé thăm và mua hàng; đơn giản hóa mọi quá trình nhằm tiết kiệm thời gian, chi phí." />
-    
-	<!-- Change [] to <> if you want to use seo_description
-	[?php } else if($seo_description) { ?]
-        <meta name="description" content="[?php echo $team['short_title']; ?], [?php echo $seo_description; ?] [?php echo ($_GET['comment']) ? ' thảo luận deal' : '';; ?] [?php echo $city['name']; ?]" />
-	-->
-	
-	<?php } else if($team) { ?>
-    <meta name="description" content="<?php echo $team['short_title']; ?>® - <?php echo cut_string(strip_tags($team['title']),150,""); ?> [xem thêm]"/>
+    	 <meta name="description" content="Cùng mua chung theo nhóm, mua hot deal giá rẻ mỗi ngày các sản phẩm, dịch vụ, du lịch, ăn uống, thời trang, spa và các khuyến mãi độc đáo tại Dealsoc - trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?> - <?php echo $city['name']; ?>" />
+     <?php } else if($seo_description) { ?>
+        <meta name="description" content="<?php echo $team['title']; ?>, <?php echo $seo_description; ?> <?php echo ($_GET['comment']) ? ' thảo luận deal' : '';; ?> <?php echo $city['name']; ?>" />
+    <?php } else if($team) { ?>
+        <meta name="description" content="<?php echo $partner['title']; ?>: <?php echo $team['title']; ?> <?php echo ($_GET['comment']) ? ' : thảo luận deal' : '';; ?> <?php echo $city['name']; ?> - trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?> " />
     <?php } else if(strpos($_SERVER['REQUEST_URI'],'/team/')!==false) { ?>
 		<?php if($pagetitle=='Deal du lịch' ){?>
-        <meta name="description" content="Hot <?php echo $pagetitle; ?> tour du lich travel, tour du lịch mới nhất tại các khu du lịch trong nước và thế giới giảm giá cực rẻ đến 90% tại<?php echo $city['name']; ?> - trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?>" />
+        <meta name="description" content="Hot <?php echo $pagetitle; ?> tour du lich travel , cùng nhóm mua chung deal soc khuyến mãi giảm giá các tour du lịch mới nhất tại các khu du lịch trong nước và thế giới giảm giá cực rẻ đến 90% tại Dealsoc.vn <?php echo $city['name']; ?> - trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?>" />
 		<?php } else if($pagetitle=='Deal dịch vụ' ) { ?>
-		<meta name="description" content="Hot <?php echo $pagetitle; ?>, Thưởng thức các món ăn ngon, lạ và các địa điểm ăn uống với giá cực rẻ. Các dịch vụ chăm sóc Sức khỏe - Làm đẹp được giảm giá tại<?php echo $city['name']; ?> - trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?>" />
+		<meta name="description" content="Hot <?php echo $pagetitle; ?>, cùng nhóm mua chung deal soc khuyến mãi giảm giá Thưởng thức các món ăn ngon, lạ và các địa điểm ăn uống với giá cực rẻ. Các dịch vụ chăm sóc Sức khỏe - Làm đẹp được giảm giá tại Dealsoc.vn <?php echo $city['name']; ?> - trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?>" />
 		<?php } else if($pagetitle=='Deal thời trang mỹ phẩm' ) { ?>
-		<meta name="description" content="Hot <?php echo $pagetitle; ?>, Khuyến mãi giảm giá thời trang mỹ phẩm quần áo, giày, mắt kính, trang sức tại trêngiảm giá tới 90% tại <?php echo $city['name']; ?> - trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?>" />
+		<meta name="description" content="Hot <?php echo $pagetitle; ?>, cùng nhóm mua chung deal soc khuyến mãi giảm giá thời trang mỹ phẩm quần áo, giày, mắt kính, trang sức tại trên Dealsoc.vn giảm giá tới 90% tại <?php echo $city['name']; ?> - trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?>" />
 		<?php } else if($pagetitle=='Deal sản phẩm' ) { ?>
-		<meta name="description" content="Hot <?php echo $pagetitle; ?>, CheapDeal khuyến mãi giảm giá nước hoa, bảo hiểm, chăn dra gối nệm, đồ chơi, túi xách và phụ kiện trêngiảm giá đến 90% tại <?php echo $city['name']; ?> - trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?>" />
+		<meta name="description" content="Hot <?php echo $pagetitle; ?>, cùng nhóm mua chung deal soc khuyến mãi giảm giá nước hoa, bảo hiểm, chăn dra gối nệm, đồ chơi, túi xách và phụ kiện trên Dealsoc.vn giảm giá đến 90% tại <?php echo $city['name']; ?> - trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?>" />
 		<?php } else if($pagetitle=='Deal gần đây' ) { ?>
-		<meta name="description" content="Hot <?php echo $pagetitle; ?>, Deals sản phẩm, dịch vụ, du lịch được bán giảm giá cực rẻ gần đây trên| <?php echo $city['name']; ?> - trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?>" />
+		<meta name="description" content="Hot <?php echo $pagetitle; ?>, cùng nhóm mua chung deal soc khuyến mãi giảm giá Deals sản phẩm, dịch vụ, du lịch được bán giảm giá cực rẻ gần đây trên Dealsoc.vn | <?php echo $city['name']; ?> - trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?>" />
 		<?php } else { ?>
-			<meta name="description" content="<?php echo $pagetitle; ?>, CheapDeal khuyến mãi giảm giá Cùng nhóm mua chung hotdeal du lịch giảm giá cực rẻ tới 90% <?php echo $city['name']; ?>" />
+			<meta name="description" content="<?php echo $pagetitle; ?>, cùng nhóm mua chung deal soc khuyến mãi giảm giá Cùng nhóm mua chung hotdeal du lịch giảm giá cực rẻ tới 90% và các sản phẩm khuyến mãi độc đáo tại Dealsoc <?php echo $city['name']; ?>" />
 		<?php }?>
     <?php } else { ?>
-        <?php if($pagetitle=='Về Cheap Deal' ){?>
-            <meta name="description" content="Cheapdeal là công ty chuyên cung cấp các sản phẩm, dịch vụ, giải trí, du lịch với mục tiêu mang lại giá rẻ nhất đem đến cho khách hàng sự hài lòng và tin cậy cao" />
+        <?php if($pagetitle=='Giới thiệu Dealsoc' ){?>
+            <meta name="description" content="Dealsoc là công ty chuyên cung cấp các sản phẩm, dịch vụ, giải trí, du lịch với mục tiêu mang lại giá rẻ nhất đem đến cho khách hàng sự hài lòng và tin cậy cao" />
         <?php } else if($pagetitle=='Hỏi đáp' ) { ?>
-            <meta name="description" content="Những câu hỏi thường gặp khi mua hàng và nhận giải đáp về các deal đã, đang và sắp diễn ra trên Cheapdeal.vn" />
-        <?php } else if($pagetitle=='Hướng dẫn mua hàng' ) { ?>
-            <meta name="description" content="Hướng dẫn khách hàng mua hàng, phương thức thanh toán, thời gian nhận hàng và bất kỳ vấn đề gì liên quan đến mua hàng tại Cheapdeal.vn" />
+            <meta name="description" content="Những câu hỏi thường gặp khi mua hàng và nhận giải đáp về các deal đã, đang và sắp diễn ra trên Dealsoc.vn" />
+        <?php } else if($pagetitle=='Hướng dẫn mua hàng trên Dealsoc' ) { ?>
+            <meta name="description" content="Hướng dẫn khách hàng mua hàng, phương thức thanh toán, thời gian nhận hàng và bất kỳ vấn đề gì liên quan đến mua hàng tại Dealsoc.vn" />
         <?php } else if($pagetitle=='Liên hệ' ) { ?>
-            <meta name="description" content="Thông tin liên hệ CTY CP TM Cheapdeal 137/5A Lê Văn Sỹ P 13 Q Phú Nhuận TPHCM ĐT 08-3991 4018" />
+            <meta name="description" content="Thông tin liên hệ CTY CP TM DEALSOC 151 Nguyễn Đình Chiểu P6 Q 3 TPHCM ĐT 08-73024401" />
         <?php } else if($pagetitle=='Điều khoản sử dụng' ) { ?>
-            <meta name="description" content="Những qui định bắt buộc người tham gia mua hàng tạiphải tuân thủ" />
+            <meta name="description" content="Những qui định bắt buộc người tham gia mua hàng tại Dealsoc.vn phải tuân thủ" />
         <?php } else if($pagetitle=='Tuyển dụng' ) { ?>
-            <meta name="description" content="Tham gia cùng đại gia đình Cheapdeal cùng phát triển tương lai" />
-        <?php } else if($pagetitle=='Hợp tác với Cheapdeal' ) { ?>
+            <meta name="description" content="Tham gia cùng đại gia đình Dealsoc cùng phát triển tương lai" />
+        <?php } else if($pagetitle=='Hợp tác kinh doanh' ) { ?>
             <meta name="description" content="Bạn sẽ được đảm bảo về hiệu quả kinh doanh và kết quả marketing. Bạn không tốn chi phí trả trước, không tốn nhân sự, nguồn lực marketing" />
-        <?php } else if($pagetitle=='Thông báo' ) { ?>
-            <meta name="description" content="Thông báo những tình trạng của các deal đang bán hoặc đã bán tại Cheapdeal.vn. hãy nhóm mua chung những hotdeal, cùng mua các deal sản phẩm và dịch vụ,..." />
+        <?php } else if($pagetitle=='Dealsoc - Thông báo' ) { ?>
+            <meta name="description" content="Thông báo những tình trạng của các deal đang bán hoặc đã bán tại dealsoc.vn. hãy nhóm mua chung những hotdeal, cùng mua các deal sản phẩm và dịch vụ,..." />
         <?php } else { ?>
-            <meta name="description" content="<?php echo cut_string(strip_tags($page['value']),150,"[xem thêm]"); ?>" />
+            <meta name="description" content="<?php echo cut_string(strip_tags($page['value']),200,"..."); ?>" />
         <?php }?>
 	<?php }?>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
       <?php if(!$pagetitle||$request_uri=='index'){?>
-     	<meta name="keywords" content="<?php echo $team['short_title']; ?>cheapdeal, cungmua, hotdeal, thoi trang, tui xach" />
+     	<meta name="keywords" content="dealsoc, deal, deals, khuyen mai, nhom mua,nhommua, hot deal, hot deals, hotdeal, hotdeals, cungmua, muachung, cung mua,mua chung,mua theo nhom, mua hang theo nhom, giam gia, uu dai, coupon, gia re, deal hôm nay, trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?>, <?php echo $city['name']; ?>" />
     <?php } else if($seo_keyword) { ?>
-	<meta name="keywords" content="<?php echo $seo_keyword; ?>, <?php echo ($_GET['comment']) ? 'thảo luận' : '';; ?>" />
+        <meta name="keywords" content="<?php echo $seo_keyword; ?>, <?php echo ($_GET['comment']) ? 'thảo luận' : '';; ?>,dealsoc, deal, deals, khuyen mai, mua theo nhom, mua hang theo nhom,nhommua,hotdeal,cungmua,muachung, nhom mua, cung mua,mua chung, deal,giam gia, uu dai, coupon, gia re,<?php echo $city['name']; ?>" />
     <?php } else if($team) { ?>
-        <meta name="keywords" content="<?php echo $partner['title']; ?>, <?php echo $team['short_title']; ?> <?php echo ($_GET['comment']) ? ' thảo luận deal' : ' ';; ?>" />
+        <meta name="keywords" content="<?php echo $partner['title']; ?>, <?php echo $team['short_title']; ?> <?php echo ($_GET['comment']) ? ' thảo luận deal' : ' ';; ?>,dealsoc, deal, deals, khuyen mai,mua theo nhom, mua hang theo nhom,nhommua,hotdeal,cungmua,muachung, nhom mua, cung mua,mua chung, deal,giam gia, uu dai, coupon , gia re,<?php echo $city['name']; ?>" />
    <?php } else if(strpos($_SERVER['REQUEST_URI'],'/team/')!==false) { ?>
 		<?php if($pagetitle=='Deal du lịch' ){?>
-        <meta name="keywords" content="du lich, dulich,tour, travel ,Cheapdeal, deals,khuyen mai, <?php echo $pagetitle; ?>, du lịch giá rẻ, du lịch tiết kiệm,gia re,<?php echo $city['name']; ?>" />
+        <meta name="keywords" content="du lich, dulich,tour, travel ,dealsoc, deals,khuyen mai, <?php echo $pagetitle; ?>, du lịch giá rẻ, du lịch tiết kiệm, du lịch trong nước, du lịch quốc tế, khuyến mại du lịch,mua theo nhom, mua hang theo nhom,nhommua,hotdeal,cungmua,muachung, nhom mua, cung mua,mua chung, deal,giam gia, uu dai, coupon, gia re,<?php echo $city['name']; ?>" />
 		<?php } else if($pagetitle=='Deal dịch vụ' ) { ?>
-	 	<meta name="keywords" content="<?php echo $pagetitle; ?>, deal ăn uống, deal làm dẹp, deal spa, deal giải trí, sức khỏe, làm đẹp," />
+	 	<meta name="keywords" content="dealsoc, deals,khuyen mai, <?php echo $pagetitle; ?>, deal ăn uống, deal làm dẹp, deal spa, deal giải trí, sức khỏe, làm đẹp,mua theo nhom, mua hang theo nhom, nhommua, hotdeal, cungmua, muachung, nhom mua, cung mua, mua chung, deal, giam gia, uu dai, coupon, gia re, <?php echo $city['name']; ?>" />
 		<?php } else if($pagetitle=='Deal thời trang' ) { ?>
-		<meta name="keywords" content="<?php echo $pagetitle; ?>, mỹ phẩm giá rẻ, mua theo nhom, mua hang theo nhom, <?php echo $city['name']; ?>" />
+		<meta name="keywords" content="dealsoc, deals,khuyen mai,<?php echo $pagetitle; ?>, mỹ phẩm giá rẻ, mua theo nhom, mua hang theo nhom, nhommua, hotdeal, cungmua, muachung, nhom mua, cung mua,mua chung, deal, giam gia, uu dai, coupon, gia re, <?php echo $city['name']; ?>" />
 		<?php } else if($pagetitle=='Deal sản phẩm' ) { ?>
-		<meta name="keywords" content="<?php echo $pagetitle; ?> giá rẻ, sản phẩm giảm giá, sản phẩm độc đáo <?php echo $city['name']; ?>" />
+		<meta name="keywords" content="dealsoc, deals, khuyen mai,<?php echo $pagetitle; ?> giá rẻ, sản phẩm giảm giá, sản phẩm độc đáo, mua theo nhom, mua hang theo nhom,nhommua,hotdeal,cungmua,muachung, nhom mua, cung mua,mua chung, deal,giam gia, uu dai, coupon, gia re,<?php echo $city['name']; ?>" />
 		<?php } else if($pagetitle=='Deal gần đây' ) { ?>
-		<meta name="keywords" content="<?php echo $pagetitle; ?> giá tốt, sản phẩm gần đây tiện dụng <?php echo $city['name']; ?>" />
+		<meta name="keywords" content="dealsoc, deals,khuyen mai,<?php echo $pagetitle; ?> giá tốt, sản phẩm gần đây tiện dụng, mua theo nhom, mua hang theo nhom,nhommua,hotdeal,cungmua,muachung, nhom mua, cung mua,mua chung, deal,giam gia, uu dai, coupon, gia re,<?php echo $city['name']; ?>" />
 		<?php } else { ?>
-		<meta name="keywords" content="<?php echo $pagetitle; ?> trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?> <?php echo $city['name']; ?>" />
+		<meta name="keywords" content="dealsoc, deals,khuyen mai,<?php echo $pagetitle; ?> trang <?php echo ($_GET['page']) ? $_GET['page'] : 1;; ?>,mua theo nhom, mua hang theo nhom,nhommua,hotdeal,cungmua,muachung, nhom mua, cung mua,mua chung, deal,giam gia, uu dai, coupon, gia re,<?php echo $city['name']; ?>" />
 		<?php }?>
  	<?php } else { ?>
-        <meta name="keywords" content="<?php echo $category['name']; ?><?php echo $page['name']; ?>" />
+        <meta name="keywords" content="dealsoc, deals,khuyen mai,<?php echo $pagetitle; ?>, mua theo nhom, mua hang theo nhom,nhommua,hotdeal,cungmua,muachung, nhom mua, cung mua,mua chung, deal,giam gia, uu dai, coupon, gia re,<?php echo $city['name']; ?>" />
 	<?php }?>
-	<link href="<?php echo $INI['system']['wwwprefix']; ?>/feed.php?ename=<?php echo $city['ename']; ?>" rel="alternate" title="subscription update" type="application/rss+xml" />
+	<link href="<?php echo SiteURL;?>/feed.php?ename=<?php echo $city['ename']; ?>" rel="alternate" title="subscription update" type="application/rss+xml" />
+	<link rel="shortcut icon" href="<?php echo SiteURL;?>/static/icon/favicon.ico" />
+	<link rel="stylesheet" href="<?php echo SiteURL;?>/static/css/deal_all.css" type="text/css" media="screen" charset="utf-8" />
+    <link href="<?php echo SiteURL;?>/static/css/nivo-slider.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo SiteURL;?>/static/css/jquery.autocomplete.css" />       
+	<script type="text/javascript" src="<?php echo SiteURL;?>/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo SiteURL;?>/static/js/index.js"></script>
+    <script type="text/javascript" src="<?php echo SiteURL;?>/static/js/jquery.nivo.slider.pack.js"></script>
+    <script type='text/javascript' src="<?php echo SiteURL;?>/static/js/jquery.autocomplete.js"></script>
+    <script type='text/javascript' src="<?php echo SiteURL;?>/static/js/jquery.lazyload.js"></script>
+    
+	<script type="text/javascript">
+	var WEB_ROOT = '<?php echo WEB_ROOT; ?>';
+	var LOGINUID= '<?php echo abs(intval($login_user_id)); ?>';
 	
-	<link rel="shortcut icon" href="/static/icon/favicon.ico" />
-	<link rel="stylesheet" href="/static/css/deal_all.css" type="text/css" media="screen" charset="utf-8" />
-    <link href="/static/css/nivo-slider.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/jquery.autocomplete.css" />
-    <script type="text/javascript">var WEB_ROOT = '<?php echo WEB_ROOT; ?>';var LOGINUID= '<?php echo abs(intval($login_user_id)); ?>';</script>
-   
-	<script src="/static/js/jquery.min.js" type="text/javascript"></script>
-     <script src="/static/js/index.js" type="text/javascript"></script>
-    <script type="text/javascript" src="/static/js/jquery.nivo.slider.pack.js"></script>
-    <script type='text/javascript' src="/static/js/jquery.autocomplete.js"></script>
-    <script type='text/javascript' src="/static/js/jquery.lazyload.js"></script>
-<script>(function() {
-  var _fbq = window._fbq || (window._fbq = []);
-  if (!_fbq.loaded) {
-    var fbds = document.createElement('script');
-    fbds.async = true;
-    fbds.src = '//connect.facebook.net/en_US/fbds.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(fbds, s);
-    _fbq.loaded = true;
-  }
-  _fbq.push(['addPixelId', '249635345231612']);
-})();
-window._fbq = window._fbq || [];
-window._fbq.push(['track', 'PixelInitialized', {}]);
-</script>
-<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=249635345231612&amp;ev=NoScript" /></noscript>
-		
-    <script type="text/javascript">
 	$(document).ready(function(){
 		 $("img.loadlazy").lazyload({
             effect : "fadeIn"
@@ -185,7 +159,7 @@ window._fbq.push(['track', 'PixelInitialized', {}]);
 	width:58px;
 	height:27px;
 	border:0;
-	background: #e6e6e6 url("/static/img/search-button.gif") no-repeat top left;
+	background: #e6e6e6 url("<?php echo SiteURL;?>/static/img/search-button.gif") no-repeat top left;
 }
 .theme-default #slider {
 			margin: 0px auto 0 auto;
@@ -350,43 +324,25 @@ $(function(){
 	jQuery('a.ataddcart').click(function () {			
 		$(this).fadeTo(100,0.5).fadeTo(500,1);		
 		var json =  X.get(jQuery(this).attr('href'));
-		loadcartajax();
 		return false;
 	});	
+	$('#selectcategory').click(function(){
+		$('.listdealcategory').slideToggle();
+	});
 	
+	$('.listdealcategory li').click(function(){
+		$val = $(this).attr('value');
+		$('#catgroupid').val($val);
+		$('#selectcategory').text($(this).text());
+		$('.listdealcategory').slideToggle();
+		
+	//	$('#topSearch').submit();
+	});
 	
 });
-function loadcartajax()
-{
-	$.get('/ajax/checkout.php?getdatastep=cartcount', function(data) { 		
-			$('.product-number').html(data);
-		});	
-}
 </script> 
-<!-- -->
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-44278171-1', 'cheapdeal.vn');
-  ga('send', 'pageview');
-
-</script>
 </head>
 <body>
-<!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TPL8PD"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TPL8PD');</script>
-<!-- End Google Tag Manager -->
-
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -397,125 +353,4 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 }(document, 'script', 'facebook-jssdk'));</script>
 <div id="pagemasker"></div><div id="dialog"></div>
 <div id="doc" align="center">
-
-<!-- Piwik -->
-<script type="text/javascript"> 
-  var _paq = _paq || [];
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://cheapdeal.vn/piwik//";
-    _paq.push(['setTrackerUrl', u+'piwik.php']);
-    _paq.push(['setSiteId', 1]);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript';
-    g.defer=true; g.async=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-  })();
-
-</script>
-<noscript><p><img src="http://cheapdeal.vn/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
-<!-- End Piwik Code -->
-
-
-<!-- End Piwik Code -->
-
-<!--- popup -->
-<style type="text/css">
-    #floating
-    {
-        z-index: 9999999;
-        position: absolute;
-        width: 600px;
-        height: 420px;
-        border: 0px !important;
-    }
-    #overPage
-    {
-        background: black;
-        z-index: 9999999;
-        position: absolute;
-        left: 0;
-        top: 0;
-    }
-</style>
-
-<!--<div id="ctl00_ContentPlaceHolder1_Adv_Popup_pnAdv" style="display:none">
-    <div id="overPage">
-    </div>
-  <div id="floating" >
-        <a href="/tp-ho-chi-minh/deal-gia-hot/">
-			
-           <div style="margin:0 auto;background:url(http://cheapdeal.vn/static/banner/chuc-mung-nam-moi-2014.jpg) no-repeat center 0;width:600px;height:420px"></div> 
-              <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" height="420" width="600">
-                    <param name="movie" value="http:///ads/ads.swf"/>
-                    <param name="quality" value="high"/>
-                    <param name="wmode" value="transparent"/>
-                    <embed src="http:///ads/ads.swf" wmode="transparent" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" height="420" width="600"/>
-                </object>
-        </a>
-        <p style="float: right; position: relative;top:-438px; left:14px">
-            <a href="javascript:closeMe();"><img src="http://cheapdeal.vn/static/banner/fancy_close.png"/></a>
-        </p>
-  </div>
-</div>-->
-
-<script language="javascript" type="text/javascript">
-    function opennew(){
-        var expire=new Date();
-        expire=new Date(expire.getTime()+50000000);
-        document.cookie="RSSgame=here; expires="+expire;
-    }
-
-    function GetCookie(name) {
-          var arg=name+"=";
-          var alen=arg.length;
-          var clen=document.cookie.length;
-          var i=0;
-          while (i<clen) {
-            var j=i+alen;
-            if (document.cookie.substring(i,j)==arg)
-              return "here";
-            i=document.cookie.indexOf(" ",i)+1;
-            if (i==0) break;
-          }
-          return null;
-    }
-
-    var visit=GetCookie("RSSgame");
-    if (visit==null){
-      $("#ctl00_ContentPlaceHolder1_Adv_Popup_pnAdv").show();
-    }
-        var lastScroll;
-        var delay = 30;
-        var speed = 50;
-        var img_w = 490;
-        var img_h = 360;
-        function centerIt() {
-            $("#overPage").css("width", $(window).width());
-            $("#overPage").css("height", $(document).height());
-            $("#floating").css("left", $(window).width() / 2 - img_w / 2);
-            $("#floating").css("top", $(window).height() / 2 - img_h / 2 + $(document).scrollTop());
-        }
-        $(document).ready(function() {
-            $("#overPage").css("opacity", 0.7);
-            $("#overPage,#floating").show();
-            centerIt();
-        });
-        $(window).scroll(function() {
-            setTimeout(function() { ani(); }, delay);
-            lastScroll = new Date().getTime();
-        });
-        $(window).resize(function() {
-            centerIt();
-        });
-        function ani() {
-            if ((new Date().getTime() - lastScroll) >= (delay - 20)) {
-                $("#floating").animate({ top: ($(window).height() / 2 - img_h / 2 + $(document).scrollTop()) }, speed);
-            }
-        }
-        function closeMe() {
-            $("#overPage,#floating").hide();
-            opennew();
-        }
-<!-- End of pop-up -->
-</script>
 
