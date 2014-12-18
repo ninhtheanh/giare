@@ -26,7 +26,7 @@ define('WWW_ROOT', rtrim(dirname(DIR_ROOT),'/'));
 define('IMG_ROOT', dirname(DIR_ROOT) . '/static');
 if(in_array($_SERVER['REMOTE_ADDR'], array('localhost', '127.0.0.1'))) 
 {
-	define('SiteURL', "http://localhost:8888/Cheap/Git");
+	define('SiteURL', ""); //We must run on root of web server because there are many hard code
 }
 else
 {
