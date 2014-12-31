@@ -89,6 +89,8 @@ RewriteRule -([0-9]+)\.html$ team.php?id=$1&comment=%1 [L]
 
 RewriteRule -([0-9]+)\.html$ team.php?id=$1 [L]
 
+RewriteRule ^khuyen-mai.html$ team/promotion.php [L]
+
 #News
 RewriteRule ^tin-tuc.html$ news.php [L]
 RewriteRule ^tin-tuc/([a-zA-Z0-9_-]+)_([0-9]+).html$ news_detail.php?id=$2

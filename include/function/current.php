@@ -1,4 +1,27 @@
 <?php
+function promotion_calculation($promotion_type, $market_price, $team_price, $promotion_value)
+{
+    $price_after_promotion = $team_price;
+    
+    if(!isset($promotion_type) || $promotion_type == NULL || $promotion_type == "")
+    {
+        $price_after_promotion = $team_price;
+    }
+    elseif($promotion_type == 0)//%
+    {
+        $price_after_promotion = ($market_price * $promotion_value) / 100;
+        $price_after_promotion = $market_price - $price_after_promotion;
+    }	
+    elseif($promotion_type == 1)
+    {
+        $price_after_promotion = $market_price - $promotion_value;
+    }
+    elseif($promotion_type == 2)
+    {
+        $price_after_promotion = $promotion_value;
+    }
+    return $price_after_promotion;
+}
 function leftMenuCategory($parent_id = 0){
 	global $INI,$city;
 	
@@ -592,6 +615,7 @@ function mcurrent_team($selector=null) {
 		'/backend/team/failure.php' => '&nbsp;Unsuccessful deal',
 		'/backend/team/OnOff.php' => '&nbsp;On/Off deal',
 		'/backend/team/show_homepage.php' => '&nbsp;Show homepage',
+		'/backend/team/promotion_category.php' => '&nbsp;Promotion',
 		'/backend/team/edit.php' => '&nbsp;New deal',
 	);
 	$l = "/backend/team/{$selector}.php";

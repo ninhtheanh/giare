@@ -19,11 +19,6 @@
                     <?php  $k = $i*$_cols+$j; ?>
                     <?php  if(isset($rows[$k])): $team = $rows[$k];?>
                         <div class="box_deal_home  team_column_<?php  echo $k%4; ?>">
-                            <?php
-                                //print_r($team['promotion']);
-                                list($id_promotion_category, $promotion_type, $promotion_value) = explode(";", $team['promotion']);
-                                $price_after_promotion = promotion_calculation($promotion_type, $team['market_price'], $team['team_price'], $promotion_value);
-                            ?>
                             <div class="box_img_home">
                              <a href="/<?php echo seo_url($team['short_title'],$team['id'],$url_suffix); ?>">
                              <?php  
@@ -34,16 +29,14 @@
                              <img src="<?php  echo $imgload; ?>" data-original="<?php echo team_image($team['image'],true,240); ?>" alt="<?php echo $INI['system']['abbreviation']; ?>: phiếu giảm giá <?php echo $team['short_title']; ?>" class="loadlazy img_deal_home" /><span class="hovershow">
                      	<?php if($team['delivery_properties']==1 || ($city['id']==556 && $team['group_id']!=23)){?> Giao sản phẩm <img src="/static/img/icon_product.png" align="absmiddle" alt="Giao sản phẩm" /><?php } else { ?>Giao Voucher <img src="/static/img/icon_voucher.png" align="absmiddle" alt="Giao voucher" /><?php }?>
                      </span></a>
-                            <?php if($id_promotion_category > 0 && $promotion_type >=0 && $promotion_value > 0){?>
-                            <div style="vertical-align:central; float:inherit; margin-top:27px; margin-left:160px">
-                                <img src="/static/icon/promotion/icon_sale.gif" border="0">
-                            </div>
-                            <?php }?>
                             </div>
                         <div class="box-title-home">
                             <a href="/<?php echo seo_url($team['short_title'],$team['id'],$url_suffix); ?>"><?php echo $team['masp']; ?>: <?php echo $team['product']; ?></a>
                         </div>
-                        <div class="box-price-sale">                        
+                        <div class="box-price-sale">
+                        <?php
+                        $price_after_promotion = promotion_calculation($promotion_type, $team['market_price'], $team['team_price'], $promotion_value);
+                        ?>
                         <div class="team_price"><?php echo print_price(moneyit($price_after_promotion)); ?> đ</div>
                          <div class="market_price"><?php echo print_price(moneyit($team['market_price'])); ?> đ</div>
                          <div class="saleper">Giảm <?php echo ceil(moneyit((100*($team['market_price'] - $price_after_promotion)/$team['market_price']))); ?>%</div>

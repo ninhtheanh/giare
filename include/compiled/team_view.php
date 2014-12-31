@@ -172,7 +172,10 @@ $arrcatid = array(
 			   </script>
               <div class="price_btn_order">
                 <div class="box_detail_price">
-                  <div class="detail_team_price"><?php echo print_price(moneyit($team[team_price])); ?> <sub>VNĐ</sub></div>
+                   <?php
+                        $price_after_promotion = promotion_calculation($promotion_type, $team['market_price'], $team['team_price'], $promotion_value);
+                   ?>
+                  <div class="detail_team_price"><?php echo print_price(moneyit($price_after_promotion)); ?> <sub>VNĐ</sub></div>
                   <div class="detail_market_price"><?php echo print_price(moneyit($team[market_price])); ?> đ</div>
                 </div>
                 <div class="box_btn_order">

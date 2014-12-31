@@ -50,7 +50,7 @@ function get_products($id_name, $group_id, $city)
 			"end_time > $mark",
 		);
 	}
-	
+	//$condition['select'] = "id";
 	//$condition = array();
 	
 	$home_side_ns = 1000;
@@ -59,12 +59,15 @@ function get_products($id_name, $group_id, $city)
 	list($pagesize, $offset, $pagestring) = pagestring($count,$home_side_ns);
 	
 	$ckey = 'past'.$_GET['page'];
-	
+	$sql_sub = "(Select CONCAT(id_promotion_category, ';' ,promotion_type, ';' ,promotion_value) From promotion_category, promotion_product 
+                Where promotion_category.id = promotion_product.id_promotion_category 
+                And promotion_category.activate = 1 And promotion_product.id_product = team.id) as promotion";
 	$teams = DB::LimitQuery('team', array(
 			'condition' => $condition,
 			'order' => 'ORDER BY sort_order DESC, id DESC',
 			'size' => $pagesize,
 			'offset' => $offset,
+            'select' => "team.*, $sql_sub",
 		));
 	return $teams;	
 }

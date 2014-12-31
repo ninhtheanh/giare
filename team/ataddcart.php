@@ -8,6 +8,21 @@ $arr = array(
 $id = abs(intval($_GET['id']));
 $team = Table::Fetch('team', $id);
 
+//Check promotion
+$sql = "Select promotion_category.id, promotion_type, promotion_value From promotion_category, promotion_product 
+Where promotion_category.id = promotion_product.id_promotion_category 
+And promotion_category.activate = 1 And promotion_product.id_product = '$id' LIMIT 0, 1;";
+//echo $sql;
+$promotion_category = DB::GetQueryResult($sql);
+if(count($promotion_category) > 0)
+{
+    $id_promotion_category = $promotion_category['id'];
+    $promotion_type = $promotion_category['promotion_type'];
+    $promotion_value = $promotion_category['promotion_value'];    
+}  
+$price_after_promotion = promotion_calculation($promotion_type, $team['market_price'], $team['team_price'], $promotion_value);
+//Check promotion End
+
 /*  
 //invalid deal
 if ( !$team || $team['begin_time']>time() ) {
@@ -48,7 +63,7 @@ $size = isset($_SESSION['size_'. $team['id']]) ? $_SESSION['size_' . $team['id']
 	 
 if($carts == NULL or count($carts) == 0){	
 	$carts = array(
-			$team['id'] => array('id'=>$team['id'],'short_title' =>$team['short_title'],'quantity'=>1,'team_price'=>$team['team_price'], 'color'=>$color, 'size'=>$size)
+			$team['id'] => array('id'=>$team['id'],'short_title' =>$team['short_title'],'quantity'=>1,'team_price'=>$price_after_promotion, 'color'=>$color, 'size'=>$size)
 		);	
 	Session::Set('carts',$carts);
 }
@@ -68,7 +83,7 @@ else{
 		Session::Set('carts',$carts);
 	}else{
 		//empty deal in cart	
-		$carts[$team['id']] = array('id'=>$team['id'],'short_title' =>$team['short_title'],'quantity'=>1,'team_price'=>$team['team_price'], 'color'=>$color, 'size'=>$size);
+		$carts[$team['id']] = array('id'=>$team['id'],'short_title' =>$team['short_title'],'quantity'=>1,'team_price'=>$price_after_promotion, 'color'=>$color, 'size'=>$size);
 		
 		Session::Set('carts',$carts);
 	}

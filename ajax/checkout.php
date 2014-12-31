@@ -245,10 +245,33 @@ switch($atact)
 							));
 				  if($dbpayment){
 					  $table->payment_cost = $dbpayment['adding_cost'];
-				  }
-				
+				  }				
 				$table->notes = $remark;
-				$insert = array('order_group','user_id', 'team_id', 'city_id', 'dist_id', 'ward_id', 'house_number', 'street_name', 'bcity_id', 'bdist_id', 'bward_id', 'bhouse_number', 'bstreet_name', 'state', 'fare', 'express', 'origin', 'price', 'address', 'note_address', 'baddress', 'bnote_address', 'zipcode', 'realname', 'mobile', 'brealname', 'bmobile', 'quantity', 'create_time', 'remark', 'condbuy', 'total_weight','shipping_id','payment_id','notes','color','size');
+                //Check promotion
+                $sql = "Select promotion_category.id, promotion_name, promotion_type, promotion_value From promotion_category, promotion_product 
+                Where promotion_category.id = promotion_product.id_promotion_category 
+                And promotion_category.activate = 1 And promotion_product.id_product = '" . $order['id'] . "' LIMIT 0, 1;";                
+                $promotion_category = DB::GetQueryResult($sql);
+                if(count($promotion_category) > 0)
+                {
+                    $id_promotion_category = $promotion_category['id'];
+                    $promotion_name = $promotion_category['promotion_name'];
+                    $promotion_type = $promotion_category['promotion_type'];
+                    $promotion_value = $promotion_category['promotion_value'];    
+                } 
+                else
+                {
+                    $id_promotion_category = 0;
+                    $promotion_name = "";
+                    $promotion_type = 0;
+                    $promotion_value = 0;
+                }
+                $table->id_promotion_category = $id_promotion_category;
+                $table->promotion_name = $promotion_name;
+                $table->promotion_type = $promotion_type;
+                $table->promotion_value = $promotion_value;               
+                //Check promotion End
+				$insert = array('order_group','user_id', 'team_id', 'city_id', 'dist_id', 'ward_id', 'house_number', 'street_name', 'bcity_id', 'bdist_id', 'bward_id', 'bhouse_number', 'bstreet_name', 'state', 'fare', 'express', 'origin', 'price', 'address', 'note_address', 'baddress', 'bnote_address', 'zipcode', 'realname', 'mobile', 'brealname', 'bmobile', 'quantity', 'create_time', 'remark', 'condbuy', 'total_weight','shipping_id','payment_id','notes','color','size','id_promotion_category','promotion_name','promotion_type','promotion_value');
 				
 				if ($table->update($insert)) {
 					
