@@ -375,3 +375,11 @@ function yahoo_login() {
 	var left = (screen.width - 670) / 2;
 	var yahoowindow = window.open(SITE_ROOT_URL + '/plugin_login/yahoologin.php?login&returnUrl='+window.location, "yahoo_account", "status=0,toolbar=0,width=670,height=500,top="+top+",left="+left);
 }
+function deleteItem(page, id)
+{
+	if(confirm('Are you sure you want to delete this items (' + id + ') ?'))
+	{
+		location.href = page + '?action=delete&id=' + id;
+	}
+	return false;	
+}
