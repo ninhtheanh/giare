@@ -15,26 +15,34 @@
               </tr>
               
             
-             <?php   foreach($carts as $cart){ ?>
-                <tr>
-                <td align="right" class="deal-buy-desc">1</td>
-                <td class="deal-buy-desc">
-				<?php echo $cart['short_title']; ?>
-                
-				<?php echo showColorSize($cart); ?>
-                </td>
+             <?php   
+			 $i = 0;
+			 $total = 0;
+			 foreach($carts as $cart)
+			 { $i++;
+			 	$total += $cart['quantity']*$cart['team_price'];
+			 ?>
+             <tr>
+                <td align="right" class="deal-buy-desc"><?php echo $i;?></td>
+                <td class="deal-buy-desc"><?php echo $cart['short_title']; ?></td>
                 <td class="deal-buy-quantity" align="right">
                 <?php  echo $cart['quantity']; ?>
                 </td>
-                <td class="deal-buy-price" align="right"><span id="deal-buy-price"><?php echo $cart['team_price']; ?></span></td>
-                <td class="deal-buy-total" align="right" style="BORDER-RIGHT: #b1d1e6 1px solid;"><span id="deal-buy-total"><?php  echo $cart['quantity']*$cart['team_price']; ?></span>
-                  </td>
-              </tr>
+                <td class="deal-buy-price" align="right"><span id="deal-buy-price"> <?php echo print_price(moneyit($cart['team_price'])); ?></span></td>
+                <td class="deal-buy-total" align="right" style="BORDER-RIGHT: #b1d1e6 1px solid;">
+                	<span id="deal-buy-total"><?php  echo print_price(moneyit($cart['quantity']*$cart['team_price'])); ?></span>
+                </td>
+              </tr>              
             <?php   } ?>
-              
+              <tr>
+                <td align="right" class="deal-buy-desc" colspan="4">Tổng cộng</td>
+                <td class="deal-buy-total" align="right" style="BORDER-RIGHT: #b1d1e6 1px solid;">
+                	<span id="deal-buy-total" style="font-weight:bold"><?php  echo print_price(moneyit($total)); ?></span>
+                </td>
+              </tr>
             </tbody>
             </table>
-        </div></br>
+        </div>
     	<div class="checkout_title">
             <h2>Thông tin mua hàng</h2>
         </div>
@@ -113,26 +121,22 @@
                 	
                  <?php  /*  Begin Step 2  */ ?>   
                  <div class="box_information  order_step2">
-                 <?php  
-				 $uinfo = Session::Get('customerinfo');
-				  ?>
                     <div class="title_step">2. Địa chỉ giao hàng</div>
                     <div class="box_order_content">
                         <div class="order_content_origin">
                             <div class="line_info_user">
-                            	<label>Họ tên: </label> <span class="" id="atusernamerec"><?php  echo $uinfo['realname']; ?></span>
+                            	<label>Họ tên: </label> <span class="" id="atusernamerec"><?php  echo $login_user['realname']; ?></span>
                             </div>
                             <div class="line_info_user">
-                            	<label>Địa chỉ: </label> <span class="" id="atuseraddress">
-								<?php  echo rtrim($uinfo['house_number'].','.$uinfo['street_name'].','.$uinfo['ward_name'].','.$uinfo['dist_name'].','.$uinfo['city_name']); ; ?></span>
+                            	<label>Địa chỉ: </label> <span class="" id="atuseraddress"><?php  echo $login_user['address']; ?> <?php  echo $login_user['street_name']; ?></span>
                             </div>
                             <div class="line_info_user">
-                            	<label>Điện thoại: </label> <span class="" id="atuserphone"><?php  echo $uinfo['mobile']; ?></span>
+                            	<label>Điện thoại: </label> <span class="" id="atuserphone"><?php  echo $login_user['mobile']; ?></span>
                             </div>
                         </div>
                         <div class="order_content_edit">
                                 <div class="user_info_transfer">
-                                	 <form id="fstep2" name="fstep2" action="/ajax/checkout.php" method="post" class="">
+                                	 <form id="fstep2" name="fstep2" action="http://thietkeachau.com/cheapdeal/ajax/checkout.php" method="post" class="">
                                     <table width="100%" class="attbform">
                                     	 <tr>
                                             <td align="left" height="35"><div class="field">
@@ -157,21 +161,16 @@
                                                         var opt = '<option value=0>--Chọn--</option>';
                                                         $('#city_id').change(function() {	
                                                                             
-                                                            $.get('/ajax/city.php?city_id='+$("#city_id").val(), function(ret) {					 		 
+                                                            $.get('http://thietkeachau.com/cheapdeal/ajax/city.php?city_id='+$("#city_id").val(), function(ret) {					 		 
                                                               $('#dist_id').empty().append(opt+ret);
                                                               $('#ward_id').empty();
                                                             });
                                                         });
                                                         $('#dist_id').change(function() {
-                                                            $.get('/ajax/city.php?dist_id='+$("#dist_id").val(), function(ret) {					 
+                                                            $.get('http://thietkeachau.com/cheapdeal/ajax/city.php?dist_id='+$("#dist_id").val(), function(ret) {					 
                                                               $('#ward_id').empty().append(opt+ret);	
                                                             });
                                                         });
-														//
-														$.get('/ajax/city.php?dist_id='+$("#dist_id").val() + '&ward_id=<?php echo $wardname['id']?>' , function(ret) {					 
-                                                              $('#ward_id').empty().append(opt+ret);	
-                                                            });
-														//
                                                     });		     
                                                     function searchSuggest(){
                                                         dist_id = getDistId();
@@ -189,11 +188,11 @@
                                               </div></td>
                                             </tr>
                                       <tr>
-                                        <td align="left" height="35"><div class="field">                                                                     
+                                        <td align="left" height="35"><div class="field">                                    
                                             <label id="enter-address-dist-label" for="signup-dist">Quận/Huyện</label>
                                             <select name="dist_id" id="dist_id" class="f-city" require="true" datatype="require">
                                               <option value="">---Chọn---</option>
-                                                <?php echo optiondistrict( $dist['dist_id'], $city['id']); ?>
+                                                <?php echo optiondistrict(1, $city['id']); ?>
                                             </select>
                                           </div></td>
                                       </tr> 
@@ -232,7 +231,7 @@
                                       <tr>
                                         <td align="left">
                                             <div style="margin-left:130px" class="act">
-                                            <input  type="buttn" value=" Lưu và tiếp tục " id="step2-submit" class="formbutton"/>
+                                            <input type="buttn" value=" Lưu và tiếp tục " id="step2-submit" class="formbutton"/>
                                             <input style="margin-left: 13px;" type="button" value=" Hủy " id="cancel_transfer" class="formbutton"/>
                                           </div>
                                          </td>
@@ -287,15 +286,15 @@
                             
                                <?php  
                                
-                          /*       if($uinfo['city_id'] == 11){
+                               if($login_user['city_id'] == 11){
                                     //HCM city
                                     echo render('atajax_transfer_hcm');
                                      
                                 }else{
                                     //Another
-                                      */
+                                    
                                     echo  render('atajax_transfer');
-                           //     }
+                                }
                                
                                 ?>
                                 
@@ -333,7 +332,7 @@
                         	<table width="100%" border="0" cellpadding="0" cellspacing="0">
             	<tr>
                 	<td width="60%" valign="top">
-                    <form id="fcuser" action="/ajax/checkout.php" method="post" name="createuser">
+                    <form id="fcuser" action="http://thietkeachau.com/cheapdeal/ajax/checkout.php" method="post" name="createuser">
                     	<input type="hidden" name="atstate" value="new" />
                     	<div class="user-infor-new">
                         	<h3>Thông tin khách hàng</h3>
@@ -551,7 +550,6 @@
                                 
                                 
                                 
-
                             </div>
                             <div class="order_content_edit" id="responser_step3">
                             
@@ -585,14 +583,16 @@
         </div>
     </div>
 </div>
-
-
 <script type="text/javascript">
 $(document).ready(function(){
 	$('#change_user').click(function(){
 		$('.order_step1').addClass('content_active');
+		
+		//
 		$('.order_step2').removeClass('content_active');
+		
 		$('.order_step2, .order_step3, .order_step4').removeClass('content_active').addClass('content_hide');
+		
 	});
 	$('#cancle_changeuser').click(function(){
 		$('.order_step1').removeClass('content_active');
@@ -648,7 +648,7 @@ $(document).ready(function(){
 				'dataType':'json',
 				'success': function (ret) {
 					if(ret['error']==0){
-						window.location = '/team/checkout.php';
+						window.location = 'http://thietkeachau.com/cheapdeal/team/checkout.php';
 					}else{
 						alert(ret['msg']);
 					}
