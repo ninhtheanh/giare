@@ -1,6 +1,21 @@
 <?php
 require_once(dirname(__FILE__) . '/app.php');
 $id = $_GET['id'];
+
+//Check promotion
+$sql = "Select promotion_category.id, promotion_type, promotion_value From promotion_category, promotion_product 
+Where promotion_category.id = promotion_product.id_promotion_category And promotion_category.start_time <= CURDATE() And promotion_category.end_time >= CURDATE()
+And promotion_category.activate = 1 And promotion_product.id_product = '$id' LIMIT 0, 1;";
+//echo $sql;
+$promotion_category = DB::GetQueryResult($sql);
+if(count($promotion_category) > 0)
+{
+    $id_promotion_category = $promotion_category['id'];
+    $promotion_type = $promotion_category['promotion_type'];
+    $promotion_value = $promotion_category['promotion_value']; 
+}   
+//Check promotion End
+
 $id_denine = array(53,768,311,1502,717,1513,1014,1493,1657);
 if(in_array($id,$id_denine)){
 	redirect("/404.html");
@@ -16,8 +31,6 @@ $team = Table::FetchForce('team', $id);
 if(!cookieget('city')){
 	cookieset('city', $team['city_id']);
 }
-
-
 
 /* refer */
 if(!$team){

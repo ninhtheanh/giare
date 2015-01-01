@@ -67,12 +67,15 @@ include template("header");?>
     );  */
 
 //	$count = Table::Count('team', array()); 
-    
+    $sql_sub = "(Select CONCAT(id_promotion_category, ';' ,promotion_type, ';' ,promotion_value) From promotion_category, promotion_product 
+                Where promotion_category.id = promotion_product.id_promotion_category And promotion_category.start_time <= CURDATE() And promotion_category.end_time >= CURDATE()
+                And promotion_category.activate = 1 And promotion_product.id_product = team.id) as promotion";
     $rows = DB::LimitQuery('team', array(
         'condition' => $condition,
         'order' => 'ORDER BY show_homepage DESC, `sort_order` DESC, `id` DESC',
         'size' => 500,
 		'offset' => 0,
+        'select' => "team.*, $sql_sub",
     ));
     
 //   
@@ -91,7 +94,11 @@ include template("header");?>
         	<?php  $k = $i*$_cols+$j; ?>
             <?php  if(isset($rows[$k])): $team = $rows[$k];?>
             	<div class="box_deal_home team_column_<?php  echo $k%4; ?>">
-				
+				    <?php
+                        //print_r($team['promotion']);
+                        list($id_promotion_category, $promotion_type, $promotion_value) = explode(";", $team['promotion']);
+                        $price_after_promotion = promotion_calculation($promotion_type, $team['market_price'], $team['team_price'], $promotion_value);
+                    ?>
                 	<div class="box_img_home">
                 	 <a href="/<?php echo seo_url($team['short_title'],$team['id'],$url_suffix); ?>" style="width: 240px;height: 348px;display: block;">
                      <?php  
@@ -107,11 +114,16 @@ include template("header");?>
                 	</div>
                 <div class="box-title-home">
                 	<a href="/<?php echo seo_url($team['short_title'],$team['id'],$url_suffix); ?>"><?php echo $team['masp']; ?>: <?php echo $team['product']; ?></a>
+                    <?php if($id_promotion_category > 0 && $promotion_type >=0 && $promotion_value > 0){?>
+                    <div style="vertical-align:central; float:inherit; margin-top:0px; margin-left:160px">
+                        <img src="/static/icon/promotion/icon_sale.gif" border="0">
+                    </div>
+                    <?php }?>
                 </div>
                 <div class="box-price-sale">
-                <div class="team_price"><?php echo print_price(moneyit($team['team_price'])); ?> đ</div>
+                <div class="team_price"><?php echo print_price(moneyit($price_after_promotion)); ?> đ</div>
                  <div class="market_price"><?php echo print_price(moneyit($team['market_price'])); ?> đ</div>
-                 <div class="saleper">Giảm <?php echo ceil(moneyit((100*($team['market_price'] - $team['team_price'])/$team['market_price']))); ?>%</div>
+                 <div class="saleper">Giảm <?php echo ceil(moneyit((100*($team['market_price'] - $price_after_promotion)/$team['market_price']))); ?>%</div>
                 </div>
                </div> 
             <?php  endif; ?>

@@ -249,7 +249,7 @@ switch($atact)
 				$table->notes = $remark;
                 //Check promotion
                 $sql = "Select promotion_category.id, promotion_name, promotion_type, promotion_value From promotion_category, promotion_product 
-                Where promotion_category.id = promotion_product.id_promotion_category 
+                Where promotion_category.id = promotion_product.id_promotion_category And promotion_category.start_time <= CURDATE() And promotion_category.end_time >= CURDATE() 
                 And promotion_category.activate = 1 And promotion_product.id_product = '" . $order['id'] . "' LIMIT 0, 1;";                
                 $promotion_category = DB::GetQueryResult($sql);
                 if(count($promotion_category) > 0)

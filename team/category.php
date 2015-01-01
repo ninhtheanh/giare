@@ -60,7 +60,7 @@ function get_products($id_name, $group_id, $city)
 	
 	$ckey = 'past'.$_GET['page'];
 	$sql_sub = "(Select CONCAT(id_promotion_category, ';' ,promotion_type, ';' ,promotion_value) From promotion_category, promotion_product 
-                Where promotion_category.id = promotion_product.id_promotion_category 
+                Where promotion_category.id = promotion_product.id_promotion_category And promotion_category.start_time <= CURDATE() And promotion_category.end_time >= CURDATE() 
                 And promotion_category.activate = 1 And promotion_product.id_product = team.id) as promotion";
 	$teams = DB::LimitQuery('team', array(
 			'condition' => $condition,
