@@ -53,9 +53,8 @@ function __template($tFile) {
         die("Templace File [$tFile] Not Found!");
     }
 
-    if(false===file_exists($cFile) 
-            || @filemtime($tFile) > @filemtime($cFile)) {
-        __parse($tFile,$cFile);
+    if(false===file_exists($cFile) || @filemtime($tFile) > @filemtime($cFile)) {
+        //__parse($tFile,$cFile); //The Anh comemnted Jan 2, 2015 because it usually modify php file in "include\compiled" folder
     }
 
     return $cFile;
