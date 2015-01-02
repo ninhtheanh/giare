@@ -13,11 +13,15 @@
                 <th class="deal-buy-price">Đơn giá (<span class="money">đ</span>)</th>
                 <th class="deal-buy-total">Thành tiền (<span class="money">đ</span>)</th>
               </tr>
-              
-            
-             <?php   foreach($carts as $cart){ ?>
+             <?php 
+			 $i = 0; $total = 0;
+			 foreach($carts as $cart)
+			 { 
+				$i++;
+			 	$total += $cart['quantity']*$cart['team_price'];
+			 ?>
                 <tr>
-                <td align="right" class="deal-buy-desc">1</td>
+                <td align="right" class="deal-buy-desc"><?php echo $i;?></td>
                 <td class="deal-buy-desc">
 				<?php echo $cart['short_title']; ?>
                 
@@ -26,12 +30,18 @@
                 <td class="deal-buy-quantity" align="right">
                 <?php  echo $cart['quantity']; ?>
                 </td>
-                <td class="deal-buy-price" align="right"><span id="deal-buy-price"><?php echo $cart['team_price']; ?></span></td>
-                <td class="deal-buy-total" align="right" style="BORDER-RIGHT: #b1d1e6 1px solid;"><span id="deal-buy-total"><?php  echo $cart['quantity']*$cart['team_price']; ?></span>
-                  </td>
+                <td class="deal-buy-price" align="right"><span id="deal-buy-price"><?php echo $cart['team_price']; ?></span></td>                
+				<td class="deal-buy-total" align="right" style="BORDER-RIGHT: #b1d1e6 1px solid;">
+                	<span id="deal-buy-total"><?php  echo print_price(moneyit($cart['quantity']*$cart['team_price'])); ?></span>
+                </td>  
               </tr>
             <?php   } ?>
-              
+              <tr>
+                <td align="right" class="deal-buy-desc" colspan="4">Tổng cộng</td>
+                <td class="deal-buy-total" align="right" style="BORDER-RIGHT: #b1d1e6 1px solid;">
+                	<span id="deal-buy-total" style="font-weight:bold"><?php  echo print_price(moneyit($total)); ?></span>
+                </td>
+              </tr>
             </tbody>
             </table>
         </div></br>
