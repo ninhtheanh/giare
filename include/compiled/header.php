@@ -13,12 +13,12 @@
 <div id="top-menu-hotine">
 	<div class="top-container">
         <ul class="nav cf" style="margin-top: 2px;">
-            <li><a href="/">Trang chủ</a></li>
-            <li><a href="/tp-ho-chi-minh/thoi-trang-nu" style="width:90px">Sản phẩm</a></li>
-			 <li><a href="/lien-he.html">Liên hệ</a></li>
-            <li><a href="/hop-tac-mua-si.html">Hợp tác mua sỉ</a></li>
-            <li><a href="/tin-tuc.html">Tin tức</a></li>
-            <li id="athover"><a id="nhanuudai" style="cursor:pointer;">Nhận ưu đãi</a>
+            <li style="white-space: nowrap"><a href="/">Trang chủ</a></li>
+            <li style="white-space: nowrap"><a href="/tp-ho-chi-minh/thoi-trang-nu" style="width:90px">Sản phẩm</a></li>
+			<li style="white-space: nowrap"><a href="/lien-he.html">Liên hệ</a></li>
+            <li style="white-space: nowrap"><a href="/hop-tac-mua-si.html">Hợp tác mua sỉ</a></li>
+            <li style="white-space: nowrap"><a href="/tin-tuc.html">Tin tức</a></li>
+            <li  style="white-space: nowrap" id="athover"><a id="nhanuudai" style="cursor:pointer;">Nhận ưu đãi</a>
                 <div id="form_nhanuudai" style="background: #fff;box-shadow: 1px 1px 2px #6e6e6e;">
                     <form id="enter-address-form" action="/subscribe.php" method="post" class="validator">
                       <label for="textfield" style="display: block;text-align: left;margin-bottom: 8px;color: #87888c;">Nhận ưu đãi hằng ngày</label>
@@ -36,7 +36,7 @@
             if($id_promotion_category > 0)
             {            
             ?>
-            <li><a href="/khuyen-mai.html">Khuyến mãi</a></li>
+            <li style="white-space: nowrap"><a href="/khuyen-mai.html">Khuyến mãi</a></li>
             <?php
             }  
             ?>       

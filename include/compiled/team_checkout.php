@@ -30,7 +30,7 @@
                 <td class="deal-buy-quantity" align="right">
                 <?php  echo $cart['quantity']; ?>
                 </td>
-                <td class="deal-buy-price" align="right"><span id="deal-buy-price"><?php echo $cart['team_price']; ?></span></td>                
+                <td class="deal-buy-price" align="right"><span id="deal-buy-price"><?php echo print_price(moneyit($cart['team_price'])); ?></span></td>                
 				<td class="deal-buy-total" align="right" style="BORDER-RIGHT: #b1d1e6 1px solid;">
                 	<span id="deal-buy-total"><?php  echo print_price(moneyit($cart['quantity']*$cart['team_price'])); ?></span>
                 </td>  
