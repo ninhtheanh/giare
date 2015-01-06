@@ -1,5 +1,5 @@
-<link href="<?php echo SiteURL;?>/static/css/number_slideshow.css" rel="stylesheet" type="text/css"></link>
-<script type="text/javascript" src="<?php echo SiteURL;?>/static/js/number_slideshow.js"></script>
+<link href="/static/css/number_slideshow.css" rel="stylesheet" type="text/css"></link>
+<script type="text/javascript" src="/static/js/number_slideshow.js"></script>
 <?php
 $arrBanner = DB::LimitQuery('banner', array(
 	'order' => 'ORDER BY `order`',
@@ -27,7 +27,7 @@ $arrBanner = DB::LimitQuery('banner', array(
 <div id="number_slideshow" class="number_slideshow">
     <ul>
     	<?php foreach($arrBanner as $item){?>
-		<li><a href="<?php echo $item['url']; ?>"><img src="<?php echo SiteURL;?><?php echo $item['img']; ?>" width="872" height="389" alt="slideshow"/></a></li>		     
+		<li><a href="<?php echo $item['url']; ?>"><img src="<?php echo $item['img']; ?>" width="872" height="389" alt="slideshow"/></a></li>		     
 		<?php }?>
      </ul>
     <ul class="number_slideshow_nav">
