@@ -1,11 +1,11 @@
 <?php
 require_once(dirname(__FILE__) . '/app.php');
 
-$news = DB::GetQueryResult("Select * From news ORDER BY date_created DESC LIMIT 1", false);
+$news = DB::GetQueryResult("Select * From news Where activate = 1 ORDER BY date_created DESC LIMIT 1", false);
 $hotNews = $news[0];
 $id_hot_news = $hotNews['id'];
 //DB::$mDebug=true;
-$other_news = DB::GetQueryResult("Select * From news Where id <> '".$id_hot_news."' ORDER BY date_created DESC LIMIT 500", false);
+$other_news = DB::GetQueryResult("Select * From news Where activate = 1 AND id <> '".$id_hot_news."' ORDER BY date_created DESC LIMIT 500", false);
 //print_r($other_news);
 
 //Right products.

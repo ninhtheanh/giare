@@ -24,7 +24,7 @@
                                 if($hotNews['image'] != "")
                                 {
                             ?>
-                                <a href="/tin-tuc/<?php echo seo_url($hotNews['title'],$hotNews['id'], $url_suffix, '_'); ?>"><img src="<?=$hotNews['image']?>" border="0" align="left" style="margin:0  15px 5px 0"></a>
+                                <a href="/tin-tuc/<?php echo seo_url($hotNews['title'],$hotNews['id'], $url_suffix, '_'); ?>"><img src="<?=$hotNews['thumb']?>" border="0" align="left" style="margin:0  15px 5px 0"></a>
                             <?		
                                 }
                             ?>

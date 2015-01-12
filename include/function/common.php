@@ -735,7 +735,7 @@ function upload_image_news($input, $type, $id, $image=null, $scale=false) {
 		//remove old files
 		@unlink($npath);
 		@unlink($lpath);		
-		Image::Convert($path, $npath, 200, 160, Image::MODE_CUT);
+		Image::Convert($path, $npath, 136, 106, Image::MODE_CUT);
 		Image::Convert($path, $lpath, 370, 275, Image::MODE_CUT);
 		//echo $path;
 		return $image;
