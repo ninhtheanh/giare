@@ -58,7 +58,7 @@ else if ( is_post() ) {
 		'express', 'credit', 'farefree', 'pre_number',
 		'user_id', 'city_id', 'group_id', 'partner_id',
 		'team_type', 'sort_order', 'farefree', 'state',
-		'condbuy', 'size', 'aff_rebate', 'weight', 'delivery_properties', 'number_of_contracts', 'sale', 'virtual_buy', 'show_homepage',
+		'condbuy', 'size', 'aff_rebate', 'weight', 'delivery_properties', 'number_of_contracts', 'sale', 'virtual_buy', 'show_homepage', 'seo_keyword', 'seo_description',
 	);
 	
 	$team['user_id'] = $login_user_id;

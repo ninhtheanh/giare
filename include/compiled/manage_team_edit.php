@@ -20,7 +20,7 @@
             <div class="box-content">
                 
                 <div class="sect">
-				<form id="-user-form" method="post" action="/backend/team/edit_test.php?id=<?php echo $team['id']; ?>" enctype="multipart/form-data" class="validator">
+				<form id="-user-form" method="post" action="/backend/team/edit.php?id=<?php echo $team['id']; ?>" enctype="multipart/form-data" class="validator">
 					<input type="hidden" name="id" value="<?php echo $team['id']; ?>" /><input type="hidden" name="now_number" value="<?php echo $team['now_number']; ?>" />
 					<div class="wholetip clear">
 					  <h3>1. Thông tin cơ bản</h3>
@@ -182,9 +182,11 @@
 						</div>
                         <br /><br />
                         <div style="float:left; padding-left:130px" id="checkboxes_color">
-                        <table width="60px">
+                        <table width="100%" border="0">
                         	<tr>
                             	<td>
+                                	<table width="100%" border="0" cellpadding="4" cellspacing="4">
+                                    	<tr>
                                 	<?php 
 									//$arrColor = array("yellow", "green", "red", "black", "white", "gray", "blue", "pink", "magenta", "orange", "cyan", "violet", "purple", "brown", "khaki", "bisque");
 									$arrColor = array();
@@ -214,6 +216,7 @@
 											continue;
 										$i++;										
 									?>
+                                    <td>
                                     <table width="70px" border="0" cellpadding="4" cellspacing="4">
                                         <tr>
                                             <td align="left" width="10">
@@ -226,10 +229,14 @@
                                     </table>
                                     <?php
 											$i++;
-											if($i % 4 == 0)
-												echo "</td><td>";
+											if($i % 9 == 0)
+												echo "</td></tr><tr>";	
+											
 										} 
 									?>
+                                    </td>
+                                    	</tr>
+                                        </table>
                                 </td>
                             </tr> 
 							<tr>
@@ -441,6 +448,14 @@
 					<div class="field">
 						<label>Chi tiết <span style="color:#ff0000;">*</span></label>
 						<div style="float:left;"><textarea cols="45" rows="5" name="detail" id="system-create-location2" class="elm1" style="width:740px;height:150px;"><?php echo htmlspecialchars_decode($team['detail']); ?></textarea></div>
+					</div>
+                    <div class="field">
+						<label>SEO-Keywords</label>
+						<input type="text" size="30" name="seo_keyword" id="seo_keyword" maxlength="255" class="f-input" value="<?php echo $team['seo_keyword']; ?>" />						
+					</div>
+                    <div class="field">
+						<label>SEO-Description</label>
+						<div style="float:left;"><textarea cols="45" rows="5" name="seo_description" id="seo_description" style="width:740px;height:150px;"><?php echo htmlspecialchars_decode($team['seo_description']); ?></textarea></div>
 					</div>
 <!--					<div class="field" id="field_userreview">
 						<label>User Reviews</label>
