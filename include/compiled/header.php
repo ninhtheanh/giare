@@ -14,7 +14,9 @@
 	<div class="top-container">
         <ul class="nav cf" style="margin-top: 2px;">
             <li style="white-space: nowrap"><a href="/">Trang chủ</a></li>
-            <li style="white-space: nowrap"><a href="/tp-ho-chi-minh/thoi-trang-nu" style="width:90px">Sản phẩm</a></li>
+            <li style="white-space: nowrap"><a href="/tp-ho-chi-minh/thoi-trang-nu" style="width:120px">Thời trang nữ giá sỉ</a></li>
+			<li style="white-space: nowrap"><a href="/tp-ho-chi-minh/thoi-trang-nam" style="width:130px">Thời trang nam giá sỉ </a></li>
+			<li style="white-space: nowrap"><a href="/tp-ho-chi-minh/tui-xach-phu-kien" style="width:80px">Túi xác giá sỉ</a></li>
 			<li style="white-space: nowrap"><a href="/lien-he.html">Liên hệ</a></li>
             <li style="white-space: nowrap"><a href="/hop-tac-mua-si.html">Hợp tác mua sỉ</a></li>
             <li style="white-space: nowrap"><a href="/tin-tuc.html">Tin tức</a></li>
@@ -58,7 +60,17 @@
 </div>
 
     <div style="padding: 7px; background-image: -moz-linear-gradient(center top , rgb(220, 22, 18), rgb(187, 19, 15)); background-color: rgb(187, 19, 15);background-repeat: repeat-x; color: white;">
-	<span><strong><a  style="color: #FFFFFF;">Đặt hàng online liên hệ qua số&nbsp; <b>0909.682311 hoặc 0938.122311 </b> </a></strong> 
+	<span><strong><a  style="color: #FFFFFF;">Đặt hàng online liên hệ qua số&nbsp; <b>0938.122311 &nbsp;&nbsp;&nbsp;Mua sỉ liên hệ: 0909.682311 </b> </a></strong>
+	     
+         <?php
+         $page_ymsgr = Table::Fetch('page', 'ymsgr_support');
+		 echo $page_ymsgr['value'];
+		 ?>
+         
+		 <!--a style="color: #FFFFFF;" href="ymsgr:sendim?infocheapdeal&amp;m=Xin chao" style="float: left;">
+<img align="absmiddle" alt="Li&ecirc;n hệ " style="margin-right: 10px; margin-top: 3px; vertical-align: middle;" src="http://opi.yahoo.com/online?u=infocheapdeal&amp;m=g&amp;t=1&amp;l=us" />
+</a>-->
+		 </strong>
 	 </span>
 	</div>
     <!--<div style="padding: 7px; background-image: -moz-linear-gradient(center top , rgb(220, 22, 18), rgb(187, 19, 15)); background-color: rgb(187, 19, 15);background-repeat: repeat-x; color: white;">
