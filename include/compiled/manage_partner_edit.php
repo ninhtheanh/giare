@@ -10,7 +10,8 @@ window.x_init_hook_gm = function() {
 		X.get(WEB_ROOT+'/ajax/system.php?action=googlemap&ll='+ll);
 	};
 	X.misc.setgooglemapclick = function(overlay, latlng) {
-		jQuery('#inputlonglat').val(latlng.y+','+latlng.x);
+		//jQuery('#inputlonglat').val(latlng.y+','+latlng.x);
+		jQuery('#inputlonglat').val(latlng.k + ',' + latlng.D);
 	};
 };
 </script>
